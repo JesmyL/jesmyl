@@ -36,8 +36,11 @@
 ## Умный поиск
 
 - Фильтр `BackLocaleKey.CmSmartSearchAnchorsAndAnchorPlus` («Песни с якорями и якорь+») отбирает комы, в разобранном списке ордов которых (`new CmCom(...).setOrders()`) есть орды с `isAnchorInherit` и орды с `isAnchorInheritPlus`; при ошибке разбора ком пропускается.
-- Реализован в `src/back/apps/cm/editor.tsjrpc.base.ts`: пункт списка в `getSmartSearchFilters` и ветка `case` в `getSmartSearchComws`.
+- Реализован в `src/back/apps/cm/editor.tsjrpc.base.ts`: пункт списка в `getSmartSearchFilters` и ветка `case` в `getSmartSearchComws_1`.
 - Оба флага выставляет `cmComOrderListConstructor` (`src/shared/utils/cm/com/orderListConstructor.ts`), причем `isAnchorInheritPlus` ставится только при наличии у цели якоря inherit-продолжений — поэтому любой подходящий ком содержит оба вида.
+- `BackLocaleKey.CmSmartSearchRepeatsByRegExp` (**Ключи повторений по регулярке:/~/i**): _отбирает комы, у которых ключ повторения орда `ord.r` совпал с пользовательской регуляркой (число сравнивается как есть, объект — по своим ключам); по умолчанию `/~/i`, невалидная регулярка даёт пустой результат._
+- `BackLocaleKey.CmSmartSearchMatchInRepeated` (**Поиск по блоку с повторениями:/\\/\\//i**): _ищет пользовательскую регулярку (по умолчанию `/\/\//i`, то есть литерал `//`) в `ord.repeatedText(CmComTextSquareBracketsMode.AsIs)`; ком с ошибкой разбора пропускается, невалидная регулярка даёт пустой результат._
+- Эти два фильтра тоже серверные: ветки `getSmartSearchComws_1` вызывают `takeRepeatsMatchComws` / `takeMatchInRepeatedComws` из `src/back/apps/cm/smart-search/*`; `param` приходит из поля параметра селектора фильтра.
 
 ## Проверка
 

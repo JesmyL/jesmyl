@@ -503,4 +503,20 @@ export const enum BackLocaleKey {
   VisitReportDate = 485,
   /** Мин. версия */
   VisitReportMinVersionColumn = 486,
+  /** Песни без аудио */
+  CmSmartSearchNoAudio = 487,
+  /** Со строкой больше чем:элементов[$n;] */
+  CmSmartSearchLineLengthMore = 488,
+  /** Ключи повторений по регулярке:/~/i */
+  CmSmartSearchRepeatsByRegExp = 489,
+  /** Поиск по блоку с повторениями:/\/\//i */
+  CmSmartSearchMatchInRepeated = 490,
+  /** Количество аккордов не равно аппликатуре */
+  CmSmartSearchChordsMismatch = 491,
+  /** С неизвестными аккордами */
+  CmSmartSearchUnknownChords = 492,
+  /** Некорректные Ё-Е */
+  CmSmartSearchIncorrectYoYe = 493,
+  /** Параметр фильтра слишком длинный */
+  CmSmartSearchParamTooLong = 494,
 }

@@ -1,7 +1,0 @@
-import { CmCom } from 'shared/const/cm/Com';
-
-export type ICmEditorCompositionsCatSpecialSearches = {
-  title: string;
-  map: (coms: CmCom[], term: string) => Promise<CmCom[]>;
-  isRerenderOnInput?: boolean;
-};

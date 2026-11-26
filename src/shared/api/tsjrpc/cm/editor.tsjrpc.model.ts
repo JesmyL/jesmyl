@@ -18,7 +18,7 @@ export type CmEditorTsjrpcModel = {
   setMp3Rule: (args: { rule: CmMp3Rule }) => void;
 
   getSmartSearchFilters: () => { filters: { id: BackLocaleKey; title: string }[] };
-  getSmartSearchComws: (args: { filterId: BackLocaleKey }) => { comws: CmComWid[] };
+  getSmartSearchComws_1: (args: { filterId: BackLocaleKey; param?: string }) => { comws: CmComWid[] };
 
   watchComBusies: (args: { comw: CmComWid }) => void;
   unwatchComBusies: () => void;

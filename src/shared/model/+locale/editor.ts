@@ -137,13 +137,6 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.CmEditorLinkPartHide]: StringTemplaterInterpolation<{ n: string; h: string }>;
   [EditorLocaleKey.CmEditorLinkPartShow]: StringTemplaterInterpolation<{ n: string; h: string }>;
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: LocaleSimpleString;
-  [EditorLocaleKey.CmEditorNoAudioComs]: LocaleSimpleString;
-  [EditorLocaleKey.CmEditorLineLengthMore]: StringTemplaterInterpolation<{ n: string }>;
-  [EditorLocaleKey.CmEditorRepeatsByRegExp]: LocaleSimpleString;
-  [EditorLocaleKey.CmEditorMatchInRepeated]: LocaleSimpleString;
-  [EditorLocaleKey.CmEditorChordsMismatch]: LocaleSimpleString;
-  [EditorLocaleKey.CmEditorUnknownChords]: LocaleSimpleString;
-  [EditorLocaleKey.CmEditorIncorrectYoYe]: LocaleSimpleString;
   [EditorLocaleKey.CmEditorPreparation]: LocaleSimpleString;
   [EditorLocaleKey.CmEditorReadTexts]: LocaleSimpleString;
   [EditorLocaleKey.CmEditorMonolith]: LocaleSimpleString;
@@ -216,4 +209,5 @@ export type LocaleCmEditor = {
   [EditorLocaleKey.PushCheck]: LocaleSimpleString;
   [EditorLocaleKey.CmEditBroadcastCopyNl]: StringTemplaterInterpolation<{ t: string }>;
   [EditorLocaleKey.CmEditorBemoleToDiez]: LocaleSimpleString;
+  [EditorLocaleKey.CmEditorSmartSearchParam]: LocaleSimpleString;
 };

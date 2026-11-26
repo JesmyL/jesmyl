@@ -266,20 +266,6 @@ export const enum EditorLocaleKey {
   CmEditorLinkPartShow = 131,
   /** Это действие повлечёт за собой уничтожение аппликатуры в данном блоке. */
   CmEditorAppliqueDestroyed = 132,
-  /** Песни без аудио */
-  CmEditorNoAudioComs = 133,
-  /** Со строкой больше чем:элементов[$n] */
-  CmEditorLineLengthMore = 134,
-  /** Ключи повторений по регулярке:/~/i */
-  CmEditorRepeatsByRegExp = 135,
-  /** Поиск по блоку с повторениями:/\/\//i */
-  CmEditorMatchInRepeated = 136,
-  /** Количество аккордов не равно аппликатуре */
-  CmEditorChordsMismatch = 137,
-  /** С неизвестными аккордами */
-  CmEditorUnknownChords = 138,
-  /** Некорректные Ё-Е */
-  CmEditorIncorrectYoYe = 139,
   /** Подготовка */
   CmEditorPreparation = 140,
   /** Считывание текстов */
@@ -426,4 +412,6 @@ export const enum EditorLocaleKey {
   CmEditBroadcastCopyNl = 210,
   /** b-># */
   CmEditorBemoleToDiez = 211,
+  /** Параметр */
+  CmEditorSmartSearchParam = 212,
 }

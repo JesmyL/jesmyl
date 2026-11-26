@@ -15,7 +15,6 @@ export const CmEditorCompositionsPage = () => {
   const comws = useCmComAllWidList();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  // const [mapper, setMapper] = useState<ICmEditorCompositionsCatSpecialSearches['map'] | null>(null);
   const term = useAtomValue(termAtom);
   const navigate = useNavigate();
 
@@ -27,7 +26,6 @@ export const CmEditorCompositionsPage = () => {
     <>
       <CmComWithComListSearchFilterInput
         termAtom={termAtom}
-        // comsMapper={mapper}
         comws={comws}
         withSmartSearch
         smartNode={<CmEditorSmartSearchFilterSelector />}
@@ -42,14 +40,6 @@ export const CmEditorCompositionsPage = () => {
               contentRef={listRef}
               content={
                 <>
-                  {/* {term.startsWith('@') && (
-                    <CmEditorCompositionsCatSpecialSearches
-                      term={term}
-                      setTerm={termAtom.set}
-                      setMapper={setMapper}
-                    />
-                  )} */}
-
                   {catNumberSearch && (
                     <CmComFaceList
                       isPutCcomFaceOff={!!term}

@@ -1,6 +1,7 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
+import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores';
 import { backLocaleError, translateBackTexts } from 'back/locales/back';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { and, asc, eq, inArray, sql } from 'drizzle-orm';
@@ -16,6 +17,15 @@ import { cmEditComBusyTsjrpcMethods } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmShareEditorServerTsjrpcMethods } from './editor.tsjrpc.shares';
 import { chordPackFileStore, eePackFileStore, mp3ResourcesFileStorage } from './file-stores';
+import {
+  takeChordsMismatchComws,
+  takeIncorrectYoYeComws,
+  takeLineLengthMoreComws,
+  takeMatchInRepeatedComws,
+  takeNoAudioComws,
+  takeRepeatsMatchComws,
+  takeUnknownChordsComws,
+} from './smart-search';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseServer<CmEditorTsjrpcModel> {
@@ -131,10 +141,43 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 id: BackLocaleKey.CmSmartSearchAnchorsAndAnchorPlus,
                 title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchAnchorsAndAnchorPlus),
               },
+              {
+                id: BackLocaleKey.CmSmartSearchNoAudio,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchNoAudio),
+              },
+              {
+                id: BackLocaleKey.CmSmartSearchLineLengthMore,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchLineLengthMore, {
+                  n: '' + constantsConfigFileStore.getValue().maxAvailableComLineLength,
+                }),
+              },
+              {
+                id: BackLocaleKey.CmSmartSearchRepeatsByRegExp,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchRepeatsByRegExp),
+              },
+              {
+                id: BackLocaleKey.CmSmartSearchMatchInRepeated,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchMatchInRepeated),
+              },
+              {
+                id: BackLocaleKey.CmSmartSearchChordsMismatch,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchChordsMismatch),
+              },
+              {
+                id: BackLocaleKey.CmSmartSearchUnknownChords,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchUnknownChords),
+              },
+              {
+                id: BackLocaleKey.CmSmartSearchIncorrectYoYe,
+                title: translateBackTexts(visitInfo?.langi, BackLocaleKey.CmSmartSearchIncorrectYoYe),
+              },
             ],
           },
         }),
-        getSmartSearchComws: async ({ filterId }) => {
+        getSmartSearchComws_1: async ({ filterId, param }, { auth }) => {
+          if (await throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R')) throw '';
+          if (param != null && param.length > 100) throw backLocaleError(BackLocaleKey.CmSmartSearchParamTooLong);
+
           let comws: CmComWid[];
 
           switch (filterId) {
@@ -249,6 +292,27 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                   }
                 })
                 .map(it => it.w);
+              break;
+            case BackLocaleKey.CmSmartSearchNoAudio:
+              comws = await takeNoAudioComws();
+              break;
+            case BackLocaleKey.CmSmartSearchLineLengthMore:
+              comws = await takeLineLengthMoreComws(param);
+              break;
+            case BackLocaleKey.CmSmartSearchRepeatsByRegExp:
+              comws = await takeRepeatsMatchComws(param);
+              break;
+            case BackLocaleKey.CmSmartSearchMatchInRepeated:
+              comws = await takeMatchInRepeatedComws(param);
+              break;
+            case BackLocaleKey.CmSmartSearchChordsMismatch:
+              comws = await takeChordsMismatchComws();
+              break;
+            case BackLocaleKey.CmSmartSearchUnknownChords:
+              comws = await takeUnknownChordsComws();
+              break;
+            case BackLocaleKey.CmSmartSearchIncorrectYoYe:
+              comws = await takeIncorrectYoYeComws();
               break;
             default:
               throw backLocaleError(BackLocaleKey.CmSmartSearchUnknownFilter);
