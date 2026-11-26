@@ -1,9 +1,12 @@
+import { translateBase } from '#basis/locale';
 import { localeLastModifiedAtAtom } from '#basis/state/locale';
 import { requestRemoteLocalesIfStale } from '#features/broadcast/remote/remote-locale';
 import { otherFooterIconAtom } from '#basis/state/otherFooterIconAtom';
 import { registerRemoteBroadcastClientBase } from '#basis/tsjrpc.electron/remote-broadcast.cli.base';
 import { registerRemoteBroadcastRelay } from '#basis/tsjrpc.electron/remote-broadcast.relay';
 import { soki } from '#shared/soki';
+import { reloadSW } from '#shared/sw-register';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { bibleInitialInvokes } from '$bible/shared/lib';
 import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
@@ -26,8 +29,11 @@ import {
 import { questionerAdminTsjrpcClientBase } from '$q/shared/tsjrpc/admin.tsjrpc';
 import { storagesStoresSharesTsjrpcBaseClient } from '$storages/shared/tsjrpc/tsjrpc.base';
 import { DeviceId } from 'shared/api';
+import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { IndexAccessScopeRules } from 'shared/model/index/access-rights';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { jversion } from 'shared/values';
+import { toast } from 'sonner';
 import { preloadUngatedLazyModules } from './lazy-preloads';
 import { appInitEvent } from './store/triggers';
 
@@ -76,6 +82,25 @@ const syncCmEditorAccess = (rights: IndexAccessScopeRules) => {
   void purgeCmEditorCache().catch(() => (isCmEditorCachePurgeScheduled = false));
 };
 
+const checkFreshAppVersion = async () => {
+  try {
+    const freshVersion = await indexTsjrpcClientMethods.getFreshAppVersion_1(undefined, {
+      aborter: new AbortController(),
+      timeout: 20_000,
+    });
+
+    if (freshVersion.num === 0 || freshVersion.num === jversion.num) return;
+
+    toast(freshVersion.text, {
+      ...makeToastKOMoodConfig(),
+      duration: Infinity,
+      action: { label: translateBase(BaseLocaleKey.Update), onClick: reloadSW },
+    });
+  } catch (_e) {
+    //
+  }
+};
+
 export const appInitialInvokes = () => {
   const rights = indexUserAccessRightsAtom.get();
 
@@ -90,6 +115,8 @@ export const appInitialInvokes = () => {
   cmShareTsjrpcBaseClient.$$register();
   storagesStoresSharesTsjrpcBaseClient.$$register();
   questionerAdminTsjrpcClientBase.$$register();
+
+  void checkFreshAppVersion();
 
   bibleInitialInvokes();
 
