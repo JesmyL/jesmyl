@@ -60,10 +60,7 @@ const rightsOrder = [
   ScheduleWidgetUserRoleRight.ReadRemoteControls,
 ];
 
-const rightTextFallbacks: Record<
-  number,
-  { title: string; role: [string, string]; description: string }
-> = {
+const rightTextFallbacks: Record<number, { title: string; role: [string, string]; description: string }> = {
   [ScheduleWidgetUserRoleRight.AddDays]: {
     title: 'Добавление дней',
     role: ['Организатор дней', 'Организатора дней'],
@@ -106,10 +103,7 @@ const makeRightText = (
       return translateBase(titleKey) || fallback.title;
     },
     get role() {
-      return [
-        translateBase(roleKeys[0]) || fallback.role[0],
-        translateBase(roleKeys[1]) || fallback.role[1],
-      ];
+      return [translateBase(roleKeys[0]) || fallback.role[0], translateBase(roleKeys[1]) || fallback.role[1]];
     },
     get description(): [string] {
       return [translateBase(descriptionKey) || fallback.description];

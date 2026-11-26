@@ -17,12 +17,14 @@ export const takeChordsMismatchComws = async () =>
         ord =>
           ord.c != null &&
           ord.p &&
-          row.c[ord.c]?.split('\n').some(
-            (line, linei, linea) =>
-              line &&
-              linei < linea.length - 1 &&
-              line.trim().split(' ').filter(itIt).length !== ord.p![linei]?.length,
-          ),
+          row.c[ord.c]
+            ?.split('\n')
+            .some(
+              (line, linei, linea) =>
+                line &&
+                linei < linea.length - 1 &&
+                line.trim().split(' ').filter(itIt).length !== ord.p![linei]?.length,
+            ),
       ),
     )
     .map(row => row.w);

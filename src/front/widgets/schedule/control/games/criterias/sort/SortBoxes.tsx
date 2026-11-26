@@ -60,8 +60,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
   const currUser: IScheduleWidgetUser | und = sortedUsers[middle];
   const addInHistoryRef = useRef<HistoryAdder>(emptyFunc);
 
-  if (insertUser == null || currUser == null)
-    return <>{translateBase(BaseLocaleKey.ScheduleMembersDistributed)}</>;
+  if (insertUser == null || currUser == null) return <>{translateBase(BaseLocaleKey.ScheduleMembersDistributed)}</>;
 
   const onCurrUserClick = () => {
     addInHistoryRef.current(start, end, sortedUsers, 'left');

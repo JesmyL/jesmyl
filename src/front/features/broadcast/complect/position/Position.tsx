@@ -220,21 +220,19 @@ const Rect = styled.div<{
                 `;
 
           return css`
-            ${
-              props.$resizeOnly
-                ? css`
-                    border-color: transparent;
-                    ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Bottom)}
-                    ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Top)}
+            ${props.$resizeOnly
+              ? css`
+                  border-color: transparent;
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Bottom)}
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Top)}
                   ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Left, targetBorderColor)}
                   ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Right, targetBorderColor)}
-                  `
-                : css`
-                    border-color: ${visibleBorderColor};
-                    border-left-color: ${targetBorderColor};
-                    border-right-color: ${targetBorderColor};
-                  `
-            }
+                `
+              : css`
+                  border-color: ${visibleBorderColor};
+                  border-left-color: ${targetBorderColor};
+                  border-right-color: ${targetBorderColor};
+                `}
           `;
         } else {
           if (value === props.$config.top)
@@ -261,21 +259,19 @@ const Rect = styled.div<{
                 `;
 
           return css`
-            ${
-              props.$resizeOnly
-                ? css`
-                    border-color: transparent;
-                    ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Right)}
-                    ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Left)}
+            ${props.$resizeOnly
+              ? css`
+                  border-color: transparent;
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Right)}
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Left)}
                   ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Top, targetBorderColor)};
-                    ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Bottom, targetBorderColor)};
-                  `
-                : css`
-                    border-color: ${visibleBorderColor};
-                    border-top-color: ${targetBorderColor};
-                    border-bottom-color: ${targetBorderColor};
-                  `
-            }
+                  ${borderColorInclude(props.$resizeOnly, BroadcastResizeBorderPositions.Bottom, targetBorderColor)};
+                `
+              : css`
+                  border-color: ${visibleBorderColor};
+                  border-top-color: ${targetBorderColor};
+                  border-bottom-color: ${targetBorderColor};
+                `}
           `;
         }
       };

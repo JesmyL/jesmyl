@@ -25,8 +25,7 @@ export const useRemoteBroadcastPendingApprovals = () => {
 
       const handlePendingDevices = (pending: RemoteBroadcastPendingDevice[]) => {
         for (const deviceId of askedDeviceIdsRef.current) {
-          if (!pending.some(device => device.deviceId === deviceId))
-            askedDeviceIdsRef.current.delete(deviceId);
+          if (!pending.some(device => device.deviceId === deviceId)) askedDeviceIdsRef.current.delete(deviceId);
         }
 
         if (isConfirmingRef.current) return;

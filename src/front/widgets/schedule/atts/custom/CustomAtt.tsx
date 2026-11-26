@@ -346,8 +346,7 @@ export function ScheduleWidgetCustomAtt(props: {
           checkIsOpen={whoCani => whoCani !== WhoCan.No}
         >
           <ModalHeader>
-            {translateBase(BaseLocaleKey.ScheduleWho)} {whoCan.action}{' '}
-            {translateBase(BaseLocaleKey.ScheduleAttachment)}{' '}
+            {translateBase(BaseLocaleKey.ScheduleWho)} {whoCan.action} {translateBase(BaseLocaleKey.ScheduleAttachment)}{' '}
             <span className="text-x7">{props.tatt.title}</span>
           </ModalHeader>
           <ModalBody>

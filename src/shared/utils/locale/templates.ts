@@ -29,20 +29,23 @@ const makeTpl = <Val extends string, Key extends PropertyKey>(key: PropertyKey, 
 };
 
 type BaseLocaleVal<K extends UsedBaseLocaleKey> = LocaleBase<Langi>[K];
-type BaseSubKeys<K extends UsedBaseLocaleKey> = BaseLocaleVal<K> extends Record<infer Key extends string, unknown>
-  ? Key
-  : never;
+type BaseSubKeys<K extends UsedBaseLocaleKey> =
+  BaseLocaleVal<K> extends Record<infer Key extends string, unknown> ? Key : never;
 type BaseTplVal<K extends UsedBaseLocaleKey, SK extends string | number> = Extract<
   [SK] extends [never] ? BaseLocaleVal<K> : BaseLocaleVal<K>[Extract<`${SK}`, keyof BaseLocaleVal<K>>],
   string
 >;
 
-const makeBaseTpl = <K extends UsedBaseLocaleKey, SK extends string | number = never>(key: PropertyKey, vars: readonly VarKey[]) =>
-  makeTpl<BaseTplVal<K, SK>, TplKey<K, SK>>(key, vars);
+const makeBaseTpl = <K extends UsedBaseLocaleKey, SK extends string | number = never>(
+  key: PropertyKey,
+  vars: readonly VarKey[],
+) => makeTpl<BaseTplVal<K, SK>, TplKey<K, SK>>(key, vars);
 
 export function baseLocaleTemplate<const K extends UsedBaseLocaleKey>(
   key: K,
-  ...rest: [BaseSubKeys<K>] extends [never] ? [vars?: readonly VarKey[]] : [subKey: TplValidSubKey<BaseSubKeys<K>, never>]
+  ...rest: [BaseSubKeys<K>] extends [never]
+    ? [vars?: readonly VarKey[]]
+    : [subKey: TplValidSubKey<BaseSubKeys<K>, never>]
 ): ReturnType<typeof makeBaseTpl<K>>;
 export function baseLocaleTemplate<const K extends UsedBaseLocaleKey, const SK extends string | number>(
   key: K,
@@ -60,9 +63,8 @@ export function baseLocaleTemplate<const K extends UsedBaseLocaleKey, const SK e
 }
 
 type EditorLocaleVal<K extends EditorLocaleKey> = LocaleCmEditor[K];
-type EditorSubKeys<K extends EditorLocaleKey> = EditorLocaleVal<K> extends Record<infer Key extends string, unknown>
-  ? Key
-  : never;
+type EditorSubKeys<K extends EditorLocaleKey> =
+  EditorLocaleVal<K> extends Record<infer Key extends string, unknown> ? Key : never;
 type EditorTplVal<K extends EditorLocaleKey, SK extends string | number> = Extract<
   [SK] extends [never] ? EditorLocaleVal<K> : EditorLocaleVal<K>[Extract<`${SK}`, keyof EditorLocaleVal<K>>],
   string

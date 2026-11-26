@@ -1,8 +1,5 @@
 import { BroadcastSlidePreview } from '#features/broadcast/SlidePreview';
-import {
-  bibleBroadcastUpdateCurrentConfig,
-  useBibleBroadcastScreenCurrentConfig,
-} from '$bible/entities/broadcast';
+import { bibleBroadcastUpdateCurrentConfig, useBibleBroadcastScreenCurrentConfig } from '$bible/entities/broadcast';
 
 export const BibleBroadcastCurrentSlidePreview = () => {
   const currentConfig = useBibleBroadcastScreenCurrentConfig();

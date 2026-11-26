@@ -29,8 +29,7 @@ export const workDirBgDragMime = 'application/x-jesmyl-workdir-bg';
 export const workDirNoBgDragValue = 'no-bg';
 
 /** `types` is an array-like that may not expose `.includes` in every engine, so read it as a plain array first. */
-export const dataTransferHasFiles = (dataTransfer: DataTransfer) =>
-  Array.from(dataTransfer.types).includes('Files');
+export const dataTransferHasFiles = (dataTransfer: DataTransfer) => Array.from(dataTransfer.types).includes('Files');
 
 /** Cancels the dragover so the browser accepts the drop; reports whether the drag carries files. */
 export const markFileDragOver = (event: DragEvent<HTMLElement>) => {

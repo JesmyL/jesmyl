@@ -283,9 +283,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                         <div className="flex gap-5">
                           <span>{translateBase(BaseLocaleKey.ScheduleNow)}</span>
                           {event === null ? (
-                            <span className="text-x3 italic">
-                              {translateBase(BaseLocaleKey.ScheduleTechBreak)}
-                            </span>
+                            <span className="text-x3 italic">{translateBase(BaseLocaleKey.ScheduleTechBreak)}</span>
                           ) : (
                             <ScheduleWidgetTopicTitle
                               titleBox={currSchBox.types[event.type]}

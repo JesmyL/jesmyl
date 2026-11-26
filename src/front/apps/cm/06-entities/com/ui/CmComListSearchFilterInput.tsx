@@ -1,5 +1,10 @@
 import { translateBase } from '#basis/locale';
-import { SearchMode, searchModeAtom, smartSearchComwsAtom, smartSearchFilterIdAtom } from '#basis/state/isNumberSearchAtom';
+import {
+  SearchMode,
+  searchModeAtom,
+  smartSearchComwsAtom,
+  smartSearchFilterIdAtom,
+} from '#basis/state/isNumberSearchAtom';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { useCmCatList } from '$cm/entities/cat';
 import { cmIDB } from '$cm/ext';

@@ -48,12 +48,7 @@ export const migrateScheduleUsers = async (sch: IScheduleWidget) => {
   if (
     !users.some(
       user =>
-        user.id == null ||
-        'login' in user ||
-        'fio' in user ||
-        'nick' in user ||
-        'tgId' in user ||
-        'tgInform' in user,
+        user.id == null || 'login' in user || 'fio' in user || 'nick' in user || 'tgId' in user || 'tgInform' in user,
     )
   )
     return false;

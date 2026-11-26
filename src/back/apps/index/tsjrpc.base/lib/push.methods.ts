@@ -33,8 +33,7 @@ const takeValidPushEndpoint = (endpoint: string) => {
 };
 
 const takeCheckedEndpoint = (endpoint: unknown) => {
-  if (!checkIsString(endpoint) || !endpoint)
-    throw backLocaleError(BackLocaleKey.PushEndpointMissing);
+  if (!checkIsString(endpoint) || !endpoint) throw backLocaleError(BackLocaleKey.PushEndpointMissing);
 
   return endpoint;
 };
@@ -55,14 +54,14 @@ const parsePushSubscription = (subscription: unknown): PushSubscriptionPayload =
   };
 };
 
-const takeUserEndpointWhere = async (endpoint: unknown, tool: { auth: Parameters<typeof takeLogginedAuthOrThrow>[0] }) => {
+const takeUserEndpointWhere = async (
+  endpoint: unknown,
+  tool: { auth: Parameters<typeof takeLogginedAuthOrThrow>[0] },
+) => {
   const auth = takeLogginedAuthOrThrow(tool.auth);
   const user = await takeUserTiny({ l: auth.login });
 
-  return and(
-    eq(pushSubscriptionsDB.endpoint, takeCheckedEndpoint(endpoint)),
-    eq(pushSubscriptionsDB.userId, user.id),
-  )!;
+  return and(eq(pushSubscriptionsDB.endpoint, takeCheckedEndpoint(endpoint)), eq(pushSubscriptionsDB.userId, user.id))!;
 };
 
 export const indexPushMethods = {

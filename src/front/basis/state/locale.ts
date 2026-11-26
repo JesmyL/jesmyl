@@ -123,9 +123,7 @@ export const takeDynamicLanguageAtom = <L extends Langi>(langi: L) => {
   const confAtom = atom({} as LocaleDynamic<L>);
   dynamicLangAtoms[langi] = confAtom as never;
 
-  hydrateLocaleAtom(`D${langi}`, confAtom, cachedDynamicLocale =>
-    checkValue(cachedDynamicLocale, requestFullLocales),
-  );
+  hydrateLocaleAtom(`D${langi}`, confAtom, cachedDynamicLocale => checkValue(cachedDynamicLocale, requestFullLocales));
 
   return confAtom;
 };

@@ -52,10 +52,7 @@ const cleanMarksHolder = (holder: MarksWithAudioPack) => {
 
 /** Одноразовая зачистка уже сохранённых legacy-паков при апгрейде схемы IDB. */
 const purgeLegacyAudioMarks = async (transaction: Transaction) => {
-  await transaction
-    .table<ComAudioMarksRow, CmComWid>('comAudioTrackMarks_v3')
-    .toCollection()
-    .modify(cleanMarksHolder);
+  await transaction.table<ComAudioMarksRow, CmComWid>('comAudioTrackMarks_v3').toCollection().modify(cleanMarksHolder);
 
   await transaction.table<IExportableCom, CmComWid>('coms').toCollection().modify(cleanComAudioMarks);
 };
@@ -128,60 +125,66 @@ export interface CmIDBStorage {
 
 class CmIDB extends DexieDB<CmIDBStorage> {
   constructor() {
-    super('cm', {
-      chordPack: [{}],
-      lastModifiedAt: [0],
-      broadcastScreenConfigs: [() => [cmBroadcastDefaultConfig]],
+    super(
+      'cm',
+      {
+        chordPack: [{}],
+        lastModifiedAt: [0],
+        broadcastScreenConfigs: [() => [cmBroadcastDefaultConfig]],
 
-      selectedComws: [null],
-      comTopTools: [null],
-      chordVisibleVariant: [null],
-      comFontSize: [null],
-      laterComwList: [null],
-      speedRollKf: [null],
-      lastOpenComw: [null],
-      isShowFavouritesInBroadcast: [null],
-      comWidRefDict: [{}],
+        selectedComws: [null],
+        comTopTools: [null],
+        chordVisibleVariant: [null],
+        comFontSize: [null],
+        laterComwList: [null],
+        speedRollKf: [null],
+        lastOpenComw: [null],
+        isShowFavouritesInBroadcast: [null],
+        comWidRefDict: [{}],
 
-      coms: {
-        w: '++',
-        isRemoved: true,
+        coms: {
+          w: '++',
+          isRemoved: true,
+        },
+        fixedComs: {
+          w: '++',
+        },
+        cats: {
+          w: '++',
+          isRemoved: true,
+        },
+        comCommentBlocks: {
+          comw: '++',
+        },
+        localComCommentBlocks: {
+          comw: '++',
+        },
+        scheduleComIntp: {
+          schw: '++',
+        },
+        scheduleComws: {
+          schw: '++',
+        },
+        comAudioTrackMarks_v3: {
+          comw: '++',
+        },
       },
-      fixedComs: {
-        w: '++',
+      4,
+      async transaction => {
+        await purgeLegacyAudioMarks(transaction);
+        await parseLegacyCats(transaction);
       },
-      cats: {
-        w: '++',
-        isRemoved: true,
-      },
-      comCommentBlocks: {
-        comw: '++',
-      },
-      localComCommentBlocks: {
-        comw: '++',
-      },
-      scheduleComIntp: {
-        schw: '++',
-      },
-      scheduleComws: {
-        schw: '++',
-      },
-      comAudioTrackMarks_v3: {
-        comw: '++',
-      },
-    }, 4, async transaction => {
-      await purgeLegacyAudioMarks(transaction);
-      await parseLegacyCats(transaction);
-    }, [
-      /**
-       * The shuffle store had several shapes over time (`l`-keyed links, `w`-keyed legacy rows,
-       * auto-`i` rows). This step drops any leftover store without comparing primary keys, keeping
-       * only rows of the ordered `i` shape in a temporary store; the next step recreates `randomList`
-       * with the auto-incremented `i` key and moves those rows back.
-       */
-      [6, { randomList: null, randomListLinks: null, [randomListRepairStore]: '++i' }, repairRandomListStore],
-      [7, { [randomListStore]: '++i', [randomListRepairStore]: null }, restoreRandomListStore],
-    ]);
+      [
+        /**
+         * The shuffle store had several shapes over time (`l`-keyed links, `w`-keyed legacy rows,
+         * auto-`i` rows). This step drops any leftover store without comparing primary keys, keeping
+         * only rows of the ordered `i` shape in a temporary store; the next step recreates `randomList`
+         * with the auto-incremented `i` key and moves those rows back.
+         */
+        [6, { randomList: null, randomListLinks: null, [randomListRepairStore]: '++i' }, repairRandomListStore],
+        [7, { [randomListStore]: '++i', [randomListRepairStore]: null }, restoreRandomListStore],
+      ],
+    );
 
     this.db.coms.hook('creating', (_primKey, com) => cleanComAudioMarks(com));
     this.db.coms.hook('updating', modifications => {

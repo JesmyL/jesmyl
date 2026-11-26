@@ -254,11 +254,7 @@ export type SchDayEventsTsjrpcMethods = {
 };
 
 export type SchEventCommentsTsjrpcMethods = {
-  setEventComment: (args: {
-    schw: ScheduleWidgetWid;
-    eventMi: ScheduleWidgetDayEventMi;
-    text: string;
-  }) => void;
+  setEventComment: (args: { schw: ScheduleWidgetWid; eventMi: ScheduleWidgetDayEventMi; text: string }) => void;
   dropEventComment: (args: { schw: ScheduleWidgetWid; eventMi: ScheduleWidgetDayEventMi }) => void;
   takeEventComments: (args: { schw: ScheduleWidgetWid; eventMi: ScheduleWidgetDayEventMi }) => {
     userId: UserId;

@@ -39,10 +39,8 @@ const takeRemoteLocaleDict = (langi = currentLangiAtom.get()) => remoteLocaleAto
 
 const translateRemoteDefine = translateBaseDefine(() => takeRemoteLocaleDict());
 
-export const translateRemote = (
-  key: RemoteLocaleKey,
-  interpolation?: Record<string, string | number | boolean>,
-) => translateRemoteDefine(key as never, interpolation as never) as string;
+export const translateRemote = (key: RemoteLocaleKey, interpolation?: Record<string, string | number | boolean>) =>
+  translateRemoteDefine(key as never, interpolation as never) as string;
 
 export const useTranslateRemote = () => {
   const langi = useAtomValue(currentLangiAtom);

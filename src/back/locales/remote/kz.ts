@@ -1,6 +1,9 @@
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
 
-export const localeRemoteKz: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>, string> = {
+export const localeRemoteKz: Record<
+  Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>,
+  string
+> = {
   [RemoteLocaleKey.Control]: 'Қашықтан басқару',
   [RemoteLocaleKey.Connected]: 'Қосылды',
   [RemoteLocaleKey.Disconnected]: 'Ажыратылды',

@@ -49,15 +49,16 @@ export const LangiPickerModal = () => {
               <span className="ellipsis max-w-full text-xs opacity-60">{description}</span>
             </span>
             {langi !== currentLangi || (
-              <LazyIcon icon="CheckmarkCircle01" className={`ml-auto${isSystemLangi ? ' opacity-50' : ''}`} />
+              <LazyIcon
+                icon="CheckmarkCircle01"
+                className={`ml-auto${isSystemLangi ? ' opacity-50' : ''}`}
+              />
             )}
           </Button>
         ))}
       </ModalBody>
       <ModalFooter>
-        <Button onClick={() => reloadWithLangi(null)}>
-          {translateBase(BaseLocaleKey.SystemLanguage)}
-        </Button>
+        <Button onClick={() => reloadWithLangi(null)}>{translateBase(BaseLocaleKey.SystemLanguage)}</Button>
       </ModalFooter>
     </Modal>
   );

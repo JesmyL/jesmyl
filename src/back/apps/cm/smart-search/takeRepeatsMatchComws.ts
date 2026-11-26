@@ -16,11 +16,7 @@ export const takeRepeatsMatchComws = async (param?: string) => {
   }
 
   return (
-    await db
-      .select({ w: comDB.w, o: comDB.o })
-      .from(comDB)
-      .where(eq(comDB.isRemoved, Bool.False))
-      .orderBy(asc(comDB.w))
+    await db.select({ w: comDB.w, o: comDB.o }).from(comDB).where(eq(comDB.isRemoved, Bool.False)).orderBy(asc(comDB.w))
   )
     .filter(row =>
       row.o?.some(ord =>

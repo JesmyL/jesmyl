@@ -28,9 +28,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const catScopeProps = useMemo(() => ({ ...scheduleScopeProps, cati }), [cati, scheduleScopeProps]);
-  const title = (
-    <>{cat.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleList)}</span>}</>
-  );
+  const title = <>{cat.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleList)}</span>}</>;
   const shortTitles: [string, string] = [cutTitle(cat.titles[0]), cutTitle(cat.titles[1])];
 
   return (

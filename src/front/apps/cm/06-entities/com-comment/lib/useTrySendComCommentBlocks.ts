@@ -15,10 +15,7 @@ export const useCmComCommentTrySendBlocks = () => {
   useEffect(() => {
     if (!localBlocks?.length) return;
     if (!auth.login) {
-      toast(
-        translateBase(BaseLocaleKey.NotAuthorized),
-        makeToastKOMoodConfig(),
-      );
+      toast(translateBase(BaseLocaleKey.NotAuthorized), makeToastKOMoodConfig());
       return;
     }
 

@@ -6,7 +6,12 @@ import { pipeline } from 'stream';
 import { pathToFileURL } from 'url';
 import { lazyInit } from '../../const';
 import { TsjrpcElectronAppBase } from '../init/tsjrpc.base.electron';
-import { electronWorkDirFileMaxBytes, ElectronBasicTsjrpcModel, ElectronWorkDirFile, ElectronWorkDirFileKind } from '../model';
+import {
+  electronWorkDirFileMaxBytes,
+  ElectronBasicTsjrpcModel,
+  ElectronWorkDirFile,
+  ElectronWorkDirFileKind,
+} from '../model';
 
 const workDirNamesFileName = '.names.json';
 

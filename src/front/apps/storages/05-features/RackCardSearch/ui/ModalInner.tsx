@@ -130,10 +130,7 @@ export const StoragesRackCardSearchModalInner = ({
           const card = rack.cards.find(card => card.meta === meta);
 
           if (card == null) {
-            toast(
-              translateBase(BaseLocaleKey.CardNotFound),
-              makeToastKOMoodConfig(),
-            );
+            toast(translateBase(BaseLocaleKey.CardNotFound), makeToastKOMoodConfig());
             return;
           }
 

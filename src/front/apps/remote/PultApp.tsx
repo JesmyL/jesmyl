@@ -8,7 +8,11 @@ import { TheRemote } from '$remote/TheRemote';
 import { createRootRoute, createRoute, createRouter, Navigate, Outlet, RouterProvider } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import React from 'react';
-import { remoteBroadcastAskNameSearchParam, remoteBroadcastSecretCodeSearchParam, remoteBroadcastUserNameSearchParam } from 'shared/const/electron';
+import {
+  remoteBroadcastAskNameSearchParam,
+  remoteBroadcastSecretCodeSearchParam,
+  remoteBroadcastUserNameSearchParam,
+} from 'shared/const/electron';
 import { Toaster } from 'sonner';
 
 const rootRoute = createRootRoute({ component: PultRoot });

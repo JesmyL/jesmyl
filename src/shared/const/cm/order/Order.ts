@@ -106,7 +106,7 @@ export class CmComOrder extends CmComOrderWidClass<CmComOrder> {
   get isVisible(): boolean {
     const v =
       this.com.intp?.o?.[this.wid]?.v ??
-      (this.me.isAnchorInherit ? null : this.me.source?.top.v ?? this.top.v) ??
+      (this.me.isAnchorInherit ? null : (this.me.source?.top.v ?? this.top.v)) ??
       this.getLeadInheritance('v') ??
       this.getWatchInheritance('v') ??
       this.me.targetOrd?.top.v;

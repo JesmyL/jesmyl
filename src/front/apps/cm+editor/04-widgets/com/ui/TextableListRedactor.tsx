@@ -41,13 +41,7 @@ type ItemProps = {
   onBemoleFix?: (texti: number, value: string) => void;
 };
 
-const CmEditorComCreateComTextableListRedactorItem = ({
-  text,
-  texti,
-  onInput,
-  corrects,
-  onBemoleFix,
-}: ItemProps) => {
+const CmEditorComCreateComTextableListRedactorItem = ({ text, texti, onInput, corrects, onBemoleFix }: ItemProps) => {
   const onFixWord = (incorrect: IIncorrect) => {
     if (!incorrect.word || incorrect.correct == null) return;
     const next = replaceWordOccurrence(text, incorrect.word, incorrect.wordOccurrence ?? 0, incorrect.correct);

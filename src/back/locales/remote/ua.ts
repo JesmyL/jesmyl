@@ -1,6 +1,9 @@
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
 
-export const localeRemoteUa: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>, string> = {
+export const localeRemoteUa: Record<
+  Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>,
+  string
+> = {
   [RemoteLocaleKey.Control]: 'Дистанційне керування',
   [RemoteLocaleKey.Connected]: 'Підключено',
   [RemoteLocaleKey.Disconnected]: 'Відключено',

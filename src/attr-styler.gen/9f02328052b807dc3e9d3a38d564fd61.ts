@@ -8,4 +8,3 @@ declare module 'react' {
     'st-hide-footer-menu'?: number | string;
   }
 }
-

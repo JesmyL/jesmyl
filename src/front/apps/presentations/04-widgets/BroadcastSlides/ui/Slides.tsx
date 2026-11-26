@@ -2,7 +2,10 @@ import { translateBase } from '#basis/locale';
 import { Button } from '#shared/components';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { publishPresentationSlide } from '$presentations/shared/lib/presentation-broadcast';
-import { presentationsCurrentSlidAtom, presentationsCurrentSlidesAtom } from '$presentations/shared/state/broadcast.atoms';
+import {
+  presentationsCurrentSlidAtom,
+  presentationsCurrentSlidesAtom,
+} from '$presentations/shared/state/broadcast.atoms';
 import { useAtomValue } from 'atomaric';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { twJoin } from 'tailwind-merge';
@@ -54,9 +57,7 @@ export const PresentationsBroadcastSlides = () => {
             key={slide.slid}
             className={twJoin(
               'pointer flex min-h-20 flex-col gap-1 rounded-lg border p-2 text-left transition-colors',
-              slide.slid === currentSlid
-                ? 'border-x7 bg-x7/15 text-x3'
-                : 'border-x2 bg-x1 text-x4 hover:border-x7/60',
+              slide.slid === currentSlid ? 'border-x7 bg-x7/15 text-x3' : 'border-x2 bg-x1 text-x4 hover:border-x7/60',
             )}
             onClick={() => showSlide(slide.slid)}
           >

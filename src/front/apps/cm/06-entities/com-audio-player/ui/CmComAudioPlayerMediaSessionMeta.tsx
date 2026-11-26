@@ -1,9 +1,6 @@
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import {
-  cmComAudioPlayerMediaTitleAtom,
-  cmComAudioPlayerPlaySrcAtom,
-} from '../state/current-play-com';
+import { cmComAudioPlayerMediaTitleAtom, cmComAudioPlayerPlaySrcAtom } from '../state/current-play-com';
 
 const mediaSession = navigator.mediaSession;
 

@@ -20,7 +20,8 @@ export const CmEditorComOrderToolsAnchorDelete = ({ com, ord, onClose }: CmEdito
         if (
           !(await confirm(
             <>
-              {translateEditorBase(EditorLocaleKey.CmEditorDeleteBlock)} <span className="text-x7">{ord.me.header()}</span>?
+              {translateEditorBase(EditorLocaleKey.CmEditorDeleteBlock)}{' '}
+              <span className="text-x7">{ord.me.header()}</span>?
               {ord.top.p?.flat().length ? ` ${translateEditorBase(EditorLocaleKey.CmEditorAppliqueDestroyed)}` : ''}
             </>,
           ))

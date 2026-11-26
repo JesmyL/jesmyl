@@ -65,12 +65,13 @@ let connectSecretCode = makeConnectSecretCode();
 let consumedConnectSecretCode: string | nil = null;
 let connectSecretCodeDeviceId: string | nil = null;
 
-type RemoteBroadcastHelloMessage = Extract<
-  RemoteBroadcastClientMessage,
-  { k: RemoteBroadcastMessageKind.Hello }
->;
+type RemoteBroadcastHelloMessage = Extract<RemoteBroadcastClientMessage, { k: RemoteBroadcastMessageKind.Hello }>;
 
-type RemoteBroadcastClientDevice = { deviceId: string; since: number; name?: string } & Partial<RemoteBroadcastUserIdentity>;
+type RemoteBroadcastClientDevice = {
+  deviceId: string;
+  since: number;
+  name?: string;
+} & Partial<RemoteBroadcastUserIdentity>;
 
 const pickUserIdentityFields = ({
   login,
@@ -320,9 +321,7 @@ const jesmylAuthCheckCache = new Map<string, { outcome: JesmylAuthCheckDecision;
 const makeJesmylAuthCheckCacheKey = (token: string, deviceId: string) =>
   `${deviceId}:${crypto.createHash('sha256').update(token).digest('hex')}`;
 
-const parseJesmylAuthCheckResponse = (
-  value: unknown,
-): { user: RemoteBroadcastUserIdentity } | 'rejected' | nil => {
+const parseJesmylAuthCheckResponse = (value: unknown): { user: RemoteBroadcastUserIdentity } | 'rejected' | nil => {
   if (typeof value !== 'object' || value === null) return null;
 
   const record = value as Record<string, unknown>;
@@ -462,7 +461,8 @@ const takeTlsCert = (certHost: string): { key: string; cert: string } | nil => {
   const cert = readCert('fullchain', certHost);
 
   if (key == null && cert == null) return null;
-  if (key == null || cert == null) throw `Сертификат ${certHost} найден не полностью: нужны privkey.pem и fullchain.pem`;
+  if (key == null || cert == null)
+    throw `Сертификат ${certHost} найден не полностью: нужны privkey.pem и fullchain.pem`;
 
   return { key, cert };
 };
@@ -622,9 +622,7 @@ const consumeConnectSecretCode = (deviceId: string, secretCode: string) => {
 };
 
 const forwardCommand = (command: RemoteBroadcastCommand) => {
-  void electronRemoteBroadcastTsjrpcAppServerMethods
-    .command({ command }, { toWinNum: 0, winNum: 0 })
-    .catch(() => {});
+  void electronRemoteBroadcastTsjrpcAppServerMethods.command({ command }, { toWinNum: 0, winNum: 0 }).catch(() => {});
 };
 
 const sendClientMessage = (ws: WebSocket, message: RemoteBroadcastServerMessage) => {
@@ -830,8 +828,7 @@ const handleClientMessage = async (ws: WebSocket, data: RawData) => {
 
     handlePultControlsRequest(
       ws,
-      device != null &&
-        (approvedDeviceIds.has(device.deviceId) || authorizedDeviceIdentities.has(device.deviceId)),
+      device != null && (approvedDeviceIds.has(device.deviceId) || authorizedDeviceIdentities.has(device.deviceId)),
     );
     return;
   }
@@ -900,10 +897,7 @@ const handleClientMessage = async (ws: WebSocket, data: RawData) => {
 
   const helloName = message.name?.trim() || null;
 
-  if (
-    helloName == null ||
-    (message.secretCode == null && !clientDevices.has(ws) && !isPresentedSession(message))
-  ) {
+  if (helloName == null || (message.secretCode == null && !clientDevices.has(ws) && !isPresentedSession(message))) {
     // QR-вход (без from-list) всегда требует свежего представления: имя хранится на пульте и переспрашивается при каждом входе
     pendingNameHellos.set(ws, message);
     sendClientMessage(ws, { k: RemoteBroadcastMessageKind.Error, e: RemoteBroadcastErrorKind.NameRequired });
@@ -1064,9 +1058,7 @@ export const startRemoteBroadcast = (): Promise<ElectronRemoteBroadcastInfo> => 
       lastError = takeLanIp() ? RemoteBroadcastErrorKind.None : RemoteBroadcastErrorKind.NoLanAddress;
 
       notifyFrontInfo();
-      setPultFrontCacheSynced(version =>
-        broadcastMessage({ k: RemoteBroadcastMessageKind.Version, v: version }),
-      );
+      setPultFrontCacheSynced(version => broadcastMessage({ k: RemoteBroadcastMessageKind.Version, v: version }));
       resolve(takeSafeRemoteBroadcastInfo());
     });
   }).catch(error => {
@@ -1208,23 +1200,20 @@ const takeControllers = () => {
     if (known.name == null && device.name != null) known.name = device.name;
   }
 
-  return Array.from(
-    controllerByDeviceId.values(),
-    ({ deviceId, since, login, fio, nick, email, name }) => {
-      const promptName = devicePromptNames.get(deviceId);
+  return Array.from(controllerByDeviceId.values(), ({ deviceId, since, login, fio, nick, email, name }) => {
+    const promptName = devicePromptNames.get(deviceId);
 
-      return {
-        deviceId,
-        since,
-        ...(name == null ? {} : { name }),
-        ...(promptName == null ? {} : { promptName }),
-        ...(login == null ? {} : { login }),
-        ...(fio == null ? {} : { fio }),
-        ...(nick == null ? {} : { nick }),
-        ...(email == null ? {} : { email }),
-      };
-    },
-  );
+    return {
+      deviceId,
+      since,
+      ...(name == null ? {} : { name }),
+      ...(promptName == null ? {} : { promptName }),
+      ...(login == null ? {} : { login }),
+      ...(fio == null ? {} : { fio }),
+      ...(nick == null ? {} : { nick }),
+      ...(email == null ? {} : { email }),
+    };
+  });
 };
 
 export const takeRemoteBroadcastInfo = (): ElectronRemoteBroadcastInfo => {
@@ -1351,9 +1340,7 @@ const mergeRemoteBroadcastSnapshot = (delta: RemoteBroadcastSnapshotDelta): Remo
           searchMatches: delta.bible.searchMatches ?? previousBible?.searchMatches ?? [],
           searchTerm: delta.bible.searchTerm ?? previousBible?.searchTerm ?? '',
           joinAddress:
-            delta.bible.joinAddress === undefined
-              ? (previousBible?.joinAddress ?? null)
-              : delta.bible.joinAddress,
+            delta.bible.joinAddress === undefined ? (previousBible?.joinAddress ?? null) : delta.bible.joinAddress,
           translationName: delta.bible.translationName ?? previousBible?.translationName ?? '',
           translations: delta.bible.translations ?? previousBible?.translations ?? [],
         }

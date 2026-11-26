@@ -10,10 +10,7 @@ import { CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner } from '$cm
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useCmComAudioMarkChanging } from '$cm+editor/shared/lib/useCmComAudioMarkChanging';
-import {
-  cmComEditorAudioMarksEditPacksAtom,
-  startCmComAudioMarkDirectChange,
-} from '$cm+editor/shared/state/com';
+import { cmComEditorAudioMarksEditPacksAtom, startCmComAudioMarkDirectChange } from '$cm+editor/shared/state/com';
 import {
   CmAudioMarkControlButtonsContext,
   cmBroadcastCurrentNameSpaceiAtom,
@@ -113,10 +110,7 @@ export const CmEditorTabComAudioMarks = iife(() => {
     const { controls: audioMarkButtons, slides } = useCmAudioMarkControlButtonsContext() ?? {};
 
     const renderedSlideIds = useMemo(
-      () =>
-        new Set(
-          slides?.slides?.filter(slide => slide.ord.wid !== CmComOrderWidNever).map(slide => slide.id) ?? [],
-        ),
+      () => new Set(slides?.slides?.filter(slide => slide.ord.wid !== CmComOrderWidNever).map(slide => slide.id) ?? []),
       [slides],
     );
 

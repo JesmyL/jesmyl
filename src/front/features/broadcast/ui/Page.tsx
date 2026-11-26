@@ -19,7 +19,8 @@ export const PresentationPage = () => {
   const isBible = viewApp === 'bible' || (viewApp == null && data.bible != null);
   const isPresentations = viewApp === 'presentations' || (viewApp == null && presentations != null);
   const content = isPresentations
-    ? presentations && presentationSlide && (
+    ? presentations &&
+      presentationSlide && (
         <PresentationBroadcastSlide
           {...presentationSlide}
           config={presentations.config}
@@ -27,15 +28,16 @@ export const PresentationPage = () => {
       )
     : isBible
       ? data.bible != null && <BibleBroadcastSlide {...data.bible} />
-      : data.cm != null && <CmBroadcastLiveScreen {...data.cm} isForceSlideMode />;
+      : data.cm != null && (
+          <CmBroadcastLiveScreen
+            {...data.cm}
+            isForceSlideMode
+          />
+        );
 
   return (
     <div className="absolute w-full h-full bg-black">
-      {data.isShowInitialSlide ? (
-        <CmBroadcastFollowInitialSlide schw={schw} />
-      ) : (
-        data.isHide || content
-      )}
+      {data.isShowInitialSlide ? <CmBroadcastFollowInitialSlide schw={schw} /> : data.isHide || content}
     </div>
   );
 };

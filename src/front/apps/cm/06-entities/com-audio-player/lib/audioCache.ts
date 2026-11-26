@@ -179,7 +179,8 @@ const putCmComAudioPlayerTrack = async (cache: Cache, url: string) => {
 /** Cached bodies keep the proxy `content-length`, so sizes are read from headers — bodies are never materialised. */
 const takeResponseBytes = (response: Response | nil) => +(response?.headers.get('content-length') ?? 0) || 0;
 
-const sumResponsesBytes = (responses: (Response | nil)[]) => responses.reduce((sum, response) => sum + takeResponseBytes(response), 0);
+const sumResponsesBytes = (responses: (Response | nil)[]) =>
+  responses.reduce((sum, response) => sum + takeResponseBytes(response), 0);
 
 /** A track lives under one of the current/legacy URL variants, so the first match holds its whole size. */
 const takeCmComAudioPlayerSrcBytes = async (cache: Cache, src: CmAudioSrc) => {
@@ -192,10 +193,7 @@ const takeCmComAudioPlayerSrcBytes = async (cache: Cache, src: CmAudioSrc) => {
 };
 
 const takeCmComAudioPlayerSrcsBytes = async (cache: Cache, srcs: CmAudioSrc[]) =>
-  (await Promise.all(srcs.map(src => takeCmComAudioPlayerSrcBytes(cache, src)))).reduce(
-    (sum, bytes) => sum + bytes,
-    0,
-  );
+  (await Promise.all(srcs.map(src => takeCmComAudioPlayerSrcBytes(cache, src)))).reduce((sum, bytes) => sum + bytes, 0);
 
 /** Fallback for environments without `navigator.storage.estimate`; matched in chunks so a huge bucket can't spike memory. */
 const takeCmComAudioPlayerCacheBytes = async (cache: Cache) => {
@@ -359,9 +357,7 @@ export const cmComAudioPlayerUncacheCom = async (comw: CmComWid) => {
 
     const cache = await caches.open(cmComAudioPlayerCacheName);
     const removedBytes = await takeCmComAudioPlayerSrcsBytes(cache, srcs);
-    await Promise.all(
-      srcs.flatMap(src => takeCmComAudioPlayerCacheUrls(src).map(url => cache.delete(url))),
-    );
+    await Promise.all(srcs.flatMap(src => takeCmComAudioPlayerCacheUrls(src).map(url => cache.delete(url))));
     clearCmComAudioPlayerSrcStates(srcs);
     deleteCmComAudioPlayerCachedSrcs(srcs);
 

@@ -54,7 +54,12 @@ export const parseRemoteBroadcastBibleAddress = (
   const finishVersei =
     chips.finishVerse == null ? null : Math.min(Number(chips.finishVerse) - 1, (sizes[chapteri] ?? 0) - 1);
 
-  return { booki, chapteri, versei, finishVersei: finishVersei != null && finishVersei <= versei ? null : finishVersei };
+  return {
+    booki,
+    chapteri,
+    versei,
+    finishVersei: finishVersei != null && finishVersei <= versei ? null : finishVersei,
+  };
 };
 
 export const takeRemoteBroadcastVersePlainText = (html: string) => html.replace(makeRegExp('/<[^>]*>/g'), ' ');
@@ -75,4 +80,5 @@ export const makeRemoteBibleWordRegs = (term: string) => {
 export const isRemoteBibleVerseSearchMatched = (
   html: string,
   searchWords: ReturnType<typeof makeRemoteBibleWordRegs>,
-) => searchWords.lowerWordRegs.some((reg, wordi) => reg.test(html) || searchWords.transcriptedWordRegs[wordi]?.test(html));
+) =>
+  searchWords.lowerWordRegs.some((reg, wordi) => reg.test(html) || searchWords.transcriptedWordRegs[wordi]?.test(html));

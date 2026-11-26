@@ -35,7 +35,9 @@ const useElementSize = () => {
 
     const update = () => {
       const rect = node.getBoundingClientRect();
-      setSize(prev => (prev.width === rect.width && prev.height === rect.height ? prev : { width: rect.width, height: rect.height }));
+      setSize(prev =>
+        prev.width === rect.width && prev.height === rect.height ? prev : { width: rect.width, height: rect.height },
+      );
     };
 
     if (typeof ResizeObserver === 'undefined') {
@@ -193,7 +195,10 @@ export const PresentationSlideCanvas = ({
   );
 };
 
-export const PresentationBroadcastSlide = ({ config = presentationBroadcastDefaultConfig, ...slide }: PresentationSlide & { config?: PresentationBroadcastConfig }) => (
+export const PresentationBroadcastSlide = ({
+  config = presentationBroadcastDefaultConfig,
+  ...slide
+}: PresentationSlide & { config?: PresentationBroadcastConfig }) => (
   <div className="relative h-full w-full overflow-hidden bg-black">
     <PresentationSlideCanvas
       slide={slide}
@@ -204,7 +209,8 @@ export const PresentationBroadcastSlide = ({ config = presentationBroadcastDefau
 
 export const PresentationBroadcastScreen = () => {
   const presentations = useAtomValue(broadcastNextLiveDataAtom).data.presentations;
-  const slide = presentations && (presentations.slides.find(slide => slide.slid === presentations.slid) ?? presentations.slides[0]);
+  const slide =
+    presentations && (presentations.slides.find(slide => slide.slid === presentations.slid) ?? presentations.slides[0]);
 
   if (!presentations || !slide) return <div className="h-full w-full bg-black" />;
 

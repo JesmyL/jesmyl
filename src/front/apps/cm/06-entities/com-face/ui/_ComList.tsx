@@ -36,16 +36,7 @@ interface ComListItemProps {
 }
 
 const CmComFaceListItem = memo(function CmComFaceListItem(props: ComListItemProps) {
-  const {
-    com,
-    comi,
-    isDropTarget,
-    isDropEnabled,
-    comDescription,
-    onDragOver,
-    onDragLeave,
-    onDrop,
-  } = props;
+  const { com, comi, isDropTarget, isDropEnabled, comDescription, onDragOver, onDragLeave, onDrop } = props;
 
   return (
     <FaceItem.Root
@@ -62,9 +53,8 @@ const CmComFaceListItem = memo(function CmComFaceListItem(props: ComListItemProp
       {/* Хвост строки: comDescription — либо функция описания, либо вариант описания из CmComFaceDescriptionVariant; undefined по умолчанию рендерит FavouriteButtons, а Nothing не рендерит ничего. */}
       {typeof comDescription === 'function' ? (
         <div className={cmComFaceItemDescriptionClassName}>{comDescription(com, comi)}</div>
-      ) : comDescription === CmComFaceDescriptionVariant.Nothing ? (
-        null
-      ) : comDescription === CmComFaceDescriptionVariant.CacheButtons ? (
+      ) : comDescription === CmComFaceDescriptionVariant.Nothing ? null : comDescription ===
+        CmComFaceDescriptionVariant.CacheButtons ? (
         <CmComAudioPlayerCacheMarks
           srcs={com.al}
           comName={com.n}

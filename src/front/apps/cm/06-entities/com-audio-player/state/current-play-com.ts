@@ -24,10 +24,7 @@ audioElement.addEventListener('error', () => {
   if (cmComAudioPlayerBlobPendingApplyId === cmComAudioPlayerSrcApplyId) return;
   if (!cmComAudioPlayerIsPlayAtom.get()) return;
 
-  toast(
-    translateBase(BaseLocaleKey.CmAudioPlaybackError),
-    makeToastKOMoodConfig(),
-  );
+  toast(translateBase(BaseLocaleKey.CmAudioPlaybackError), makeToastKOMoodConfig());
 });
 
 const comPlayerDurationAtom = atom(0.01);
@@ -218,10 +215,7 @@ const applyCmComAudioPlayerSrc = (src: CmAudioSrc, applyId: number) => {
       if (!cmComAudioPlayerIsPlayAtom.get()) return;
 
       cmComAudioPlayerErrorTickAtom.set(true);
-      toast(
-        translateBase(BaseLocaleKey.CmAudioPlaybackError),
-        makeToastKOMoodConfig(),
-      );
+      toast(translateBase(BaseLocaleKey.CmAudioPlaybackError), makeToastKOMoodConfig());
     });
 };
 

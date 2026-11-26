@@ -86,12 +86,15 @@ const makeRemoteControlRequestTool = () => ({ timeout: 10_000 });
 export const remoteBibleSearchTermAtom = atom('');
 export const remoteBibleSearchMatchesAtom = atom<RemoteBroadcastBibleSearchMatch[]>([]);
 
-export const remoteBibleVersesAtom = atom<{
-  booki: number;
-  chapteri: number;
-  translationName: string;
-  verses: string[];
-} | nil>(null);
+export const remoteBibleVersesAtom = atom<
+  | {
+      booki: number;
+      chapteri: number;
+      translationName: string;
+      verses: string[];
+    }
+  | nil
+>(null);
 
 export const remoteBroadcastInfoAtom = atom<ElectronRemoteBroadcastInfo>({
   isOn: false,
@@ -167,7 +170,8 @@ const syncRemoteControlPublication = async () => {
 };
 
 const scheduleRemoteControlPublishRetry = () => {
-  if (remoteControlPublishRetryTimeout !== null || remoteControlPublishAttempt >= remoteControlPublishMaxAttempts) return;
+  if (remoteControlPublishRetryTimeout !== null || remoteControlPublishAttempt >= remoteControlPublishMaxAttempts)
+    return;
 
   remoteControlPublishAttempt++;
   remoteControlPublishRetryTimeout = setTimeout(() => {
@@ -195,10 +199,7 @@ const isSameRemoteBroadcastArray = <T>(
 const isSameRemoteBroadcastComItem = (next: RemoteBroadcastComItem, previous: RemoteBroadcastComItem) =>
   next.comw === previous.comw && next.name === previous.name;
 
-const isSameRemoteBroadcastCmLists = (
-  next: RemoteBroadcastCmLists | nil,
-  previous: RemoteBroadcastCmLists | nil,
-) => {
+const isSameRemoteBroadcastCmLists = (next: RemoteBroadcastCmLists | nil, previous: RemoteBroadcastCmLists | nil) => {
   if (next === previous) return true;
   if (next == null || previous == null) return false;
 
@@ -216,10 +217,7 @@ const isRemoteBroadcastCmListsLoading = (next: RemoteBroadcastCmLists, previous:
   (next.sel.length === 0 && previous.sel.length > 0) ||
   (next.cached.length === 0 && previous.cached.length > 0);
 
-const isSameRemoteBroadcastBibleBook = (
-  next: RemoteBroadcastBibleBook,
-  previous: RemoteBroadcastBibleBook,
-) =>
+const isSameRemoteBroadcastBibleBook = (next: RemoteBroadcastBibleBook, previous: RemoteBroadcastBibleBook) =>
   next.short === previous.short &&
   next.full === previous.full &&
   next.color === previous.color &&
@@ -284,9 +282,12 @@ const takeRemoteBroadcastSnapshot = (isFullPush = false): RemoteBroadcastSnapsho
   const liveCm = cmProvider?.snapshot() ?? null;
   const previousCmSnapshot = lastCmSnapshot;
   const isCmListsLoading =
-    liveCm != null && previousCmSnapshot != null && isRemoteBroadcastCmListsLoading(liveCm.lists, previousCmSnapshot.lists);
+    liveCm != null &&
+    previousCmSnapshot != null &&
+    isRemoteBroadcastCmListsLoading(liveCm.lists, previousCmSnapshot.lists);
   let cm: RemoteBroadcastCmSnapshot | nil = liveCm;
-  if (liveCm != null && isCmListsLoading && previousCmSnapshot != null) cm = { ...liveCm, lists: previousCmSnapshot.lists };
+  if (liveCm != null && isCmListsLoading && previousCmSnapshot != null)
+    cm = { ...liveCm, lists: previousCmSnapshot.lists };
   else if (liveCm == null) cm = previousCmSnapshot;
   const bible = bibleProvider?.snapshot() ?? lastBibleSnapshot;
   if (cmProvider != null && cm != null) lastCmSnapshot = cm;
@@ -313,7 +314,11 @@ const takeRemoteBroadcastSnapshot = (isFullPush = false): RemoteBroadcastSnapsho
     const isSlidesChanged =
       previousCm != null &&
       cm.slides !== previousCm.slides &&
-      !isSameRemoteBroadcastArray(cm.slides, previousCm.slides, (nextSlide, previousSlide) => nextSlide === previousSlide);
+      !isSameRemoteBroadcastArray(
+        cm.slides,
+        previousCm.slides,
+        (nextSlide, previousSlide) => nextSlide === previousSlide,
+      );
     const isCmChanged =
       isFullPush ||
       previousCm == null ||
@@ -350,7 +355,11 @@ const takeRemoteBroadcastSnapshot = (isFullPush = false): RemoteBroadcastSnapsho
       !isSameRemoteBroadcastArray(bibleBooks, sentBibleBooks, isSameRemoteBroadcastBibleBook);
     const isBibleVersesChanged =
       bibleVerses !== sentBibleVerses &&
-      !isSameRemoteBroadcastArray(bibleVerses, sentBibleVerses, (nextVerse, previousVerse) => nextVerse === previousVerse);
+      !isSameRemoteBroadcastArray(
+        bibleVerses,
+        sentBibleVerses,
+        (nextVerse, previousVerse) => nextVerse === previousVerse,
+      );
     const isBibleSearchMatchesChanged =
       bibleSearchMatches !== sentBibleSearchMatches &&
       !isSameRemoteBroadcastArray(bibleSearchMatches, sentBibleSearchMatches, isSameRemoteBroadcastSearchMatch);
@@ -377,7 +386,8 @@ const takeRemoteBroadcastSnapshot = (isFullPush = false): RemoteBroadcastSnapsho
       isBibleSearchMatchesChanged;
 
     if (isBibleChanged) {
-      if (isFullPush || previousBible == null) snapshotDelta.bible = { ...bible, joinAddress: bible.joinAddress ?? null };
+      if (isFullPush || previousBible == null)
+        snapshotDelta.bible = { ...bible, joinAddress: bible.joinAddress ?? null };
       else {
         const bibleDelta: RemoteBroadcastBibleSnapshotDelta = {};
         if (isBibleBooksChanged) bibleDelta.books = bibleBooks;
@@ -388,8 +398,7 @@ const takeRemoteBroadcastSnapshot = (isFullPush = false): RemoteBroadcastSnapsho
         if (bible.versei !== previousBible.versei) bibleDelta.versei = bible.versei;
         if (bible.bookTitle !== previousBible.bookTitle) bibleDelta.bookTitle = bible.bookTitle;
         if (bible.chapterCount !== previousBible.chapterCount) bibleDelta.chapterCount = bible.chapterCount;
-        if (bible.translationName !== previousBible.translationName)
-          bibleDelta.translationName = bible.translationName;
+        if (bible.translationName !== previousBible.translationName) bibleDelta.translationName = bible.translationName;
         if (isBibleTranslationsChanged) bibleDelta.translations = bible.translations;
         if (isBibleJoinAddressChanged) bibleDelta.joinAddress = bible.joinAddress ?? null;
         if (bible.searchTerm !== previousBible.searchTerm) bibleDelta.searchTerm = bible.searchTerm;
@@ -535,9 +544,7 @@ const applyRemoteBroadcastInfoRequest = async (request: Promise<ElectronRemoteBr
 };
 
 export const loadRemoteBroadcastInfo = async () => {
-  await applyRemoteBroadcastInfoRequest(
-    electronRemoteBroadcastTsjrpcClientMethods.getInfo(undefined, mainWindowTool),
-  );
+  await applyRemoteBroadcastInfoRequest(electronRemoteBroadcastTsjrpcClientMethods.getInfo(undefined, mainWindowTool));
 };
 
 export const startRemoteBroadcastServer = async () => {
@@ -556,9 +563,7 @@ export const stopRemoteBroadcastServer = async () => {
 };
 
 export const setRemoteBroadcastServerPort = async (port: number) => {
-  await applyRemoteBroadcastInfoRequest(
-    electronRemoteBroadcastTsjrpcClientMethods.setPort({ port }, mainWindowTool),
-  );
+  await applyRemoteBroadcastInfoRequest(electronRemoteBroadcastTsjrpcClientMethods.setPort({ port }, mainWindowTool));
 };
 
 export const setRemoteBroadcastCertHost = async (certHost: string | nil) => {

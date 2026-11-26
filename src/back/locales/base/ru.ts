@@ -360,7 +360,9 @@ export const localeBaseRu = convertObjectToArray<LocaleBase<Langi.Ru>>({
   [BaseLocaleKey.ScheduleFirstIsTechDay]: 'Первый - технический день',
   [BaseLocaleKey.ScheduleMakeFirstDayUsual]: 'Сделать первый день обычным?',
   [BaseLocaleKey.ScheduleFirstDayPrep]: 'Сделать первый день подготовительным?',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAllowRemoteControls)`${IF('$v').THEN`Запретить`.ELSE`Разрешить`} подключение пультов`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleAllowRemoteControls,
+  )`${IF('$v').THEN`Запретить`.ELSE`Разрешить`} подключение пультов`,
   [BaseLocaleKey.ScheduleDefaultRights]: 'Права по умолчанию',
   [BaseLocaleKey.ScheduleSmallFontStatements]: 'Справедливы утверждения мелким шрифтом',
   [BaseLocaleKey.ScheduleNewUser]: ' - Новый',

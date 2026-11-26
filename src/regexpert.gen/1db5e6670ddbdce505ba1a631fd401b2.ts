@@ -11,26 +11,28 @@ namespace N1db5e6670ddbdce505ba1a631fd401b2_1 {
   type $content = string | '';
   type $end = `${RepeatingString<`\\`>}`;
   type $endNl = `${`\n` | ''}`;
-  
+
   type U1 = string;
   type U2 = U1;
 
-  export interface I extends Record<
-    `/(?<lead>(^|\\n)\\d{${string}})(?<before>.*?)(?<start>/+)(?:${string})?(?<content>[^\\\\/]*?)(?:${string})?(?<end>\\\\+)(?<endNl>\\n?)/g`,
-    {
-      $0: $0;
-      lead: $lead;
-      $2: $2;
-      before: $before;
-      start: $start;
-      content: $content;
-      end: $end;
-      endNl: $endNl
-    }
-  > { '': '' }
+  export interface I
+    extends Record<
+      `/(?<lead>(^|\\n)\\d{${string}})(?<before>.*?)(?<start>/+)(?:${string})?(?<content>[^\\\\/]*?)(?:${string})?(?<end>\\\\+)(?<endNl>\\n?)/g`,
+      {
+        $0: $0;
+        lead: $lead;
+        $2: $2;
+        before: $before;
+        start: $start;
+        content: $content;
+        end: $end;
+        endNl: $endNl;
+      }
+    > {
+    '': '';
+  }
 }
 
-interface _GlobalScopedNamedRegExpMakerGeneratedTypes
-  extends N1db5e6670ddbdce505ba1a631fd401b2_1.I {
-    '': ''
+interface _GlobalScopedNamedRegExpMakerGeneratedTypes extends N1db5e6670ddbdce505ba1a631fd401b2_1.I {
+  '': '';
 }

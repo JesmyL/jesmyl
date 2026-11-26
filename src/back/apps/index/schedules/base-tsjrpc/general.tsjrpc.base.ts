@@ -57,8 +57,7 @@ const parseComsRightsUserIds = (users: unknown): UserId[] => {
   const userIds = new Set<number>();
 
   for (const userId of users) {
-    if (!checkIsNumber(userId) || userId <= 0)
-      throw backLocaleError(BackLocaleKey.ScheduleComsMembersPositive);
+    if (!checkIsNumber(userId) || userId <= 0) throw backLocaleError(BackLocaleKey.ScheduleComsMembersPositive);
 
     userIds.add(userId);
   }
@@ -76,8 +75,7 @@ const parseComsRightsIdsRecord = <Key extends number, Value>(
 
   forEachObjectEntries(record, (key, value) => {
     const numericKey = +key;
-    if (isNaN(numericKey) || numericKey < 0)
-      throw backLocaleError(BackLocaleKey.ScheduleComsKeyNotNumber, { k: key });
+    if (isNaN(numericKey) || numericKey < 0) throw backLocaleError(BackLocaleKey.ScheduleComsKeyNotNumber, { k: key });
 
     result[numericKey as Key] = parseValue(value);
   });
@@ -93,10 +91,7 @@ const parseComsRights = (value: unknown): IScheduleWidgetComsRights | nil => {
 
   if (value.users != null) comsRights.users = parseComsRightsUserIds(value.users);
   if (value.days != null)
-    comsRights.days = parseComsRightsIdsRecord<ScheduleWidgetDayi, UserId[]>(
-      value.days,
-      parseComsRightsUserIds,
-    );
+    comsRights.days = parseComsRightsIdsRecord<ScheduleWidgetDayi, UserId[]>(value.days, parseComsRightsUserIds);
   if (value.events != null)
     comsRights.events = parseComsRightsIdsRecord<ScheduleWidgetDayi, Record<ScheduleWidgetDayEventMi, UserId[]>>(
       value.events,
@@ -126,8 +121,7 @@ const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
 
   if (kind === SchedulePeriodKind.MonthDay) {
     const dayi = value.dayi;
-    if (!checkIsNumber(dayi) || dayi < 1 || dayi > 31)
-      throw backLocaleError(BackLocaleKey.SchedulePeriodMonthDayRange);
+    if (!checkIsNumber(dayi) || dayi < 1 || dayi > 31) throw backLocaleError(BackLocaleKey.SchedulePeriodMonthDayRange);
 
     return { kind, dayi };
   }
@@ -135,10 +129,8 @@ const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
   if (kind === SchedulePeriodKind.WeekdayOfMonth) {
     const weeki = value.weeki;
     const dayi = value.dayi;
-    if (!checkIsSchedulePeriodWeeki(weeki))
-      throw backLocaleError(BackLocaleKey.SchedulePeriodWeekRange);
-    if (!checkIsSchedulePeriodWeekday(dayi))
-      throw backLocaleError(BackLocaleKey.SchedulePeriodWeekdayRange);
+    if (!checkIsSchedulePeriodWeeki(weeki)) throw backLocaleError(BackLocaleKey.SchedulePeriodWeekRange);
+    if (!checkIsSchedulePeriodWeekday(dayi)) throw backLocaleError(BackLocaleKey.SchedulePeriodWeekdayRange);
 
     return { kind, weeki, dayi };
   }
@@ -149,8 +141,7 @@ const parseSchedulePeriod = (value: unknown): IScheduleWidgetPeriod | nil => {
 const takeComsRightsUserIds = (comsRights: IScheduleWidgetComsRights | nil) => {
   const userIds = new Set(comsRights?.users);
 
-  if (comsRights?.days)
-    Object.values(comsRights.days).forEach(dayUserIds => dayUserIds.forEach(id => userIds.add(id)));
+  if (comsRights?.days) Object.values(comsRights.days).forEach(dayUserIds => dayUserIds.forEach(id => userIds.add(id)));
 
   if (comsRights?.events)
     Object.values(comsRights.events).forEach(dayEvents =>
@@ -261,33 +252,27 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           };
         },
 
-        rename: updateScheduleValue(
-          'title',
-          async sch => backLocaleError(BackLocaleKey.SchRenamed, { t: await scheduleTitleInBrackets(sch) }),
+        rename: updateScheduleValue('title', async sch =>
+          backLocaleError(BackLocaleKey.SchRenamed, { t: await scheduleTitleInBrackets(sch) }),
         ),
-        setTopic: updateScheduleValue(
-          'topic',
-          async sch =>
-            backLocaleError(BackLocaleKey.SchTopicChanged, {
-              t: await scheduleTitleInBrackets(sch),
-              v: sch.topic,
-            }),
+        setTopic: updateScheduleValue('topic', async sch =>
+          backLocaleError(BackLocaleKey.SchTopicChanged, {
+            t: await scheduleTitleInBrackets(sch),
+            v: sch.topic,
+          }),
         ),
-        setDescription: updateScheduleValue(
-          'dsc',
-          async sch =>
-            backLocaleError(BackLocaleKey.SchDescriptionChanged, {
-              t: await scheduleTitleInBrackets(sch),
-              v: sch.dsc,
-            }),
+        setDescription: updateScheduleValue('dsc', async sch =>
+          backLocaleError(BackLocaleKey.SchDescriptionChanged, {
+            t: await scheduleTitleInBrackets(sch),
+            v: sch.dsc,
+          }),
         ),
         setFirstDayAsTech: updateScheduleValue(
           'withTech',
           async sch =>
-            backLocaleError(
-              sch.withTech ? BackLocaleKey.SchFirstDayTech : BackLocaleKey.SchFirstDayNormal,
-              { t: await scheduleTitleInBrackets(sch) },
-            ),
+            backLocaleError(sch.withTech ? BackLocaleKey.SchFirstDayTech : BackLocaleKey.SchFirstDayNormal, {
+              t: await scheduleTitleInBrackets(sch),
+            }),
           true,
         ),
         setPaused: updateScheduleValue(
@@ -324,7 +309,8 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
         }),
 
         setAppInform: modifySchedule(true, async (sch, { value }) => {
-          if (!checkIsScheduleAppInform(value)) throw backLocaleError(BackLocaleKey.ScheduleReminderIntervalInvalid, { v: value });
+          if (!checkIsScheduleAppInform(value))
+            throw backLocaleError(BackLocaleKey.ScheduleReminderIntervalInvalid, { v: value });
 
           sch.appInform = value;
 

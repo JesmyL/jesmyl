@@ -1,11 +1,6 @@
 import { bigint, bigserial, doublePrecision, index, jsonb, pgTable, text } from 'p/d';
 import { UserId } from 'shared/api';
-import {
-  QuestionerBlankUser,
-  QuestionerBlankWid,
-  QuestionerTemplate,
-  QuestionerTemplateId,
-} from 'shared/model/q';
+import { QuestionerBlankUser, QuestionerBlankWid, QuestionerTemplate, QuestionerTemplateId } from 'shared/model/q';
 import { QuestionerUserAnswer } from 'shared/model/q/answer';
 
 export const questionerBlankDB = pgTable(

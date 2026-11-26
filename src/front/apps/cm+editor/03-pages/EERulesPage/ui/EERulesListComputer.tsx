@@ -31,121 +31,91 @@ export const CmEditorEERulesListComputer = memo(function ListComputer({ isCheckB
       timeout = setTimeout(cb, 10);
     };
 
-    etap(
-      translateEditorBase(EditorLocaleKey.CmEditorReadTexts),
-      async () => {
-        const texts: string[] = [
-          cats?.map(col => col.name) ?? [],
-          coms?.filter(com => com.langi === Langi.Ru).map(col => (col.texts ? [col.name, col.texts] : col.name)) ?? [],
-          isCheckBible
-            ? (
-                await bibleTBCVTranslatesIDB.tb.list
-                  .where('k')
-                  .startsWithAnyOf(
-                    objectEntries(bibleTranslateLanguage)
-                      .filter(([, v]) => v === Langi.Ru)
-                      .map(([k]) => makeBibleTbcvPrefix(k)),
-                  )
-                  .toArray()
-              ).map(it => it.v)
-            : [],
-        ].flat(5);
+    etap(translateEditorBase(EditorLocaleKey.CmEditorReadTexts), async () => {
+      const texts: string[] = [
+        cats?.map(col => col.name) ?? [],
+        coms?.filter(com => com.langi === Langi.Ru).map(col => (col.texts ? [col.name, col.texts] : col.name)) ?? [],
+        isCheckBible
+          ? (
+              await bibleTBCVTranslatesIDB.tb.list
+                .where('k')
+                .startsWithAnyOf(
+                  objectEntries(bibleTranslateLanguage)
+                    .filter(([, v]) => v === Langi.Ru)
+                    .map(([k]) => makeBibleTbcvPrefix(k)),
+                )
+                .toArray()
+            ).map(it => it.v)
+          : [],
+      ].flat(5);
 
-        etap(
-          translateEditorBase(EditorLocaleKey.CmEditorMonolith),
-          () => {
-            const text = texts.join(' ');
+      etap(translateEditorBase(EditorLocaleKey.CmEditorMonolith), () => {
+        const text = texts.join(' ');
 
-            etap(
-              translateEditorBase(EditorLocaleKey.CmEditorToLower),
-              () => {
-                const lower = text.toLowerCase();
+        etap(translateEditorBase(EditorLocaleKey.CmEditorToLower), () => {
+          const lower = text.toLowerCase();
 
-                etap(
-                  translateEditorBase(EditorLocaleKey.CmEditorTrimNonSlavic),
-                  () => {
-                    const normSlavic = lower.replace(makeRegExp(`/[^${slavicLowerLettersStr}]+/gi`), ' ');
+          etap(translateEditorBase(EditorLocaleKey.CmEditorTrimNonSlavic), () => {
+            const normSlavic = lower.replace(makeRegExp(`/[^${slavicLowerLettersStr}]+/gi`), ' ');
 
-                    etap(
-                      translateEditorBase(EditorLocaleKey.CmEditorReplaceYoWithYe),
-                      () => {
-                        const norm = normSlavic.replace(makeRegExp('/ё/g'), 'е');
+            etap(translateEditorBase(EditorLocaleKey.CmEditorReplaceYoWithYe), () => {
+              const norm = normSlavic.replace(makeRegExp('/ё/g'), 'е');
 
-                        etap(
-                          translateEditorBase(EditorLocaleKey.CmEditorToWordList),
-                          () => {
-                            const splits = norm.split(' ');
+              etap(translateEditorBase(EditorLocaleKey.CmEditorToWordList), () => {
+                const splits = norm.split(' ');
 
-                            etap(
-                              translateEditorBase(EditorLocaleKey.CmEditorFilterUnique),
-                              () => {
-                                const spaceds = Array.from(new Set(splits));
+                etap(translateEditorBase(EditorLocaleKey.CmEditorFilterUnique), () => {
+                  const spaceds = Array.from(new Set(splits));
 
-                                etap(
-                                  translateEditorBase(EditorLocaleKey.CmEditorPickWordsWithYe),
-                                  () => {
-                                    const words: string[] = [];
-                                    let wordi = 0;
-                                    const size = 500;
+                  etap(translateEditorBase(EditorLocaleKey.CmEditorPickWordsWithYe), () => {
+                    const words: string[] = [];
+                    let wordi = 0;
+                    const size = 500;
 
-                                    const add = (word: string) => {
-                                      if (
-                                        word.search(makeRegExp('/[іїєґ]/')) > -1 ||
-                                        word.search(makeRegExp('/е/')) < 0 ||
-                                        ignoredWordsSet.has(word)
-                                      )
-                                        return;
+                    const add = (word: string) => {
+                      if (
+                        word.search(makeRegExp('/[іїєґ]/')) > -1 ||
+                        word.search(makeRegExp('/е/')) < 0 ||
+                        ignoredWordsSet.has(word)
+                      )
+                        return;
 
-                                      words.push(word);
-                                    };
+                      words.push(word);
+                    };
 
-                                    const addWord = () => {
-                                      const wordsList = spaceds.slice(wordi, wordi + size);
-                                      wordi += size;
+                    const addWord = () => {
+                      const wordsList = spaceds.slice(wordi, wordi + size);
+                      wordi += size;
 
-                                      if (!wordsList.length) {
-                                        etap(
-                                          translateEditorBase(EditorLocaleKey.CmEditorSortWords),
-                                          () => {
-                                            listBox.list = words.reverse();
+                      if (!wordsList.length) {
+                        etap(translateEditorBase(EditorLocaleKey.CmEditorSortWords), () => {
+                          listBox.list = words.reverse();
 
-                                            etap(
-                                              translateEditorBase(EditorLocaleKey.CmEditorRenderList, {
-                                                n: '' + words.length,
-                                              }),
-                                              () => setUpdates(num => num + 1),
-                                            );
-                                          },
-                                        );
+                          etap(
+                            translateEditorBase(EditorLocaleKey.CmEditorRenderList, {
+                              n: '' + words.length,
+                            }),
+                            () => setUpdates(num => num + 1),
+                          );
+                        });
 
-                                        return;
-                                      }
+                        return;
+                      }
 
-                                      wordsList.forEach(add);
+                      wordsList.forEach(add);
 
-                                      etap(
-                                        translateEditorBase(EditorLocaleKey.CmEditorWordChecked, { w: wordsList[0] }),
-                                        addWord,
-                                      );
-                                    };
+                      etap(translateEditorBase(EditorLocaleKey.CmEditorWordChecked, { w: wordsList[0] }), addWord);
+                    };
 
-                                    addWord();
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-            );
-          },
-        );
-      },
-    );
+                    addWord();
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
 
     return () => clearTimeout(timeout);
   }, [cats, coms, ignoredWordsSet, isCheckBible, listBox, setUpdates]);

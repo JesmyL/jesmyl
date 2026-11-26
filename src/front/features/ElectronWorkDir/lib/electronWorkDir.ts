@@ -28,8 +28,7 @@ export const takeMediaMimeByFileName = (fileName: string) =>
   mediaMimeByExtensionLazy()[takeFileExtension(fileName)] ?? 'application/octet-stream';
 
 /** Dropped fonts are registered in myFiles (which also stores them in the WorkDir `fonts` folder), not routed as media. */
-export const isDroppedFontFile = (file: File) =>
-  myFilesConfig[MyFileType.Font].ext.has(takeFileExtension(file.name));
+export const isDroppedFontFile = (file: File) => myFilesConfig[MyFileType.Font].ext.has(takeFileExtension(file.name));
 
 export const selectWorkDir = (create?: string) =>
   electronBasicTsjrpcClient.selectDir(create ? { create } : {}, electronWorkDirTool);
@@ -60,9 +59,8 @@ export const workDirPresetFolders = {
 
 /** Preset folder at the WorkDir root matching a file's media kind, falling back to `other` for non-media files. */
 export const takeWorkDirPresetFolder = (fileName: string) =>
-  workDirPresetFolders[
-    takeMediaMimeByFileName(fileName).split('/')[0] as keyof typeof workDirPresetFolders
-  ] ?? workDirPresetFolders.other;
+  workDirPresetFolders[takeMediaMimeByFileName(fileName).split('/')[0] as keyof typeof workDirPresetFolders] ??
+  workDirPresetFolders.other;
 
 /**
  * Saves dropped files, routing each file into its media-kind root preset folder
@@ -85,9 +83,7 @@ export const saveDroppedWorkDirFiles = async (rootDirPath: string, files: File[]
 
   const dirPaths = objectKeys(payloadsByDirPath);
 
-  await Promise.all(
-    mapObjectEntries(payloadsByDirPath, (dirPath, payloads) => saveWorkDirFiles(dirPath, payloads)),
-  );
+  await Promise.all(mapObjectEntries(payloadsByDirPath, (dirPath, payloads) => saveWorkDirFiles(dirPath, payloads)));
 
   return dirPaths.length === 1 ? dirPaths[0] : undefined;
 };
@@ -105,4 +101,3 @@ export const readWorkDirFileSrc = async (filePath: string): Promise<string | nil
 
   return electronBasicTsjrpcClient.takeWorkDirFileUrl({ filePath }, electronWorkDirTool);
 };
-

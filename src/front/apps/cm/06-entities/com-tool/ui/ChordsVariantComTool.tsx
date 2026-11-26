@@ -30,23 +30,17 @@ export const CmComToolChordsVariant = () => {
 
         if (newVariant === ChordVisibleVariant.Maximal) toast(translateBase(BaseLocaleKey.CmMaximumChordsCount));
         if (newVariant === ChordVisibleVariant.Minimal)
-          toast(
-            translateBase(BaseLocaleKey.CmMinimumChordsCount),
-            {
-              action: {
-                label: translateBase(BaseLocaleKey.Detailed),
-                onClick: () => {
-                  toast(
-                    translateBase(BaseLocaleKey.CmMinimumChordsCountDescription),
-                    {
-                      duration: 10000,
-                      closeButton: true,
-                    },
-                  );
-                },
+          toast(translateBase(BaseLocaleKey.CmMinimumChordsCount), {
+            action: {
+              label: translateBase(BaseLocaleKey.Detailed),
+              onClick: () => {
+                toast(translateBase(BaseLocaleKey.CmMinimumChordsCountDescription), {
+                  duration: 10000,
+                  closeButton: true,
+                });
               },
             },
-          );
+          });
         if (newVariant === ChordVisibleVariant.None) toast(translateBase(BaseLocaleKey.CmNoChordsText));
 
         cmComChordVisibleVariantAtom.set(newVariant);

@@ -69,8 +69,10 @@ const makeHelloUserIdentity = (auth: LocalSokiAuth | nil): RemoteBroadcastUserId
 };
 
 const takeJesmylAuthIdentity = () => {
-  const { promise, resolve } =
-    Promise.withResolvers<{ token: string | nil; user: RemoteBroadcastUserIdentity | nil }>();
+  const { promise, resolve } = Promise.withResolvers<{
+    token: string | nil;
+    user: RemoteBroadcastUserIdentity | nil;
+  }>();
   const timeout = setTimeout(() => resolve({ token: null, user: null }), remoteBroadcastAuthTokenWaitMs);
 
   Promise.all([authIDB.get.token(), authIDB.get.auth()]).then(
@@ -455,10 +457,7 @@ class RemoteBroadcastConnection {
           verses: isVersesKept ? (prevBible?.verses ?? []) : (bibleDelta.verses ?? []),
           searchMatches: bibleDelta.searchMatches ?? prevBible?.searchMatches ?? [],
           searchTerm: bibleDelta.searchTerm ?? prevBible?.searchTerm ?? '',
-          joinAddress:
-            bibleDelta.joinAddress === undefined
-              ? (prevBible?.joinAddress ?? null)
-              : bibleDelta.joinAddress,
+          joinAddress: bibleDelta.joinAddress === undefined ? (prevBible?.joinAddress ?? null) : bibleDelta.joinAddress,
         }
       : prevBible;
 
@@ -690,8 +689,7 @@ export const probeRemoteControlReachability = (target: string): Promise<boolean>
 const remoteBroadcastConnectionsLazy = lazyInit(() => new Map<string, RemoteBroadcastConnection>());
 
 const sameOriginConnectionKey = 'same-origin';
-const makeTargetKey = (target: string | nil) =>
-  target == null ? sameOriginConnectionKey : `target:${target}`;
+const makeTargetKey = (target: string | nil) => (target == null ? sameOriginConnectionKey : `target:${target}`);
 
 export const takeRemoteBroadcastConnection = (
   target: string | nil,

@@ -80,11 +80,13 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>({
         <CmComCurrentComPackContext value={{ comws }}>{node}</CmComCurrentComPackContext>
       );
 
-    const content = tran
-      ? render(BroadcastComponent ? <BroadcastComponent /> : <CmBroadcast />)
-      : com || comw != null
-        ? render(<TheCmComComposition />)
-        : <RouteComponent />;
+    const content = tran ? (
+      render(BroadcastComponent ? <BroadcastComponent /> : <CmBroadcast />)
+    ) : com || comw != null ? (
+      render(<TheCmComComposition />)
+    ) : (
+      <RouteComponent />
+    );
 
     return <CmComInterpretationSchwContext value={schw ?? null}>{content}</CmComInterpretationSchwContext>;
   };

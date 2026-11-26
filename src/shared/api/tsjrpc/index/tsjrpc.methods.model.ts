@@ -34,11 +34,7 @@ export type IndexTsjrpcSharesModel = {
 
   constConfig: (args: { config: Partial<ConstantsConfig>; mod: number }) => unknown;
 
-  visitsOnline: (args: {
-    count: number;
-    login: SokiAuthLogin | nil;
-    isEnter: boolean;
-  }) => unknown;
+  visitsOnline: (args: { count: number; login: SokiAuthLogin | nil; isEnter: boolean }) => unknown;
 
   dashMessage: (args: { message: DashMessage }) => unknown;
 

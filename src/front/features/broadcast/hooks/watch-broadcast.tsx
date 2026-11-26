@@ -76,10 +76,7 @@ export const watchScreenBroadcast = async (configs?: ScreenBroadcastConfig[], fo
 
         continue;
       } catch (_) {
-        toast(
-          translateBase(BaseLocaleKey.BroadcastPresentModeFailed),
-          makeToastKOMoodConfig(),
-        );
+        toast(translateBase(BaseLocaleKey.BroadcastPresentModeFailed), makeToastKOMoodConfig());
       }
     }
     watch(windowi);

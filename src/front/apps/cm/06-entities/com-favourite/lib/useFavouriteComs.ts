@@ -68,10 +68,7 @@ export const cmComFavouriteToggle = (comw: CmComWid) => {
   cmComFavoriteComwsAtom.set(comws.slice(0, maxFavouritesCount).sort(itNumSort));
 
   if (isOverLimit) {
-    toast(
-      translateBase(BaseLocaleKey.FavoriteNumberLimit, { n: maxFavouritesCount }),
-      makeToastKOMoodConfig(),
-    );
+    toast(translateBase(BaseLocaleKey.FavoriteNumberLimit, { n: maxFavouritesCount }), makeToastKOMoodConfig());
     return;
   }
 

@@ -40,10 +40,7 @@ export const IndexEmailConfirm = ({
           disabled={!email}
           onClick={async () => {
             const result = await onSend(email);
-            toast(
-              translateBase(BaseLocaleKey.EmailCodeSent, { e: result.email }),
-              makeToastOKMoodConfig(),
-            );
+            toast(translateBase(BaseLocaleKey.EmailCodeSent, { e: result.email }), makeToastOKMoodConfig());
           }}
         />
       </div>

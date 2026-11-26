@@ -12,7 +12,9 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmIntensity]: 'Інтенсивність',
   [EditorLocaleKey.CmEditSquareBracketsHint]:
     'Текст у [квадратних дужках] не показується в слайдах, але зводиться до (тексту в круглих дужках) у тексті пісень. Використовуйте [[дві відкривальні дужки] для перенесення рядка. Перед "[" має бути пробіл, а після "]" не повинно бути нічого',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Видалити${IF(isUtil.EQ('$t', '')).THEN` новий`} блок?\n\n$t`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, [
+    '$t',
+  ])`Видалити${IF(isUtil.EQ('$t', '')).THEN` новий`} блок?\n\n$t`,
   [EditorLocaleKey.CmEditRemovedComs]: 'Видалені пісні',
   [EditorLocaleKey.CmEditBackup]: 'Відновити цю пісню',
   [EditorLocaleKey.CmEditDestroy]: 'Знищити цю пісню',
@@ -142,7 +144,9 @@ export const localeEditorUa = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorFretNumber]: 'Лад $n;',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Редагування інтерпретації для заходу',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'включати біблійні слова',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Надіслати $n; сл${FUNCTION('dec')('$n', 'ово', 'ова', 'ів')}`,
+  ...editorLocaleTemplate(
+    EditorLocaleKey.CmEditorSendWords,
+  )`Надіслати $n; сл${FUNCTION('dec')('$n', 'ово', 'ова', 'ів')}`,
   [EditorLocaleKey.CmEditorLinkPartHide]: 'Зробити $n;-у частину посилання на $h; невидимою?',
   [EditorLocaleKey.CmEditorLinkPartShow]: 'Зробити $n;-у частину посилання на $h; видимою?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'Ця дія призведе до знищення аплікатури в цьому блоці.',

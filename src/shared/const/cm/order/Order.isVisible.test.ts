@@ -23,15 +23,12 @@ const coms: CmCom[] = [];
 const ords: CmComOrder[] = [];
 
 const inhiOf = (ord: CmComOrder) => ord.me.anchorInheritIndex || 0;
-const leadV = (ord: CmComOrder) =>
-  ord.me.isAnchorInherit ? ord.me.leadOrd?.me.source?.top._v?.[inhiOf(ord)] : null;
+const leadV = (ord: CmComOrder) => (ord.me.isAnchorInherit ? ord.me.leadOrd?.me.source?.top._v?.[inhiOf(ord)] : null);
 const watchV = (ord: CmComOrder) =>
-  ord.me.isAnchorInherit
-    ? (ord.me.watchOrd?.me.source?.top._v?.[inhiOf(ord)] ?? ord.me.watchOrd?.top.v)
-    : null;
+  ord.me.isAnchorInherit ? (ord.me.watchOrd?.me.source?.top._v?.[inhiOf(ord)] ?? ord.me.watchOrd?.top.v) : null;
 const chainV = (ord: CmComOrder) =>
   ord.com.intp?.o?.[ord.wid]?.v ??
-  (ord.me.isAnchorInherit ? null : ord.me.source?.top.v ?? ord.top.v) ??
+  (ord.me.isAnchorInherit ? null : (ord.me.source?.top.v ?? ord.top.v)) ??
   leadV(ord) ??
   watchV(ord) ??
   ord.me.targetOrd?.top.v;

@@ -120,11 +120,9 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         addRackMember: async (props, tool) => {
           const memberUser = await takeUserTiny({ l: props.login });
 
-          return updateRack(
-            (rack, props: StoragesTsjrpcRackSelector & { member: StoragesRackMember }) => {
-              rack.team[memberUser.id] = props.member;
-            },
-          )(props, tool);
+          return updateRack((rack, props: StoragesTsjrpcRackSelector & { member: StoragesRackMember }) => {
+            rack.team[memberUser.id] = props.member;
+          })(props, tool);
         },
 
         setRackIcon: updateRack((rack, { icon }) => {
@@ -305,7 +303,8 @@ export const storagesServerTsjrpcBase = new (class Storages extends TsjrpcBaseSe
         }),
 
         createDatesNestedCell: updateCell(cell => {
-          if (cell[0] !== StoragesColumnType.Dates) throw backLocaleError(BackLocaleKey.CellTypeError, { n: 761564128398 });
+          if (cell[0] !== StoragesColumnType.Dates)
+            throw backLocaleError(BackLocaleKey.CellTypeError, { n: 761564128398 });
 
           cell[1] ??= { nst: [] };
           cell[1].nst ??= [];
@@ -536,8 +535,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
         },
         onSet: (_, keys, key) => {
           if ((keys[0] ?? key) in rackCore) return true;
-          if (!parentRack?.team[authUserId]?.role)
-            throw backLocaleError(BackLocaleKey.NoParentRackEditRight);
+          if (!parentRack?.team[authUserId]?.role) throw backLocaleError(BackLocaleKey.NoParentRackEditRight);
           return true;
         },
       });
@@ -560,8 +558,7 @@ function updateRack<Props extends StoragesTsjrpcRackSelector, RetValue, Ret exte
 
     if ('parent' in item) {
       parentRack ??= storagesDirStorage.getItem(item.parent);
-      if (parentRack == null || 'parent' in parentRack)
-        throw backLocaleError(BackLocaleKey.ChildRackInheritance);
+      if (parentRack == null || 'parent' in parentRack) throw backLocaleError(BackLocaleKey.ChildRackInheritance);
       rack = { ...parentRack, ...item };
     } else rack = item;
 

@@ -190,7 +190,8 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
               if (comwRefGroup != null) {
                 if (comwRefGroup !== withComwRefGroup) {
-                  if (checkIsNil(comTiny) || checkIsNil(withComTiny)) throw backLocaleError(BackLocaleKey.CmComNotFound);
+                  if (checkIsNil(comTiny) || checkIsNil(withComTiny))
+                    throw backLocaleError(BackLocaleKey.CmComNotFound);
 
                   refs[withComw] = comwRefGroup;
                   description = backLocaleError(BackLocaleKey.CmComRefGroupMerged, {

@@ -19,7 +19,13 @@ import { DynLocaleKey } from 'shared/model/+locale/_DynLocaleKey';
 import { DashCounters, DashMessageKind, DashMessagesPage } from 'shared/model/index/visitsDashboard';
 import { forEachObjectEntries } from 'shared/utils/object.utils';
 import { toast } from 'sonner';
-import { indexDashMessageVersionAtom, indexIDB, indexUserAccessRightsAtom, indexVisitsOnlineAtom, lastUpdatedIconsMd5HashAtom } from '../state';
+import {
+  indexDashMessageVersionAtom,
+  indexIDB,
+  indexUserAccessRightsAtom,
+  indexVisitsOnlineAtom,
+  lastUpdatedIconsMd5HashAtom,
+} from '../state';
 
 /** Каждый пришедший словарь несёт свою отметку свежести: храним самую позднюю. */
 const updateLocaleModifiedAt = (mod: number) => localeLastModifiedAtAtom.set(prev => Math.max(prev, mod));
@@ -91,11 +97,16 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
 
           // Счётчик вкладки VisitError считается по визитам из visitDB, поэтому сообщения этого вида его не увеличивают.
           if (message.kind !== DashMessageKind.VisitError)
-            defaultQueryClient.setQueryData<DashCounters>([QueryKey.DashCounters], counters =>
-              counters && {
-                ...counters,
-                unreadCounts: { ...counters.unreadCounts, [message.kind]: (counters.unreadCounts[message.kind] ?? 0) + 1 },
-              },
+            defaultQueryClient.setQueryData<DashCounters>(
+              [QueryKey.DashCounters],
+              counters =>
+                counters && {
+                  ...counters,
+                  unreadCounts: {
+                    ...counters.unreadCounts,
+                    [message.kind]: (counters.unreadCounts[message.kind] ?? 0) + 1,
+                  },
+                },
             );
 
           indexDashMessageVersionAtom.set(version => version + 1);
@@ -110,18 +121,23 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
 
               if (!firstPage || firstPage.visits.some(({ id }) => id === visit.id)) return data;
 
-              return { ...data, pages: [{ ...firstPage, visits: [visit, ...firstPage.visits] }, ...data.pages.slice(1)] };
+              return {
+                ...data,
+                pages: [{ ...firstPage, visits: [visit, ...firstPage.visits] }, ...data.pages.slice(1)],
+              };
             },
           );
 
-          defaultQueryClient.setQueryData<DashCounters>([QueryKey.DashCounters], counters =>
-            counters && {
-              ...counters,
-              unreadCounts: {
-                ...counters.unreadCounts,
-                [DashMessageKind.VisitError]: (counters.unreadCounts[DashMessageKind.VisitError] ?? 0) + 1,
+          defaultQueryClient.setQueryData<DashCounters>(
+            [QueryKey.DashCounters],
+            counters =>
+              counters && {
+                ...counters,
+                unreadCounts: {
+                  ...counters.unreadCounts,
+                  [DashMessageKind.VisitError]: (counters.unreadCounts[DashMessageKind.VisitError] ?? 0) + 1,
+                },
               },
-            },
           );
         },
 

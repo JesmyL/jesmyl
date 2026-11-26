@@ -77,9 +77,7 @@ export function ScheduleWidgetEventComments({
             key={comment.userId}
             className="my-2 rounded-lg border border-x4/40 bg-x1/40 px-3 py-2"
           >
-            <div className="text-xs font-bold text-x7">
-              {user ? takeScheduleWidgetUserName(rights, user) : '?'}
-            </div>
+            <div className="text-xs font-bold text-x7">{user ? takeScheduleWidgetUserName(rights, user) : '?'}</div>
             <div className="whitespace-pre-wrap break-word">{comment.text}</div>
           </div>
         );

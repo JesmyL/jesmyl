@@ -19,12 +19,8 @@ export const takeChordsBlockIncorrects = (value: string | und, isHardChords: Boo
       }
 
       if (!isHardChords) {
-        const {
-          hardModificators,
-          lightModificators,
-          hardModificators_lastRepeat,
-          lightModificators_lastRepeat,
-        } = textedChordRegsLazy().transform(match);
+        const { hardModificators, lightModificators, hardModificators_lastRepeat, lightModificators_lastRepeat } =
+          textedChordRegsLazy().transform(match);
 
         if (hardModificators || lightModificators || hardModificators_lastRepeat || lightModificators_lastRepeat) {
           complexChords.push(chord);

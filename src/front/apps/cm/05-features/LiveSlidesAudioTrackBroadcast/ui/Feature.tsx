@@ -23,10 +23,7 @@ export const CmLiveSlidesAudioTrackBroadcast = (props: LiveBroadcastAppProps & {
   const windows = useScreenBroadcastWindows();
 
   const { html, nextHtml, audioSlides, slidei } = useCmComCurrentMarkValues(props.com, config.case);
-  const allSlideHtmls = useMemo(
-    () => audioSlides.map(slide => makeCmComNbspHtmlText(slide.text)),
-    [audioSlides],
-  );
+  const allSlideHtmls = useMemo(() => audioSlides.map(slide => makeCmComNbspHtmlText(slide.text)), [audioSlides]);
 
   const fio = takeUserAuthName(useAuth());
   const currentSlide = audioSlides.at(slidei);

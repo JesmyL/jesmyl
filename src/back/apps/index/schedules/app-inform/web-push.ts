@@ -15,8 +15,7 @@ const pushBodyMaxLength = 200;
 const takeVapidDetails = () => {
   const { VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT } = lazyEnvJson();
 
-  if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY)
-    throw backLocaleError(BackLocaleKey.VapidKeysMissing);
+  if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) throw backLocaleError(BackLocaleKey.VapidKeysMissing);
 
   return {
     subject: VAPID_SUBJECT,
@@ -65,9 +64,7 @@ export const sendSchedulePush = async (
     let bodies = bodiesByLangi.get(langi);
     if (bodies) return bodies;
 
-    const actualPayload = checkIsFunction<(langi: Langi) => SchedulePushPayload>(payload)
-      ? payload(langi)
-      : payload;
+    const actualPayload = checkIsFunction<(langi: Langi) => SchedulePushPayload>(payload) ? payload(langi) : payload;
     const makeBody = (silent: boolean) =>
       JSON.stringify({ ...actualPayload, silent, body: actualPayload.body.slice(0, pushBodyMaxLength) });
 

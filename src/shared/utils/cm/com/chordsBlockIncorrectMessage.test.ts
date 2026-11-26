@@ -24,17 +24,26 @@ describe('chordsBlockIncorrectMessage', () => {
     expect(takeMessage(chord, Bool.False)).toContain(`Аккорд "${chord}" слишком сложн`);
   });
 
-  it.each(lightModificatedRepeatChords)('reports %s with light modificators in a repeat as too complex in simple mode', chord => {
-    expect(takeMessage(chord, Bool.False)).toContain(`Аккорд "${chord}" слишком сложн`);
-  });
+  it.each(lightModificatedRepeatChords)(
+    'reports %s with light modificators in a repeat as too complex in simple mode',
+    chord => {
+      expect(takeMessage(chord, Bool.False)).toContain(`Аккорд "${chord}" слишком сложн`);
+    },
+  );
 
-  it.each(hardModificatedRepeatChords)('reports %s with hard modificators in a repeat as too complex in simple mode', chord => {
-    expect(takeMessage(chord, Bool.False)).toContain(`Аккорд "${chord}" слишком сложн`);
-  });
+  it.each(hardModificatedRepeatChords)(
+    'reports %s with hard modificators in a repeat as too complex in simple mode',
+    chord => {
+      expect(takeMessage(chord, Bool.False)).toContain(`Аккорд "${chord}" слишком сложн`);
+    },
+  );
 
-  it.each([...lightModificatedRepeatChords, ...hardModificatedRepeatChords])('accepts repeat %s in hard mode', chord => {
-    expect(chordsBlockIncorrectMessage(chord, Bool.True)).toEqual({});
-  });
+  it.each([...lightModificatedRepeatChords, ...hardModificatedRepeatChords])(
+    'accepts repeat %s in hard mode',
+    chord => {
+      expect(chordsBlockIncorrectMessage(chord, Bool.True)).toEqual({});
+    },
+  );
 
   it('reports a light modificator regardless of the bass chord', () => {
     expect(takeMessage('Dsus2/G', Bool.False)).toContain('Аккорд "Dsus2/G" слишком сложн');

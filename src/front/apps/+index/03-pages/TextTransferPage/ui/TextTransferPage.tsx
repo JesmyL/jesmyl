@@ -164,7 +164,8 @@ export function IndexTextTransferPage() {
               <div className="flex custom-align-items flex-col gap-1">
                 {receivedFiles.map(file => {
                   const downloading = download?.deviceId === file.deviceId ? download : null;
-                  const progress = downloading == null || downloading.count === 0 ? 0 : downloading.loaded / downloading.count;
+                  const progress =
+                    downloading == null || downloading.count === 0 ? 0 : downloading.loaded / downloading.count;
 
                   return (
                     <div

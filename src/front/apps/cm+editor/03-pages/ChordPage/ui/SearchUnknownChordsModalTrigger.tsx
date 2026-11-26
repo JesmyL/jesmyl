@@ -88,7 +88,9 @@ export const CmEditorChordSearchUnknownChordsModalTrigger = () => {
       />
 
       <Modal openAtom={isOpenAtom}>
-        <ModalHeader>{translateEditorBase(EditorLocaleKey.CmUnknownChordsCount, { n: unknownChords.length })}</ModalHeader>
+        <ModalHeader>
+          {translateEditorBase(EditorLocaleKey.CmUnknownChordsCount, { n: unknownChords.length })}
+        </ModalHeader>
 
         <StyledModalBody
           $lastClickedChord={lastClickedChord}

@@ -1,4 +1,3 @@
- 
 /* eslint-disable @typescript-eslint/no-namespace */
 import('../front/apps/cm/06-entities/com-comment/utils/commentHeadBibleAddressRegExp');
 

@@ -91,10 +91,7 @@ export const IndexAppVersionLabel = ({ className }: { className?: string }) => {
                 if (answer == null) return;
 
                 if (+answer !== +code) {
-                  toast(
-                    translateBase(BaseLocaleKey.IncorrectCode),
-                    makeToastKOMoodConfig(),
-                  );
+                  toast(translateBase(BaseLocaleKey.IncorrectCode), makeToastKOMoodConfig());
                   return;
                 }
 

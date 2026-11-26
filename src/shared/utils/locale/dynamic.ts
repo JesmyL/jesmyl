@@ -28,5 +28,6 @@ export const translateDynamicBase = <Value>(selector: (dict: DynamicLocale) => V
 
 // Объединяет массивы одного ключа из словарей всех языков без повторов:
 // так теги распознаются независимо от выбранного языка интерфейса.
-export const translateDynamicUnion = <Value>(selector: (dict: DynamicLocale) => Value[]): Value[] =>
-  [...new Set(takeAllDynamicLocales().flatMap(selector))];
+export const translateDynamicUnion = <Value>(selector: (dict: DynamicLocale) => Value[]): Value[] => [
+  ...new Set(takeAllDynamicLocales().flatMap(selector)),
+];

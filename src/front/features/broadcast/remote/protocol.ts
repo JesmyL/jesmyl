@@ -223,7 +223,8 @@ const parseBibleTranslations = (value: unknown): RemoteBroadcastBibleTranslation
   const translations: RemoteBroadcastBibleTranslation[] = [];
 
   for (const translation of value) {
-    if (!isRecord(translation) || typeof translation.name !== 'string' || typeof translation.title !== 'string') return null;
+    if (!isRecord(translation) || typeof translation.name !== 'string' || typeof translation.title !== 'string')
+      return null;
     translations.push({ name: translation.name, title: translation.title });
   }
 
@@ -374,11 +375,7 @@ export const parseRemoteBroadcastServerMessage = (value: unknown): IncomingRemot
   )
     return { k: RemoteBroadcastMessageKind.Version, version: value.v };
 
-  if (
-    value.k === RemoteBroadcastMessageKind.Scheme &&
-    typeof value.g === 'number' &&
-    Number.isFinite(value.g)
-  )
+  if (value.k === RemoteBroadcastMessageKind.Scheme && typeof value.g === 'number' && Number.isFinite(value.g))
     return { k: RemoteBroadcastMessageKind.Scheme, gamuti: value.g };
 
   if (value.k === RemoteBroadcastMessageKind.Controls) {

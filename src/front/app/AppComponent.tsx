@@ -41,8 +41,7 @@ const appStartedAt = Date.now();
 /** `Langi`/`LocaleVersion` sit at the head of every dictionary array, so those indices never count as texts. */
 const hasLocaleTexts = (dict: Record<string, string | number | object | nil>) =>
   Object.values(dict).some(
-    (value, index) =>
-      index > BaseLocaleKey.LocaleVersion && !checkIsNumber(value) && objectLength(value) > 0,
+    (value, index) => index > BaseLocaleKey.LocaleVersion && !checkIsNumber(value) && objectLength(value) > 0,
   );
 
 /** Right after boot any fresh dictionary remounts the app; later only a textless push does. */
@@ -73,10 +72,7 @@ export const AppComponent = () => {
 
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
-      toast(
-        translateBase(BaseLocaleKey.AuthorizationIncorrect),
-        makeToastKOMoodConfig(),
-      );
+      toast(translateBase(BaseLocaleKey.AuthorizationIncorrect), makeToastKOMoodConfig());
     });
 
     const errorMessageListener = soki.onInvokeErrorMessageEvent.listen(errorMessage => {

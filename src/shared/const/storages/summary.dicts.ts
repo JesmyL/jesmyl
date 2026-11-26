@@ -25,7 +25,8 @@ export const storagesSummaryTypePropsDict: Record<
     get title() {
       return translateBase(BaseLocaleKey.StoragesByYear);
     },
-    mapDateString: (ts, langi = Langi.Ru) => new Date(ts).toLocaleString(takeLangSystemCode(langi), { year: 'numeric' }),
+    mapDateString: (ts, langi = Langi.Ru) =>
+      new Date(ts).toLocaleString(takeLangSystemCode(langi), { year: 'numeric' }),
   },
 };
 

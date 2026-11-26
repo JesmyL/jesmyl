@@ -40,8 +40,7 @@ const takeUserPushSubscriptionsCount = (userId: UserId) =>
  * при отсутствии подписок отдаём отдельный текст, при mute добавляем к числу предупреждение, иначе — только число.
  */
 const makePushSubscriptionsTitle = (langi = Langi.Ru, subscriptionsCount: number, isMuted: boolean) => {
-  if (subscriptionsCount === 0)
-    return translateBackTexts(langi, BackLocaleKey.PushSubscriptionsAbsent);
+  if (subscriptionsCount === 0) return translateBackTexts(langi, BackLocaleKey.PushSubscriptionsAbsent);
 
   return isMuted
     ? `${subscriptionsCount} • ${translateBackTexts(langi, BackLocaleKey.PushCheckMuted)}`
@@ -81,7 +80,12 @@ onDashMessageStoredEvent.listen(message => {
   dashWatchers.forEach(client => {
     indexServerTsjrpcShareMethods
       .dashMessage(
-        { message: { ...message, m: makeDashMessageForViewer(message.m, message.kind, sokiServer.takeClientLangi(client) ?? undefined) } },
+        {
+          message: {
+            ...message,
+            m: makeDashMessageForViewer(message.m, message.kind, sokiServer.takeClientLangi(client) ?? undefined),
+          },
+        },
         client,
       )
       .catch(emptyFunc);

@@ -356,7 +356,9 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ScheduleFirstIsTechDay]: 'Біріншісі - техникалық күн',
   [BaseLocaleKey.ScheduleMakeFirstDayUsual]: 'Бірінші күнді қарапайым ету керек пе?',
   [BaseLocaleKey.ScheduleFirstDayPrep]: 'Бірінші күнді дайындық күні ету керек пе?',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAllowRemoteControls)`Пульттерді қосуға ${IF('$v').THEN`тыйым салу`.ELSE`рұқсат беру`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleAllowRemoteControls,
+  )`Пульттерді қосуға ${IF('$v').THEN`тыйым салу`.ELSE`рұқсат беру`}`,
   [BaseLocaleKey.ScheduleDefaultRights]: 'Әдепкі құқықтар',
   [BaseLocaleKey.ScheduleSmallFontStatements]: 'Кішкентай қаріппен жазылған тұжырымдар күшінде',
   [BaseLocaleKey.ScheduleNewUser]: ' - Жаңа',
@@ -658,7 +660,9 @@ export const localeBaseKz = convertObjectToArray<LocaleBase<Langi.Kz>>({
   [BaseLocaleKey.ConfigPromptHeader]: 'Толтыр',
   [BaseLocaleKey.ConfigAccept]: 'Қабылдау',
   [BaseLocaleKey.ConfigTextCopied]: 'Мәтін көшірілді',
-  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Файл${IF('$v').THEN`дарды`} таңдау${IF('$max').THEN` ($max МБ дейін)`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ConfigPickFile,
+  )`Файл${IF('$v').THEN`дарды`} таңдау${IF('$max').THEN` ($max МБ дейін)`}`,
   [BaseLocaleKey.ConfigDate]: 'Күні',
   [BaseLocaleKey.ConfigTextCaseCapitalize]: 'Біріншісі үлкен',
   [BaseLocaleKey.ConfigTextCaseAsIs]: 'сол Күйінде',

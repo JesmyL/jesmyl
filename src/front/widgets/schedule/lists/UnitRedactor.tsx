@@ -22,9 +22,7 @@ type Props = {
 };
 
 export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, unitScopeData }: Props) => {
-  const title = (
-    <>{unit.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleUntitled)}</span>}</>
-  );
+  const title = <>{unit.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleUntitled)}</span>}</>;
 
   return (
     <>

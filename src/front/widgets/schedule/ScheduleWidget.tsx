@@ -34,9 +34,7 @@ export function ScheduleWidget({
     [schedule?.w],
   );
   const prevDate =
-    schedule && !checkIsSchedulePeriodic(schedule) && schedule.prevStart != null
-      ? new Date(schedule.prevStart)
-      : null;
+    schedule && !checkIsSchedulePeriodic(schedule) && schedule.prevStart != null ? new Date(schedule.prevStart) : null;
 
   const date = useMemo(() => new Date(schedule?.start || Date.now()), [schedule?.start]);
 
@@ -70,9 +68,7 @@ export function ScheduleWidget({
         );
       } else if (rights.isSwHideContent)
         blockContent = (
-          <div className="text-x7 font-size:0.8em">
-            {translateBase(BaseLocaleKey.ScheduleNoPreregistration)}
-          </div>
+          <div className="text-x7 font-size:0.8em">{translateBase(BaseLocaleKey.ScheduleNoPreregistration)}</div>
         );
     }
   } else {
@@ -81,9 +77,7 @@ export function ScheduleWidget({
       if (!rights.isSwPublic || rights.isSwHideContent)
         blockContent = <div className="text-x7">{translateBase(BaseLocaleKey.ScheduleRequestAccepted)}</div>;
     } else if (!rights.isCanRead) {
-      blockContent = (
-        <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleContentAccessLimited)}</div>
-      );
+      blockContent = <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleContentAccessLimited)}</div>;
     }
   }
 

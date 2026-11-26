@@ -103,8 +103,7 @@ const makeLcsMatches = (oldItems: string[], newItems: string[]): DiffMatch[] => 
   const rows = Array.from({ length: oldItems.length + 1 }, () => new Uint16Array(newItems.length + 1));
   for (let i = oldItems.length; i--; )
     for (let j = newItems.length; j--; )
-      rows[i][j] =
-        oldItems[i] === newItems[j] ? rows[i + 1][j + 1] + 1 : Math.max(rows[i + 1][j], rows[i][j + 1]);
+      rows[i][j] = oldItems[i] === newItems[j] ? rows[i + 1][j + 1] + 1 : Math.max(rows[i + 1][j], rows[i][j + 1]);
 
   // Идём по таблице вперёд и забираем общие элементы; всё пропущенное станет удалённым и добавленным.
   const matches: DiffMatch[] = [];
@@ -200,11 +199,7 @@ const makeWordDiff = (a: string, b: string): DiffSegment[] => {
   const oldTokens = splitDiffTokens(a);
   const newTokens = splitDiffTokens(b);
 
-  return makeMatchedTokenDiff(
-    oldTokens,
-    newTokens,
-    makeDiffMatches(oldTokens, newTokens, diffTokenLcsCellCap),
-  );
+  return makeMatchedTokenDiff(oldTokens, newTokens, makeDiffMatches(oldTokens, newTokens, diffTokenLcsCellCap));
 };
 
 /** Сравнивает длинные строки: общие начало и конец сразу равны, а середину диффит посимвольно или по словам. */
@@ -215,10 +210,7 @@ const makeLongDiff = (a: string, b: string): DiffSegment[] => {
   while (prefixLength < minLength && a[prefixLength] === b[prefixLength]) prefixLength++;
 
   let suffixLength = 0;
-  while (
-    suffixLength < minLength - prefixLength &&
-    a[a.length - 1 - suffixLength] === b[b.length - 1 - suffixLength]
-  )
+  while (suffixLength < minLength - prefixLength && a[a.length - 1 - suffixLength] === b[b.length - 1 - suffixLength])
     suffixLength++;
 
   const oldMiddle = a.slice(prefixLength, a.length - suffixLength);

@@ -62,12 +62,10 @@ export const StoragesRackSumPage = ({ rackw }: { rackw: StoragesRackWid }) => {
                   <Accordion.Content className="flex justify-between">
                     <div>
                       <div>
-                        {translateBase(BaseLocaleKey.Type)}:{' '}
-                        {storagesSummaryTypePropsDict[summary.type].title}
+                        {translateBase(BaseLocaleKey.Type)}: {storagesSummaryTypePropsDict[summary.type].title}
                       </div>
                       <div>
-                        {translateBase(BaseLocaleKey.StoragesTotal)}:{' '}
-                        {storagesRackSumComputeFormulas(summary, rack)}
+                        {translateBase(BaseLocaleKey.StoragesTotal)}: {storagesRackSumComputeFormulas(summary, rack)}
                       </div>
                     </div>
                     <Button

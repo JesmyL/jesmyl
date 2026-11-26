@@ -32,7 +32,11 @@ export const schAttachmentTypesTsjrpcBaseServer =
   new (class SchAttachmentTypes extends TsjrpcBaseServer<SchAttachmentTypesTsjrpcMethods> {
     constructor() {
       const modifyAttType = <Props extends { props: ScheduleAttachmentTypeScopeProps }>(
-        modifier: (tatt: ScheduleWidgetAppAttCustomized, props: Props, sch: IScheduleWidget) => PromiseOr<string | null>,
+        modifier: (
+          tatt: ScheduleWidgetAppAttCustomized,
+          props: Props,
+          sch: IScheduleWidget,
+        ) => PromiseOr<string | null>,
       ) =>
         modifySchedule<Props>(false, (sch, props) => {
           const tatt = sch.tatts.find(tatt => tatt.mi === props.props.tattMi);

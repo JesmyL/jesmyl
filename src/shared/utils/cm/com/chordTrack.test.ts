@@ -4,7 +4,13 @@ import chordTracksJson from 'back/apps/cm/+case/chordTracks.json';
 import type { ChordTrack } from 'shared/api';
 import { chordDiezEquivalent } from 'shared/utils/cm/com/const';
 
-import { chordNameToTrack, chordNameToTracks, decodeChordTrack, normalizeChordName, parseChordName } from './chordTrack';
+import {
+  chordNameToTrack,
+  chordNameToTracks,
+  decodeChordTrack,
+  normalizeChordName,
+  parseChordName,
+} from './chordTrack';
 import { ChordInstrument } from './chordTrack.model';
 
 const openMidis = [64, 59, 55, 50, 45, 40];
@@ -13,8 +19,8 @@ const ukuleleOpenMidis = [69, 64, 60, 67];
 const pressedFrets = (track: ChordTrack) => decodeChordTrack(track).frets.map(fret => (fret > 0 ? fret : null));
 
 const soundingMidis = (track: ChordTrack) =>
-  decodeChordTrack(track).frets
-    .map((fret, stringIndex) => (fret >= 0 ? openMidis[stringIndex] + fret : null))
+  decodeChordTrack(track)
+    .frets.map((fret, stringIndex) => (fret >= 0 ? openMidis[stringIndex] + fret : null))
     .filter((midi): midi is number => midi !== null);
 
 const bassPc = (track: ChordTrack) => Math.min(...soundingMidis(track)) % 12;

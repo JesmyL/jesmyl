@@ -10,10 +10,7 @@ import { ScheduleWidgetRightControlList } from './RightControlList';
 
 export function ScheduleWidgetRegisterType() {
   const rights = useScheduleWidgetRightsContext();
-  const [expandNode, isExpand] = useIsExpand(
-    false,
-    <>{translateBase(BaseLocaleKey.ScheduleEventTypeTitle)}</>,
-  );
+  const [expandNode, isExpand] = useIsExpand(false, <>{translateBase(BaseLocaleKey.ScheduleEventTypeTitle)}</>);
   const scheduleScopeProps = useScheduleScopePropsContext();
 
   return (

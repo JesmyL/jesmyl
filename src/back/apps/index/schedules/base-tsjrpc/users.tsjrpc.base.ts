@@ -81,7 +81,8 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
             actualUsers.push({ mi: ++lastUserMi, id: userId });
           });
 
-          if (unknownTitles.length) throw backLocaleError(BackLocaleKey.UsersNotFoundByTitles, { n: unknownTitles.join(', ') });
+          if (unknownTitles.length)
+            throw backLocaleError(BackLocaleKey.UsersNotFoundByTitles, { n: unknownTitles.join(', ') });
 
           sch.ctrl.users.push(...actualUsers);
 
@@ -95,7 +96,8 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
 
           const userTiny = await takeUserTiny({ l: login as SokiAuthLogin });
 
-          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw backLocaleError(BackLocaleKey.UserAlreadyInSchedule);
+          if (sch.ctrl.users.some(user => user.id === userTiny.id))
+            throw backLocaleError(BackLocaleKey.UserAlreadyInSchedule);
 
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
@@ -115,7 +117,8 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
 
           const userTiny = await takeUserTiny({ l: auth.login });
 
-          if (sch.ctrl.users.some(user => user.id === userTiny.id)) throw backLocaleError(BackLocaleKey.UserAlreadyInSchedule);
+          if (sch.ctrl.users.some(user => user.id === userTiny.id))
+            throw backLocaleError(BackLocaleKey.UserAlreadyInSchedule);
 
           sch.ctrl.users.push({
             mi: takeNextMi(sch.ctrl.users, ScheduleWidgetUserMi.def),
@@ -159,10 +162,7 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
           if (user === undefined) throw backLocaleError(BackLocaleKey.NotParticipant);
 
           if (
-            scheduleWidgetUserRights.checkIsHasRights(
-              user.R ?? sch.ctrl.defu,
-              ScheduleWidgetUserRoleRight.TotalRedact,
-            )
+            scheduleWidgetUserRights.checkIsHasRights(user.R ?? sch.ctrl.defu, ScheduleWidgetUserRoleRight.TotalRedact)
           )
             throw backLocaleError(BackLocaleKey.ManagerCannotLeave);
 

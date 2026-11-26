@@ -50,9 +50,7 @@ export const StoragesFormulaEditValue = (props: Props) => {
         id={props.column.fx ?? 2}
         hiddenArrow
         items={[0, 1, 2, 3, 4, 5].map(fx => ({ id: fx, title: fx }))}
-        renderItem={({ node }) => (
-          <div>{translateBase(BaseLocaleKey.StoragesDecimals, { n: '' + node })}</div>
-        )}
+        renderItem={({ node }) => <div>{translateBase(BaseLocaleKey.StoragesDecimals, { n: '' + node })}</div>}
         onSelectId={fx =>
           storagesTsjrpcClient.editColumnFields({
             rackw: props.rack.w,

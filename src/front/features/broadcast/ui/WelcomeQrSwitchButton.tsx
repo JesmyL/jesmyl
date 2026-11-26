@@ -12,11 +12,12 @@ import { isShowBroadcastInitialSlideAtom } from '../initial-slide-context';
 import { switchBroadcastApp } from '../lib/broadcast-live-data';
 
 // Заголовки кнопок идут в translateBase без подстановки, поэтому типизируются ключами без её метаданных.
-const sourceAppConfigs: { app: BroadcastViewApp; icon: KnownStameskaIconName; title: NonInterpolatedBaseLocaleKey }[] = [
-  { app: 'bible', icon: 'Book02', title: BaseLocaleKey.Bible },
-  { app: 'cm', icon: 'BookOpen02', title: BaseLocaleKey.CmApp },
-  { app: 'presentations', icon: 'Presentation01', title: BaseLocaleKey.Presentations },
-];
+const sourceAppConfigs: { app: BroadcastViewApp; icon: KnownStameskaIconName; title: NonInterpolatedBaseLocaleKey }[] =
+  [
+    { app: 'bible', icon: 'Book02', title: BaseLocaleKey.Bible },
+    { app: 'cm', icon: 'BookOpen02', title: BaseLocaleKey.CmApp },
+    { app: 'presentations', icon: 'Presentation01', title: BaseLocaleKey.Presentations },
+  ];
 
 export const BroadcastWelcomeQrSwitchButton = () => {
   const app = useAtomValue(broadcastCurrentTextAppAtom);

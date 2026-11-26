@@ -23,7 +23,15 @@ export const CmComListPackKindSelector = () => {
       items={objectKeys(MODE_DICT).map(id => {
         const [icon, kind] = MODE_DICT[id];
 
-        return { id, title: <LazyIcon icon={icon} kind={kind} /> };
+        return {
+          id,
+          title: (
+            <LazyIcon
+              icon={icon}
+              kind={kind}
+            />
+          ),
+        };
       })}
       renderItem={({ node, id }) => (
         <>

@@ -58,9 +58,7 @@ const remoteControlPagePaths = ['', '/cm', '/bible'];
 const isRemoteControlPagePath = (pathname: string) => {
   const normalizedPathname = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
 
-  return remoteControlPagePaths.some(pagePath =>
-    normalizedPathname.endsWith(`/${remoteBroadcastPath}${pagePath}`),
-  );
+  return remoteControlPagePaths.some(pagePath => normalizedPathname.endsWith(`/${remoteBroadcastPath}${pagePath}`));
 };
 
 export const parseRemoteControlLink = (value: string): { remote: string } | nil => {
@@ -107,9 +105,7 @@ export const parseScannedRemoteControlScreen = (
 
     const secretCodeParam = url.searchParams.get(remoteBroadcastSecretCodeSearchParam);
     const secretCode =
-      secretCodeParam != null &&
-      secretCodeParam.length > 0 &&
-      secretCodeParam.length <= remoteBroadcastSecretCodeLength
+      secretCodeParam != null && secretCodeParam.length > 0 && secretCodeParam.length <= remoteBroadcastSecretCodeLength
         ? secretCodeParam
         : null;
 

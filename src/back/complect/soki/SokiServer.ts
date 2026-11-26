@@ -249,11 +249,7 @@ export class SokiServer {
         const visitInfo = this.visits.get(client);
 
         if (checkIsNotUndefined(event.errorMessage)) {
-          if (
-            auth?.login &&
-            !this.isLocalhost(visitInfo?.urls[0]) &&
-            this.checkErrorRate(client)
-          )
+          if (auth?.login && !this.isLocalhost(visitInfo?.urls[0]) && this.checkErrorRate(client))
             insertDashMessage(
               escapeHtmlLazy()(event.errorMessage),
               visitInfo,

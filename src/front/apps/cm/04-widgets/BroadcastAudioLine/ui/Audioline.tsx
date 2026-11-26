@@ -83,9 +83,7 @@ export const CmBroadcastAudioLine = ({ topNode }: { topNode: (nodes?: ReactNode)
           {translateBase(BaseLocaleKey.CmNoComTracks)}
         </div>
       ) : isNoMarks ? (
-        <div className="flex items-center justify-center w-full h-[30%]">
-          {translateBase(BaseLocaleKey.CmNoSlides)}
-        </div>
+        <div className="flex items-center justify-center w-full h-[30%]">{translateBase(BaseLocaleKey.CmNoSlides)}</div>
       ) : (
         <>
           {broadcastSrc && (

@@ -68,10 +68,7 @@ export const IndexAuthorizePage = () => {
                   setTimeout(() => soki.onAuthorizeEvent.invoke(), 100);
 
                   navigate({ to: '..' });
-                  toast(
-                    translateBase(BaseLocaleKey.AuthorizationSuccess),
-                    makeToastOKMoodConfig(),
-                  );
+                  toast(translateBase(BaseLocaleKey.AuthorizationSuccess), makeToastOKMoodConfig());
                 }}
               />
             )}

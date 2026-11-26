@@ -256,9 +256,7 @@ const parseCommand = (value: unknown): RemoteBroadcastCommand | nil => {
       return { kind: RemoteBroadcastCommandKind.Hello };
 
     case RemoteBroadcastCommandKind.CmSlide:
-      return value.dir === -1 || value.dir === 1
-        ? { kind: RemoteBroadcastCommandKind.CmSlide, dir: value.dir }
-        : null;
+      return value.dir === -1 || value.dir === 1 ? { kind: RemoteBroadcastCommandKind.CmSlide, dir: value.dir } : null;
   }
 
   if (Object.hasOwn(value, 'kind')) return typeof value.kind === 'number' ? parseLegacyCommand(value) : null;
@@ -282,9 +280,7 @@ const parseDeviceName = (value: unknown): string | nil => {
 };
 
 const parseJesmylToken = (value: unknown): string | nil =>
-  typeof value === 'string' && value.length > 0 && value.length <= remoteBroadcastJesmylTokenMaxLength
-    ? value
-    : null;
+  typeof value === 'string' && value.length > 0 && value.length <= remoteBroadcastJesmylTokenMaxLength ? value : null;
 
 const remoteBroadcastUserIdentityKeys = ['login', 'fio', 'nick', 'email'] as const;
 

@@ -38,9 +38,7 @@ export const cmEditComOrderServerTsjrpcBase =
             ord.c = chordi;
 
             return backLocaleError(
-              getCmComOrd().isAnchor
-                ? BackLocaleKey.CmComOrdRefChordAttached
-                : BackLocaleKey.CmComOrdChordAttached,
+              getCmComOrd().isAnchor ? BackLocaleKey.CmComOrdRefChordAttached : BackLocaleKey.CmComOrdChordAttached,
               { b: makeOrdTitle(getCmComOrd), i: chordi + 1 },
             );
           }),
@@ -58,17 +56,17 @@ export const cmEditComOrderServerTsjrpcBase =
 
             if (checkIsNil(ord.v)) delete ord.v;
 
-            return backLocaleError(
-              ord.v ? BackLocaleKey.CmComOrdMadeVisible : BackLocaleKey.CmComOrdMadeInvisible,
-              { b: makeOrdTitle(getCmComOrd) },
-            );
+            return backLocaleError(ord.v ? BackLocaleKey.CmComOrdMadeVisible : BackLocaleKey.CmComOrdMadeInvisible, {
+              b: makeOrdTitle(getCmComOrd),
+            });
           }),
 
           toggleAnchorInhVis: modifyOrd(ModifyOrdParent.Lead, 'COM_ORD', (leadOrd, getCmComOrd) => {
             const cmOrd = getCmComOrd();
             const inhi = cmOrd.me.anchorInheritIndex;
 
-            if (checkIsNil(inhi) || checkIsNil(cmOrd.me.leadOrd)) throw backLocaleError(BackLocaleKey.CmComOrderContinuationNotFound);
+            if (checkIsNil(inhi) || checkIsNil(cmOrd.me.leadOrd))
+              throw backLocaleError(BackLocaleKey.CmComOrderContinuationNotFound);
 
             const isVisible = cmOrd.isVisible;
             leadOrd._v ??= [];
@@ -182,10 +180,9 @@ export const cmEditComOrderServerTsjrpcBase =
           isBmSwitch: modifyOrd(ModifyOrdParent.Self, 'COM_ORD', (ord, getCmComOrd) => {
             const isAdd = updateCmComOrderTonTypeSwitcherValue(ord);
 
-            return backLocaleError(
-              isAdd ? BackLocaleKey.CmComOrdTonSet : BackLocaleKey.CmComOrdTonRemoved,
-              { b: makeOrdTitle(getCmComOrd) },
-            );
+            return backLocaleError(isAdd ? BackLocaleKey.CmComOrdTonSet : BackLocaleKey.CmComOrdTonRemoved, {
+              b: makeOrdTitle(getCmComOrd),
+            });
           }),
         },
       });

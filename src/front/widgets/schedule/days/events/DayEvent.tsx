@@ -77,12 +77,9 @@ export function ScheduleWidgetDayEvent(props: Props) {
   const now = Date.now();
   const eventTm = ScheduleWidgetCleans.takeEventTm(props.event, eventType);
   const wakeupMs = ScheduleWidgetCleans.computeDayWakeUpTime(props.day.wup, 'number');
-  const eventFinishMs = indexScheduleGetEventFinishMs(
-    props.schedule,
-    wakeupMs,
-    props.dayi,
-    props.eventTimes[props.eventi],
-  ) + (props.periodShiftMs ?? 0);
+  const eventFinishMs =
+    indexScheduleGetEventFinishMs(props.schedule, wakeupMs, props.dayi, props.eventTimes[props.eventi]) +
+    (props.periodShiftMs ?? 0);
   const eventStartMs = eventFinishMs - eventTm * howMillisecondsInMin;
   let isPrevEvent = now > eventFinishMs;
 
@@ -222,28 +219,26 @@ export function ScheduleWidgetDayEvent(props: Props) {
         {(isExpandEvent || props.isForceExpand) && (
           <StyledContent className="no-scrollbar">
             <div className="sign-line" />
-            {isRedact ? (
-              rights.isCanRedactEventContent && (
-                <DayEventRedactControls
-                  eventTopic={props.event.topic}
-                  eventTypeTitle={eventType.title}
-                  isSecret={props.event.secret}
-                  noAppInform={props.event.noAppInform}
-                  appInform={props.schedule.appInform ?? 1}
-                  isPastEvent={isPrevEvent || isCurrentEvent}
-                  dayEventScopeProps={dayEventScopeProps}
-                  eventTm={eventTm}
-                />
-              )
-            ) : (
-              !!props.event.secret && (
-                <TheIconButton
-                  icon="ViewOffSlash"
-                  className="text-xKO my-2"
-                  postfix={translateBase(BaseLocaleKey.ScheduleLeadersOnly)}
-                />
-              )
-            )}
+            {isRedact
+              ? rights.isCanRedactEventContent && (
+                  <DayEventRedactControls
+                    eventTopic={props.event.topic}
+                    eventTypeTitle={eventType.title}
+                    isSecret={props.event.secret}
+                    noAppInform={props.event.noAppInform}
+                    appInform={props.schedule.appInform ?? 1}
+                    isPastEvent={isPrevEvent || isCurrentEvent}
+                    dayEventScopeProps={dayEventScopeProps}
+                    eventTm={eventTm}
+                  />
+                )
+              : !!props.event.secret && (
+                  <TheIconButton
+                    icon="ViewOffSlash"
+                    className="text-xKO my-2"
+                    postfix={translateBase(BaseLocaleKey.ScheduleLeadersOnly)}
+                  />
+                )}
             {((isRedact && rights.isCanRedactEventContent) || props.event.dsc) && (
               <StrongEditableField
                 isRedact={isRedact && rights.isCanRedactEventContent}
@@ -261,9 +256,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                 <ScheduleWidgetBindAtts
                   atts={props.event.atts}
                   schedule={props.schedule}
-                  canRedactAtt={attKey =>
-                    attKey === '[cm]:coms' ? isCanRedactComsList : undefined
-                  }
+                  canRedactAtt={attKey => (attKey === '[cm]:coms' ? isCanRedactComsList : undefined)}
                   forTitle={translateBase(BaseLocaleKey.ScheduleInsertAttachment, { t: eventType.title })}
                   onAddAttSend={(attKey, defaultValue) =>
                     schDayEventsTsjrpcClient.addAttachment({ props: dayEventScopeProps, attKey, defaultValue })

@@ -4,9 +4,7 @@ import { RemotePublishedControlScoped } from 'shared/api/remote-controls';
 
 const makeTarget = (control: RemotePublishedControlScoped) => `${control.ip}:${control.port}`;
 
-export const usePublishedRemoteControls = (
-  requestControls: () => Promise<RemotePublishedControlScoped[]>,
-) => {
+export const usePublishedRemoteControls = (requestControls: () => Promise<RemotePublishedControlScoped[]>) => {
   const [controls, setControls] = useState<RemotePublishedControlScoped[] | null>(null);
   const [isLoadFailed, setIsLoadFailed] = useState(false);
   const [reachability, setReachability] = useState<{

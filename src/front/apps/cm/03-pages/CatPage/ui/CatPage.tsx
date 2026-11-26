@@ -91,9 +91,7 @@ export const CmCatPage = (props: Props) => {
                       ref={categoryTitleRef}
                     >
                       <div>{props.icat.name}:</div>
-                      <div>
-                        {translateBase(BaseLocaleKey.FromOf, { f: foundComsLength, o: props.comsCount })}
-                      </div>
+                      <div>{translateBase(BaseLocaleKey.FromOf, { f: foundComsLength, o: props.comsCount })}</div>
                     </div>
                     <div className="com-list">
                       <CmComSetListLimitsExtracterContext

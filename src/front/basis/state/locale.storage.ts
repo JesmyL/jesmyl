@@ -120,9 +120,7 @@ export const saveLocaleCache = async (key: string, value: object): Promise<void>
     }
 
     dropLegacyLocaleStorage();
-    await Promise.allSettled(
-      localeTiers.map(({ remove }, tierIndex) => (tierIndex === index ? null : remove(key))),
-    );
+    await Promise.allSettled(localeTiers.map(({ remove }, tierIndex) => (tierIndex === index ? null : remove(key))));
     return;
   }
 };

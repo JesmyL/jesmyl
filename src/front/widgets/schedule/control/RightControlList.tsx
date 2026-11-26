@@ -38,9 +38,7 @@ export function ScheduleWidgetRightControlList({
         if (type.individual) isIndividualStarted = true;
         const isHas =
           (type.always || type.individual || isCan) &&
-          (type.individual
-            ? rightCtrl.checkIsHasIndividualRights(R, type.id)
-            : rightCtrl.checkIsHasRights(R, type.id));
+          (type.individual ? rightCtrl.checkIsHasIndividualRights(R, type.id) : rightCtrl.checkIsHasRights(R, type.id));
 
         const node = (
           <div

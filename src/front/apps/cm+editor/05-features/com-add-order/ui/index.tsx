@@ -50,7 +50,8 @@ export const CmEditorComAddOrderRedactorAdditions = ({ com, setClickBetweenOrds 
               setClickBetweenOrds({
                 buttonTitle: (
                   <>
-                    {translateEditorBase(EditorLocaleKey.CmEditorNewBlock)} <span className="text-x7">{orderTitle}</span>
+                    {translateEditorBase(EditorLocaleKey.CmEditorNewBlock)}{' '}
+                    <span className="text-x7">{orderTitle}</span>
                   </>
                 ),
                 checkIsShowButton: ({ ordAbove }) => {

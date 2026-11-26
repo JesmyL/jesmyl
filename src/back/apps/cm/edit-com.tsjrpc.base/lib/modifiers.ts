@@ -1,4 +1,9 @@
-import { backLocaleError, backLocalePayload, localizeBackLocaleErrorPayload, translateBackTexts } from 'back/locales/back';
+import {
+  backLocaleError,
+  backLocalePayload,
+  localizeBackLocaleErrorPayload,
+  translateBackTexts,
+} from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { comDB } from 'back/drizzle.schema';
@@ -74,8 +79,9 @@ export const modifyCom =
       value: props.comw,
       ...(checkIsString(feedback) || !feedback ? {} : feedback),
       description: description
-        ? backLocalePayload(langi =>
-            `${translateBackTexts(langi, BackLocaleKey.CmComChanged, { i: comNumber, n: comName })} ${localizeBackLocaleErrorPayload(description, langi)}`,
+        ? backLocalePayload(
+            langi =>
+              `${translateBackTexts(langi, BackLocaleKey.CmComChanged, { i: comNumber, n: comName })} ${localizeBackLocaleErrorPayload(description, langi)}`,
           )
         : null,
     };

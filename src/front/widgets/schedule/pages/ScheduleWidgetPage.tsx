@@ -24,8 +24,7 @@ export const ScheduleWidgetPage = ({ inviteHash }: { inviteHash?: string }) => {
   const schedule = schedules?.find(({ w }) => w === schw);
   const rights = useScheduleWidgetRights(schedule);
   const isSwPublic =
-    schedule != null &&
-    scheduleWidgetRegTypeRights.checkIsHasRights(schedule.ctrl.type, ScheduleWidgetRegType.Public);
+    schedule != null && scheduleWidgetRegTypeRights.checkIsHasRights(schedule.ctrl.type, ScheduleWidgetRegType.Public);
   const connectionNode = useConnectionState();
   const auth = useAuth();
   const appName = useAppNameContext();

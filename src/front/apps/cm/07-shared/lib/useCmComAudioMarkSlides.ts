@@ -14,12 +14,11 @@ export const useCmComAudioMarkSlides = (
   textCase: TextCase | nil,
   nameSpaceiVariants?: number[],
 ) => {
-  const { markTimes: wholeMarkTimes, timeSlideDict, srcMarks } = useCmComMarkTextValuesMaker(
-    com,
-    src,
-    textCase,
-    nameSpaceiVariants,
-  );
+  const {
+    markTimes: wholeMarkTimes,
+    timeSlideDict,
+    srcMarks,
+  } = useCmComMarkTextValuesMaker(com, src, textCase, nameSpaceiVariants);
   const langi = com?.langi ?? Langi.Ru;
 
   const { audioSlides, markTimes } = useMemo(() => {

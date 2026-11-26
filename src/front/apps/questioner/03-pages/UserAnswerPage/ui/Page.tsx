@@ -70,7 +70,8 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
         <ConditionalRender
           value={blank}
           render={blank => {
-            if (!blank.anon && !userAnswer.fio) answerErrorsSet.add(translateBase(BaseLocaleKey.QuestionerFullNameMissing));
+            if (!blank.anon && !userAnswer.fio)
+              answerErrorsSet.add(translateBase(BaseLocaleKey.QuestionerFullNameMissing));
 
             return (
               <Card.Root>
@@ -209,10 +210,7 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                           })
                           .then(() => {
                             answersAtom.set(prev => ({ ...prev, isWasPublicate: true }));
-                            toast(
-                              translateBase(BaseLocaleKey.QuestionerAnswerSent),
-                              makeToastOKMoodConfig(),
-                            );
+                            toast(translateBase(BaseLocaleKey.QuestionerAnswerSent), makeToastOKMoodConfig());
                           })
                       }
                     >

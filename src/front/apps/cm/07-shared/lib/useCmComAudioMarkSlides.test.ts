@@ -113,9 +113,14 @@ describe('useCmComAudioMarkSlides', () => {
     const { audioSlides, markTimes } = takeSlides();
 
     expect(markTimes).toEqual([0, 1000, 2000, 5000, 6000, 7000]);
-    expect(audioSlides.map(({ text }) => text)).toEqual(
-      ['Вступление', 'Моя метка', 'Раз\nдва три четыре', mergedEnteredText, mergedEnteredFadeText, 'Финал'],
-    );
+    expect(audioSlides.map(({ text }) => text)).toEqual([
+      'Вступление',
+      'Моя метка',
+      'Раз\nдва три четыре',
+      mergedEnteredText,
+      mergedEnteredFadeText,
+      'Финал',
+    ]);
     expect(audioSlides.map(({ isChorded }) => isChorded)).toEqual([true, false, false, true, true, true]);
     expect(audioSlides.map(({ time }) => time)).toEqual(markTimes);
     expect(markTimes).not.toContain(3000);
@@ -127,9 +132,15 @@ describe('useCmComAudioMarkSlides', () => {
     const { audioSlides, markTimes } = takeSlides([1, 0]);
 
     expect(markTimes).toEqual([0, 1000, 2000, 3000, 5000, 6000, 7000]);
-    expect(audioSlides.map(({ text }) => text)).toEqual(
-      ['Вступление', 'Моя метка', 'Раз', 'два\nтри четыре', mergedEnteredText, mergedEnteredFadeText, 'Финал'],
-    );
+    expect(audioSlides.map(({ text }) => text)).toEqual([
+      'Вступление',
+      'Моя метка',
+      'Раз',
+      'два\nтри четыре',
+      mergedEnteredText,
+      mergedEnteredFadeText,
+      'Финал',
+    ]);
     expect(audioSlides.map(({ isChorded }) => isChorded)).toEqual([true, false, false, false, true, true, true]);
     expect(audioSlides.map(({ time }) => time)).toEqual(markTimes);
     expect(audioSlides.at(2)?.slide?.id).toBe('w22l0');
@@ -141,9 +152,15 @@ describe('useCmComAudioMarkSlides', () => {
     const { audioSlides, markTimes } = takeSlides();
 
     expect(markTimes).toEqual([0, 1000, 2000, 3000, 5000, 6000, 7000]);
-    expect(audioSlides.map(({ text }) => text)).toEqual(
-      ['Вступление', 'Моя метка', 'Раз', 'два\nтри четыре', mergedEnteredText, mergedEnteredFadeText, 'Финал'],
-    );
+    expect(audioSlides.map(({ text }) => text)).toEqual([
+      'Вступление',
+      'Моя метка',
+      'Раз',
+      'два\nтри четыре',
+      mergedEnteredText,
+      mergedEnteredFadeText,
+      'Финал',
+    ]);
     expect(audioSlides.map(({ time }) => time)).toEqual(markTimes);
   });
 });

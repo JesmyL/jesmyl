@@ -51,7 +51,8 @@ export const makeCmComHttpLinkFromNumLead = (numLeadLink: HttpLink | HttpNumLead
   if (checkIsStartsWith(numLeadLink, 'http')) return numLeadLink;
 
   const prefix = `${parseFloat(numLeadLink)}~` as const;
-  if (numLeadToHttpLinks[prefix] === undefined) throw backLocaleError(BackLocaleKey.AudioLinkPrefixUnknown, { p: prefix });
+  if (numLeadToHttpLinks[prefix] === undefined)
+    throw backLocaleError(BackLocaleKey.AudioLinkPrefixUnknown, { p: prefix });
 
   let postfix = numLeadLink.slice(prefix.length);
 

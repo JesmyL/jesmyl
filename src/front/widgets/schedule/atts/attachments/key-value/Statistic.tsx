@@ -127,13 +127,9 @@ export function ScheduleKeyValueListAttStatistic(props: { list: ScheduleWidgetAp
           {!checks || len === checks || (
             <div className="">{translateBase(BaseLocaleKey.ScheduleSelectableCount, { n: checks })}</div>
           )}
-          {!checked || (
-            <div className="">{translateBase(BaseLocaleKey.ScheduleCheckedCount, { n: checked })}</div>
-          )}
+          {!checked || <div className="">{translateBase(BaseLocaleKey.ScheduleCheckedCount, { n: checked })}</div>}
           {!lists || <div className="">{translateBase(BaseLocaleKey.ScheduleListsCount, { n: lists })}</div>}
-          {!subLists || (
-            <div className="">{translateBase(BaseLocaleKey.ScheduleSubListsCount, { n: subLists })}</div>
-          )}
+          {!subLists || <div className="">{translateBase(BaseLocaleKey.ScheduleSubListsCount, { n: subLists })}</div>}
         </div>
       )}
     </>

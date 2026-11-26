@@ -30,8 +30,7 @@ const requestNotificationPermission = () =>
   new Promise<NotificationPermission>(resolve => {
     const requestResult: unknown = Notification.requestPermission(resolve);
 
-    if (requestResult instanceof Promise)
-      void requestResult.then(resolve, () => resolve(Notification.permission));
+    if (requestResult instanceof Promise) void requestResult.then(resolve, () => resolve(Notification.permission));
     else setTimeout(resolve, 0, Notification.permission);
   });
 
@@ -124,8 +123,7 @@ export const usePushSubscription = () => {
 
     const { endpoint, keys } = subscription.toJSON();
 
-    if (!endpoint || !keys?.p256dh || !keys.auth)
-      throw translateBase(BaseLocaleKey.SchedulePushSubscribeError);
+    if (!endpoint || !keys?.p256dh || !keys.auth) throw translateBase(BaseLocaleKey.SchedulePushSubscribeError);
 
     await indexTsjrpcClientMethods.subscribePush({
       subscription: { endpoint, keys: { p256dh: keys.p256dh, auth: keys.auth } },

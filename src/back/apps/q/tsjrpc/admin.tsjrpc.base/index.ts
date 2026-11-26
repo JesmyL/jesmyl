@@ -300,7 +300,8 @@ function updateTemplate<Args extends QuestionerTemplateSelector>(
 ): (args: Args, tool: ServerTSJRPCTool) => void {
   return updateBlank((blank, args) => {
     const template = blank.tmp[args.templateId];
-    if (template == null) throw backLocaleError(BackLocaleKey.QTemplateNotFound, { t: args.templateId, n: blank.title });
+    if (template == null)
+      throw backLocaleError(BackLocaleKey.QTemplateNotFound, { t: args.templateId, n: blank.title });
 
     updater(template, args, blank);
   });

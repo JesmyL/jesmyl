@@ -11,7 +11,12 @@ import { schRolesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { extractScheduleWidgetRoleUser, takeScheduleWidgetUserName } from '#widgets/schedule/useScheduleWidget';
 import { Atom, atom } from 'atomaric';
 import React, { useMemo } from 'react';
-import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';
+import {
+  IScheduleWidgetRole,
+  ScheduleRoleScopeProps,
+  scheduleWidgetUserRights,
+  ScheduleWidgetUserRoleRight,
+} from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetRoleFace } from './RoleFace';
 

@@ -32,9 +32,7 @@ export const readPresentationPreview = async (filePath: string, size: number): P
 };
 
 export const usePresentationPreview = (filePath: string, size: number) => {
-  const [slide, setSlide] = useState<PresentationSlide | nil>(() =>
-    takeCachedPresentationPreview(filePath, size),
-  );
+  const [slide, setSlide] = useState<PresentationSlide | nil>(() => takeCachedPresentationPreview(filePath, size));
 
   useEffect(() => {
     let isActive = true;

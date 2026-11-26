@@ -8,7 +8,12 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { Link } from '@tanstack/react-router';
 import { Atom, atom } from 'atomaric';
 import { useMemo, useState } from 'react';
-import { IScheduleWidget, packScheduleWidgetInviteLink, ScheduleScopeProps, scheduleWidgetUserRights } from 'shared/api';
+import {
+  IScheduleWidget,
+  packScheduleWidgetInviteLink,
+  ScheduleScopeProps,
+  scheduleWidgetUserRights,
+} from 'shared/api';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { ScheduleWidgetMyUserAppInform } from '../app-inform/UserAppInform';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
@@ -60,9 +65,8 @@ function ScheduleWidgetMyParticipation() {
 
   const roleTitle =
     rights.schedule.ctrl.roles.find(({ userMi }) => userMi === myUser.mi)?.title ||
-    scheduleWidgetUserRights.texts[
-      scheduleWidgetUserRights.rightsBalance(myUser.R ?? rights.schedule.ctrl.defu)
-    ]?.role?.[0] ||
+    scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(myUser.R ?? rights.schedule.ctrl.defu)]
+      ?.role?.[0] ||
     translateBase(BaseLocaleKey.WithoutRole);
 
   return (
@@ -104,7 +108,10 @@ function ScheduleWidgetInviteQr({ openAtom }: { openAtom: Atom<boolean> }) {
         openAtom={openAtom}
         text={schLinkAction.makeLink(
           rights.myUser
-            ? { inviteSch: rights.schedule.w, inviteHash: packScheduleWidgetInviteLink(rights.schedule.w, rights.myUser.mi) }
+            ? {
+                inviteSch: rights.schedule.w,
+                inviteHash: packScheduleWidgetInviteLink(rights.schedule.w, rights.myUser.mi),
+              }
             : { inviteSch: rights.schedule.w },
         )}
       />

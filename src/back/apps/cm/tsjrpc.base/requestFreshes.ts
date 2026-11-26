@@ -2,7 +2,16 @@ import { constantsConfigFileStore } from 'back/apps/index/schedules/file-stores'
 import { takeScheduleWidgetTiny } from 'back/apps/index/schedules/schedule.tiny';
 import { takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import { catDB, comDB, sch2ComDB, schComHistoryDB, scheduleDB, user2ComDB, userDB, userExtDB } from 'back/drizzle.schema';
+import {
+  catDB,
+  comDB,
+  sch2ComDB,
+  schComHistoryDB,
+  scheduleDB,
+  user2ComDB,
+  userDB,
+  userExtDB,
+} from 'back/drizzle.schema';
 import { db } from 'back/drizzle/drizzle.db';
 import { PgCheckFieldMode } from 'back/drizzle/ex';
 import { makePgCheckedSelectExportableComSqlRaw } from 'back/drizzle/ex/com.selectors';

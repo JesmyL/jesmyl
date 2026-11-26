@@ -98,9 +98,7 @@ const takeOtpPushUserId = async (email: string, auth: UserAuth | nil) => {
   if (userByEmail) return userByEmail.id;
   if (!auth?.login) return null;
 
-  return (
-    (await db.select({ id: userDB.id }).from(userDB).where(eq(userDB.l, auth.login)).limit(1)).at(0)?.id ?? null
-  );
+  return (await db.select({ id: userDB.id }).from(userDB).where(eq(userDB.l, auth.login)).limit(1)).at(0)?.id ?? null;
 };
 
 const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = async (
@@ -128,7 +126,8 @@ const sendEmailOTP: ServerTsjrpcSatisfy<IndexTsjrpcModel>['sendEmailOTP_v1'] = a
     );
   });
 
-  if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts)) throw backLocaleError(BackLocaleKey.OtpRequestLater, { e: email });
+  if (userVerify && !checkIsOTPTimeStampExpired(userVerify.ts))
+    throw backLocaleError(BackLocaleKey.OtpRequestLater, { e: email });
 
   let otp;
   const oldOtpSet = new Set(verifies.map(it => it.otp));

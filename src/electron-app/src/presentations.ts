@@ -220,7 +220,8 @@ const takeGradientCss = (value: unknown) => {
   const stops: string[] = [];
 
   for (const item of value.colors) {
-    if (checkIsObject(item) && checkIsString(item.color) && checkIsString(item.pos)) stops.push(`${item.color} ${item.pos}`);
+    if (checkIsObject(item) && checkIsString(item.color) && checkIsString(item.pos))
+      stops.push(`${item.color} ${item.pos}`);
   }
 
   if (!stops.length) return null;
@@ -310,9 +311,7 @@ const takeSlideTitle = (elements: PptElement[]) => {
   const blocks = elements
     .flatMap(element => {
       const lines = element.content ? takeHtmlLines(element.content) : [];
-      return lines.length
-        ? [{ name: element.name ?? '', top: element.top ?? 0, left: element.left ?? 0, lines }]
-        : [];
+      return lines.length ? [{ name: element.name ?? '', top: element.top ?? 0, left: element.left ?? 0, lines }] : [];
     })
     .toSorted((left, right) => left.top - right.top || left.left - right.left);
 
@@ -411,9 +410,7 @@ const takeElementItems = (element: PptElement, scale: number): PresentationSlide
 };
 
 const takePresentationSlide = (slide: PptSlide, slid: number, size: SlideSize, scale: number): PresentationSlide => {
-  const elements = flattenElements(slide.elements).toSorted(
-    (left, right) => (left.order ?? 0) - (right.order ?? 0),
-  );
+  const elements = flattenElements(slide.elements).toSorted((left, right) => (left.order ?? 0) - (right.order ?? 0));
   const layoutItems = flattenElements(slide.layoutElements)
     .filter(element => !isFullBleed(element, size) && !(element.content && takeHtmlLines(element.content).length))
     .flatMap(element => takeElementItems(element, scale));
@@ -431,8 +428,7 @@ const takePresentationSlide = (slide: PptSlide, slid: number, size: SlideSize, s
   return result;
 };
 
-const isPresentationFilePath = (filePath: string) =>
-  path.extname(filePath).toLowerCase() === presentationExtension;
+const isPresentationFilePath = (filePath: string) => path.extname(filePath).toLowerCase() === presentationExtension;
 
 /** Resolves a renderer-supplied WorkDir path — arbitrary filesystem paths are rejected by the allowed-root check. */
 const takePresentationPath = (inputPath: string) => {

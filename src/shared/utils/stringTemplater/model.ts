@@ -24,11 +24,10 @@ type UnionToIntersection<Union> = (Union extends unknown ? (arg: Union) => void 
   ? Intersection
   : never;
 
-type StringTemplaterLastKey<Keys extends string> = UnionToIntersection<
-  Keys extends unknown ? (arg: Keys) => void : never
-> extends (arg: infer Key) => void
-  ? Key
-  : never;
+type StringTemplaterLastKey<Keys extends string> =
+  UnionToIntersection<Keys extends unknown ? (arg: Keys) => void : never> extends (arg: infer Key) => void
+    ? Key
+    : never;
 
 type StringTemplaterKeysWithin3<Keys extends string, Acc extends readonly unknown[] = []> = [Keys] extends [never]
   ? true
@@ -43,14 +42,15 @@ type StringTemplaterInterpolationLooseTail<Keys extends string> = [Keys] extends
   : `${string}$${StringTemplaterLastKey<Keys> & string}${string}` &
       StringTemplaterInterpolationLooseTail<Exclude<Keys, StringTemplaterLastKey<Keys>>>;
 
-export type StringTemplaterInterpolation<Vals extends object, GenKey extends string = string> =
-  (StringTemplaterKeysWithin3<keyof Vals & string> extends true
+export type StringTemplaterInterpolation<Vals extends object, GenKey extends string = string> = (
+  StringTemplaterKeysWithin3<keyof Vals & string> extends true
     ? StringTemplaterInterpolationTail<keyof Vals & string, GenKey>
-    : StringTemplaterInterpolationLooseTail<keyof Vals & string>) extends infer Tail
-    ? Tail extends string
-      ? Tail & StringTemplaterMeta<Vals, GenKey>
-      : never
-    : never;
+    : StringTemplaterInterpolationLooseTail<keyof Vals & string>
+) extends infer Tail
+  ? Tail extends string
+    ? Tail & StringTemplaterMeta<Vals, GenKey>
+    : never
+  : never;
 
 export type StringTemplaterVals<Str> = [Str] extends [
   { readonly [stringTemplaterValsMeta]?: (vals: infer Vals) => void },

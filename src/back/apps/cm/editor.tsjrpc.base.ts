@@ -220,8 +220,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 .orderBy(asc(comDB.w));
               const candidateWids = comRows
                 .filter(
-                  ({ nl, am }) =>
-                    nl?.[0] != null || (am != null && objectValues(am).some(src => objectLength(src))),
+                  ({ nl, am }) => nl?.[0] != null || (am != null && objectValues(am).some(src => objectLength(src))),
                 )
                 .map(({ w }) => w);
               const candidateComRows = candidateWids.length
@@ -241,10 +240,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                     const expandLines = com.makeExpandLines(null);
                     const slides1 = com.makeExpandSlides([1], true, undefined, expandLines).length;
 
-                    if (
-                      nl?.[0] != null &&
-                      com.makeExpandSlides([0], true, undefined, expandLines).length * 2 < slides1
-                    )
+                    if (nl?.[0] != null && com.makeExpandSlides([0], true, undefined, expandLines).length * 2 < slides1)
                       return true;
 
                     return hasMarks && Math.max(...markCounts) * 2 < slides1;
@@ -266,27 +262,16 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
                 .filter(
                   ({ am }) =>
                     am != null &&
-                    objectValues(am).some(src =>
-                      objectKeys(src).some(time => Math.round(+time * 100) % 10 !== 0),
-                    ),
+                    objectValues(am).some(src => objectKeys(src).some(time => Math.round(+time * 100) % 10 !== 0)),
                 )
                 .map(it => it.w);
               break;
             case BackLocaleKey.CmSmartSearchAnchorsAndAnchorPlus:
-              comws = (
-                await db
-                  .select()
-                  .from(comDB)
-                  .where(eq(comDB.isRemoved, Bool.False))
-                  .orderBy(asc(comDB.w))
-              )
+              comws = (await db.select().from(comDB).where(eq(comDB.isRemoved, Bool.False)).orderBy(asc(comDB.w)))
                 .filter(comRow => {
                   try {
                     const ords = new CmCom(comRow, null, null, Bool.False).setOrders() ?? [];
-                    return (
-                      ords.some(ord => ord.me.isAnchorInherit) &&
-                      ords.some(ord => ord.me.isAnchorInheritPlus)
-                    );
+                    return ords.some(ord => ord.me.isAnchorInherit) && ords.some(ord => ord.me.isAnchorInheritPlus);
                   } catch (_error) {
                     return false;
                   }

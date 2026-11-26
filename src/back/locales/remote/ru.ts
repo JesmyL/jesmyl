@@ -1,6 +1,9 @@
 import { RemoteLocaleKey } from 'shared/model/+locale/_RemoteLocaleKey';
 
-export const localeRemoteRu: Record<Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>, string> = {
+export const localeRemoteRu: Record<
+  Exclude<RemoteLocaleKey, RemoteLocaleKey.VersionMismatch | RemoteLocaleKey.Clients>,
+  string
+> = {
   [RemoteLocaleKey.Control]: 'Удалённый контроль',
   [RemoteLocaleKey.Connected]: 'Подключено',
   [RemoteLocaleKey.Disconnected]: 'Отключено',

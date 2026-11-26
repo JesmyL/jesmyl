@@ -56,7 +56,7 @@ const takeSchedulePeriodByKind = (kind: SchedulePeriodKind, date: Date): ISchedu
 
 const takeNearestWeekdayTime = (weekday: number, timeFrom: Date) => {
   const date = new Date();
-  date.setDate(date.getDate() + (weekday + 7 - date.getDay()) % 7);
+  date.setDate(date.getDate() + ((weekday + 7 - date.getDay()) % 7));
   date.setHours(timeFrom.getHours(), timeFrom.getMinutes(), timeFrom.getSeconds(), timeFrom.getMilliseconds());
 
   return date.getTime();

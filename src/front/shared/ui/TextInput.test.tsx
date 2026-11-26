@@ -114,9 +114,7 @@ describe('link paste navigation', () => {
   });
 
   it('lets a passed onPaste handler prevent the navigation', async () => {
-    const { container } = render(
-      <TextInput onPaste={event => event.preventDefault()} />,
-    );
+    const { container } = render(<TextInput onPaste={event => event.preventDefault()} />);
     const input = container.querySelector('input')!;
 
     await pasteText(input, 'http://localhost:3627/cm/i?comw=5');

@@ -108,7 +108,8 @@ export function ScheduleWidgetDayEventRating(props: {
           <div className="flex gap-0 my-2">
             {ratePoints.map(ratePoint => {
               const isSelected = ratePoint === myRate[0];
-              const isFill = ratePoint === 0 ? isSelected : ratePoint < 0 ? myRate[0] <= ratePoint : myRate[0] >= ratePoint;
+              const isFill =
+                ratePoint === 0 ? isSelected : ratePoint < 0 ? myRate[0] <= ratePoint : myRate[0] >= ratePoint;
 
               return (
                 <TheIconSendButton

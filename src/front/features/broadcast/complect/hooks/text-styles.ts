@@ -13,8 +13,7 @@ export const useScreenBroadcastTextStyles = (config: ScreenBroadcastTextConfig |
       fontWeight: theConfig.fontWeight,
       textAlign: theConfig.textAlign,
       fontStyle: theConfig.fontStyle,
-      fontFamily:
-        theConfig.fontFileId == null ? fontFamily : `'${takeMyFileFontFamily(theConfig.fontFileId)}'`,
+      fontFamily: theConfig.fontFileId == null ? fontFamily : `'${takeMyFileFontFamily(theConfig.fontFileId)}'`,
       ...makeBroadcastTextStroke(theConfig),
     };
   }, [theConfig]);

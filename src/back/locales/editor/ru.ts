@@ -13,7 +13,9 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmIntensity]: 'Интенсивность',
   [EditorLocaleKey.CmEditSquareBracketsHint]:
     'Текст в [квадратных скобках] не показывается в слайдах, но приводится к (тексту в круглых скобках) в тексте песен. Используйте [[две открывающие скобки] для переноса строки. Перед "[" должен быть пробел, а после "]" быть ничего не должно',
-  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, ['$t'])`Удалить${IF(isUtil.EQ('$t', '')).THEN` новый`} блок?\n\n$t`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditIsRemoveTextBlock, [
+    '$t',
+  ])`Удалить${IF(isUtil.EQ('$t', '')).THEN` новый`} блок?\n\n$t`,
   [EditorLocaleKey.CmEditRemovedComs]: 'Удалённые песни',
   [EditorLocaleKey.CmEditBackup]: 'Восстановить эту песню',
   [EditorLocaleKey.CmEditDestroy]: 'Уничтожить эту песню',
@@ -147,9 +149,7 @@ export const localeEditorRu = convertObjectToArray<LocaleCmEditor>({
   [EditorLocaleKey.CmEditorFretNumber]: 'Лад $n;',
   [EditorLocaleKey.CmEditorInterpretationEdit]: 'Редактирование интерпретации для мероприятия',
   [EditorLocaleKey.CmEditorIncludeBibleWords]: 'включать библейские слова',
-  ...editorLocaleTemplate(
-    EditorLocaleKey.CmEditorSendWords,
-  )`Отправить $n; слов${FUNCTION('dec')('$n', 'о', 'а', '')}`,
+  ...editorLocaleTemplate(EditorLocaleKey.CmEditorSendWords)`Отправить $n; слов${FUNCTION('dec')('$n', 'о', 'а', '')}`,
   [EditorLocaleKey.CmEditorLinkPartHide]: 'Сделать $n;-ю часть ссылки на $h; невидимой?',
   [EditorLocaleKey.CmEditorLinkPartShow]: 'Сделать $n;-ю часть ссылки на $h; видимой?',
   [EditorLocaleKey.CmEditorAppliqueDestroyed]: 'Это действие повлечёт за собой уничтожение аппликатуры в данном блоке.',

@@ -18,9 +18,7 @@ const makeSortFields = (): DropdownItem[] => [
   { title: translateBase(BaseLocaleKey.Name), id: 'title' },
   { title: translateBase(BaseLocaleKey.StoragesNote), id: 'note' },
 ];
-const makeGroupFields = (): DropdownItem[] => [
-  { title: translateBase(BaseLocaleKey.StoragesStatus), id: 'status' },
-];
+const makeGroupFields = (): DropdownItem[] => [{ title: translateBase(BaseLocaleKey.StoragesStatus), id: 'status' }];
 const sortableColumnTypesSet = new Set([
   StoragesColumnType.Link,
   StoragesColumnType.Number,

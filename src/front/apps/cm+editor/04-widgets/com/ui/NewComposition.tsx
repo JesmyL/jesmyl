@@ -22,7 +22,10 @@ import { CmCom } from 'shared/const/cm/Com';
 import { cmDefaultCom } from 'shared/const/cm/def.com';
 import { Bool } from 'shared/enums';
 import { itIt } from 'shared/utils';
-import { chordsBlockIncorrectMessage, takeChordsBlockIncorrects } from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
+import {
+  chordsBlockIncorrectMessage,
+  takeChordsBlockIncorrects,
+} from 'shared/utils/cm/com/chordsBlockIncorrectMessage';
 import { comNameExtraSymbolsStr } from 'shared/utils/cm/com/const';
 import { takeTextBlockLocalIncorrects } from 'shared/utils/cm/com/takeTextBlockLocalIncorrects';
 import { textLinesLengthIncorrects } from 'shared/utils/cm/com/textLinesLengthIncorrects';
@@ -101,7 +104,8 @@ export const CmEditorComCreate = ({ openAtom }: { openAtom: Atom<boolean> }) => 
       (text, texti) =>
         textLinesLengthIncorrects(text, maxAvailableComLineLength) ??
         takeTextBlockLocalIncorrects(text) ??
-        textsEeIncorrects[texti] ?? {},
+        textsEeIncorrects[texti] ??
+        {},
     ) ?? [];
   const chordsErrors = newICom.c?.map(text => chordsBlockIncorrectMessage(text, Bool.False)) ?? [];
   const hasIncorrectChords =

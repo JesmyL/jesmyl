@@ -229,9 +229,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.QuestionerCommentRequiredFor]: 'The comment "$t;" is required',
   [BaseLocaleKey.QuestionerSortValuesIn]: 'You need to sort the values in the point "$t;"',
   [BaseLocaleKey.QuestionerRestoreIn]: 'You need to restore all missing words in the point "$t;"',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.QuestionerVariantsNumber,
-  )`$n; option${FUNCTION('dec')('$n', '', 's')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.QuestionerVariantsNumber)`$n; option${FUNCTION('dec')('$n', '', 's')}`,
 
   [BaseLocaleKey.Bible]: 'Bible',
   [BaseLocaleKey.BibleChapter]: 'Chapter',
@@ -322,20 +320,12 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleTechBreak]: 'Tech. break',
   [BaseLocaleKey.ScheduleEndOfDay]: 'end of day',
   [BaseLocaleKey.ScheduleLessThanHour]: 'less than an hour to start',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleAfterMinutes,
-  )`in $n; minute${FUNCTION('dec')('$n', '', 's')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAfterMinutes)`in $n; minute${FUNCTION('dec')('$n', '', 's')}`,
   [BaseLocaleKey.ScheduleAtTime]: 'at $tm;',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleBeforeHours,
-  )`$n; hour${FUNCTION('dec')('$n', '', 's')} to start`,
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleBeforeDays,
-  )`$n; day${FUNCTION('dec')('$n', '', 's')} to start`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeHours)`$n; hour${FUNCTION('dec')('$n', '', 's')} to start`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeDays)`$n; day${FUNCTION('dec')('$n', '', 's')} to start`,
   [BaseLocaleKey.ScheduleThroughMinutes]: 'In $n; min.',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleMinutesLeft,
-  )`$n; minute${FUNCTION('dec')('$n', '', 's')} left`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleMinutesLeft)`$n; minute${FUNCTION('dec')('$n', '', 's')} left`,
   [BaseLocaleKey.ScheduleWillParticipate]: 'I will participate',
   [BaseLocaleKey.ScheduleByLink]: 'via link',
   [BaseLocaleKey.ScheduleByScheduleButton]: 'via the button in the schedule',
@@ -365,7 +355,9 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleFirstIsTechDay]: 'The first is a tech day',
   [BaseLocaleKey.ScheduleMakeFirstDayUsual]: 'Make the first day regular?',
   [BaseLocaleKey.ScheduleFirstDayPrep]: 'Make the first day preparatory?',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAllowRemoteControls)`${IF('$v').THEN`Disallow`.ELSE`Allow`} remote control connections`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleAllowRemoteControls,
+  )`${IF('$v').THEN`Disallow`.ELSE`Allow`} remote control connections`,
   [BaseLocaleKey.ScheduleDefaultRights]: 'Default rights',
   [BaseLocaleKey.ScheduleSmallFontStatements]: 'The statements in small print apply',
   [BaseLocaleKey.ScheduleNewUser]: ' - New',
@@ -463,9 +455,7 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleContentUnavailable]: 'Content unavailable',
   [BaseLocaleKey.ScheduleSourceRemoved]: 'Source removed',
   [BaseLocaleKey.ScheduleAddEventTemplate]: 'Add event template',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleUsedCount,
-  )` used $n; time${FUNCTION('dec')('$n', '', 's')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleUsedCount)` used $n; time${FUNCTION('dec')('$n', '', 's')}`,
   [BaseLocaleKey.ScheduleNotUsed]: ' not used',
   [BaseLocaleKey.ScheduleTemplateRedact]: '- Template editing',
   [BaseLocaleKey.ScheduleAttachmentRedact]: '- Attachment editing',
@@ -669,7 +659,9 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ConfigPromptHeader]: 'Fill in',
   [BaseLocaleKey.ConfigAccept]: 'Accept',
   [BaseLocaleKey.ConfigTextCopied]: 'Text copied',
-  ...baseLocaleTemplate(BaseLocaleKey.ConfigPickFile)`Choose file${IF('$v').THEN`s`}${IF('$max').THEN` (up to $max MB)`}`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ConfigPickFile,
+  )`Choose file${IF('$v').THEN`s`}${IF('$max').THEN` (up to $max MB)`}`,
   [BaseLocaleKey.ConfigDate]: 'Date',
   [BaseLocaleKey.ConfigTextCaseCapitalize]: 'First letter capital',
   [BaseLocaleKey.ConfigTextCaseAsIs]: 'as Is',
@@ -850,7 +842,9 @@ export const localeBaseEn = convertObjectToArray<LocaleBase<Langi.En>>({
   [BaseLocaleKey.ScheduleEventAppInformWillBe]: 'Notification will be $n minutes before',
   [BaseLocaleKey.ScheduleEventAppInformWontBe]: 'No notification',
   [BaseLocaleKey.ScheduleInformDisabled]: 'Off',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleUserReceiveInform)`The member ${IF('$v').THEN`does not receive`.ELSE`receives`} notifications`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleUserReceiveInform,
+  )`The member ${IF('$v').THEN`does not receive`.ELSE`receives`} notifications`,
   ...baseLocaleTemplate(BaseLocaleKey.ScheduleInformMe)`${IF('$v').THEN`Do not r`.ELSE`R`}emind me`,
   [BaseLocaleKey.ScheduleInformMuteFor]: 'Mute for',
   [BaseLocaleKey.ScheduleInformMute1Hour]: '1 hour',

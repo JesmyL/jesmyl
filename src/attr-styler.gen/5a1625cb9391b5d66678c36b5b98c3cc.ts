@@ -10,4 +10,3 @@ declare module 'react' {
     'com-letter-spaced-word'?: number | string;
   }
 }
-

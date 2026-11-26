@@ -111,7 +111,9 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                             icon="RowDelete"
                             className={`align-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
                             onClick={async () => {
-                              const isClear = await confirm(translateEditorBase(EditorLocaleKey.CmEditorClearOwnRepeats));
+                              const isClear = await confirm(
+                                translateEditorBase(EditorLocaleKey.CmEditorClearOwnRepeats),
+                              );
 
                               if (isClear)
                                 cmEditComOrderClientTsjrpcMethods.clearOwnRepeats({

@@ -65,7 +65,9 @@ export const CmEditorMp3RuleEditor = (
           error={redirectError}
           setText={value => {
             setRedirectError(
-              mp3Rules?.some(rule => rule.url === value) ? '' : translateEditorBase(EditorLocaleKey.CmEditorRedirectKnown),
+              mp3Rules?.some(rule => rule.url === value)
+                ? ''
+                : translateEditorBase(EditorLocaleKey.CmEditorRedirectKnown),
             );
 
             setRedirect(value);

@@ -53,8 +53,6 @@ interface Props {
 
 const remoteBibleSearchMaxMatches = 50;
 
-
-
 const makeJoinAddressWithChapter = (
   joinAddress: BibleBroadcastJoinAddress | nil,
   booki: BibleBooki,
@@ -274,7 +272,9 @@ export const BibleBroadcastControlled = ({ head, headTitle }: Props) => {
 
         if (!bibleTranslateFilter[nextTName](bibleBookiAtom.get())) return;
 
-        const firstBooki = takeBibleLangBooks(langi).findIndex((_book, booki) => !bibleTranslateFilter[nextTName](booki));
+        const firstBooki = takeBibleLangBooks(langi).findIndex(
+          (_book, booki) => !bibleTranslateFilter[nextTName](booki),
+        );
         if (firstBooki < 0) return;
 
         const [b, c, v] = takeBibleSimpleCheckedSingleAddress(nextTName, firstBooki, 0, 0);

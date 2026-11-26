@@ -20,11 +20,4 @@ export type BroadcastGridTabDict<TabId extends number> = Record<
 
 export type BroadcastGridNumberNetPack = [number, number, number, number, number, number];
 
-export type BroadcastGridTabNet<TabId extends number> = [
-  TabId[],
-  TabId[],
-  TabId[],
-  TabId[],
-  TabId[],
-  TabId[],
-];
+export type BroadcastGridTabNet<TabId extends number> = [TabId[], TabId[], TabId[], TabId[], TabId[], TabId[]];

@@ -46,7 +46,8 @@ export const CmScheduleWidgetBroadcast = ({ schw }: { schw: ScheduleWidgetWid | 
   }, [schedule?.w, windows]);
 
   const userName = takeUserAuthName(auth);
-  if (!userName) return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.NotAuthorized)}</div>;
+  if (!userName)
+    return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.NotAuthorized)}</div>;
   if (schedule == null)
     return <div className="flex center full-size text-xKO">{translateBase(BaseLocaleKey.ScheduleNotFound)}</div>;
 

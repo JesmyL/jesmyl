@@ -39,7 +39,11 @@ export const useCmComFaceScrollToCurrentComFace = (
     const scrollDeltaToCentre = (scrollContainer: Element, node: Element) => {
       const nodeRect = node.getBoundingClientRect();
 
-      return nodeRect.top - scrollContainer.getBoundingClientRect().top - (scrollContainer.clientHeight - nodeRect.height) / 2;
+      return (
+        nodeRect.top -
+        scrollContainer.getBoundingClientRect().top -
+        (scrollContainer.clientHeight - nodeRect.height) / 2
+      );
     };
 
     const smoothScrollTo = (scrollContainer: Element, top: number) =>

@@ -130,8 +130,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
               />
             </div>
           );
-      } else
-        attContent ??= <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleSourceRemoved)}</div>;
+      } else attContent ??= <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleSourceRemoved)}</div>;
     }
 
     attContent ??= isExpand && (

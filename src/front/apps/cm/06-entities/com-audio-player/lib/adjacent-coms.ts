@@ -111,13 +111,7 @@ export const cmComAudioPlayerPreloadLastSrc = async () => {
   cmComAudioPlayerSetSrc(src);
 };
 
-const playCom = (
-  comw: CmComWid,
-  name: string,
-  src: CmAudioSrc,
-  shouldPlay: boolean,
-  isFromPlayerPage: boolean,
-) => {
+const playCom = (comw: CmComWid, name: string, src: CmAudioSrc, shouldPlay: boolean, isFromPlayerPage: boolean) => {
   lastPickKind = CmComAudioPlayerPickKind.Advance;
   cmComAudioPlayerSetCurrentComw(comw);
   cmComAudioPlayerIsFromPlayerPageAtom.set(isFromPlayerPage);

@@ -46,10 +46,7 @@ export const ScheduleWidgetMyUserAppInform = () => {
   const clearMute = () => toastApplied(setMutedUntil(null), translateBase(BaseLocaleKey.ScheduleInformResume));
 
   const switchSound = () =>
-    toastApplied(
-      toggleSilent(),
-      translateBase(BaseLocaleKey.ScheduleInformSoundOn, { v: isSilent }),
-    );
+    toastApplied(toggleSilent(), translateBase(BaseLocaleKey.ScheduleInformSoundOn, { v: isSilent }));
 
   const switchNotifications = () =>
     toastApplied(

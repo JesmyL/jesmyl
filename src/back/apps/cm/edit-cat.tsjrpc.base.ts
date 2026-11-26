@@ -30,10 +30,10 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
 
           cat.s = Array.from(stackSet);
 
-          return backLocaleError(
-            cat.s?.includes(comw) ? BackLocaleKey.CmCatComAdded : BackLocaleKey.CmCatComRemoved,
-            { c: cat.n, n: await getCmComNameInBrackets(comw) },
-          );
+          return backLocaleError(cat.s?.includes(comw) ? BackLocaleKey.CmCatComAdded : BackLocaleKey.CmCatComRemoved, {
+            c: cat.n,
+            n: await getCmComNameInBrackets(comw),
+          });
         }),
 
         removeNativeComNum: modifyCat(async (cat, { comw }, { auth }) => {

@@ -1,11 +1,19 @@
 import { electronPresentationTsjrpcClientMethods } from '#basis/tsjrpc.electron/presentation.cli.methods';
 import { electronPresentationsTsjrpcClientMethods } from '#basis/tsjrpc.electron/presentations.cli.methods';
-import { broadcastCurrentTextAppAtom, broadcastNextLiveDataAtom, broadcastPresentationsLiveDataAtom } from '#features/broadcast/atoms';
+import {
+  broadcastCurrentTextAppAtom,
+  broadcastNextLiveDataAtom,
+  broadcastPresentationsLiveDataAtom,
+} from '#features/broadcast/atoms';
 import { presentationBroadcastDefaultConfig } from '#features/broadcast/complect/defaults';
 import { BroadcastLiveData } from '#features/broadcast/Broadcast.model';
 import { sendBroadcastLiveData } from '#features/broadcast/lib/broadcast-live-data';
 import { HorizontalDirection } from '#shared/model/Direction';
-import { presentationsCurrentFilePathAtom, presentationsCurrentSlidAtom, presentationsCurrentSlidesAtom } from '$presentations/shared/state/broadcast.atoms';
+import {
+  presentationsCurrentFilePathAtom,
+  presentationsCurrentSlidAtom,
+  presentationsCurrentSlidesAtom,
+} from '$presentations/shared/state/broadcast.atoms';
 import { PresentationSlide, presentationsTool } from '$presentations/shared/model/model';
 import { ScheduleWidgetWidDef } from 'shared/api';
 import { presentationProjectorTool } from 'shared/model/electron';

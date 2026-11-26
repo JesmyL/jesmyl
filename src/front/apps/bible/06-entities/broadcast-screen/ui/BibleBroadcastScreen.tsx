@@ -2,10 +2,7 @@ import { BroadcastScreenProps } from '#features/broadcast/Broadcast.model';
 import { useBroadcastBackgroundNode } from '#features/broadcast/complect/hooks/useBroadcastBackgroundNode';
 import { useFontFileDrop } from '#features/ElectronWorkDir/lib/useFontFileDrop';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import {
-  bibleBroadcastUpdateCurrentConfig,
-  useBibleBroadcastScreenWrapperStyle,
-} from '$bible/entities/broadcast';
+import { bibleBroadcastUpdateCurrentConfig, useBibleBroadcastScreenWrapperStyle } from '$bible/entities/broadcast';
 import { useRef, useState } from 'react';
 import { BibleBroadcastScreenConfig } from 'shared/model/bible/broadcast';
 import { twJoin } from 'tailwind-merge';

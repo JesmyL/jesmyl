@@ -25,7 +25,9 @@ export const ScheduleWidgetPhotoGalery = () => {
       .map(user => ({ user, title: takeScheduleWidgetUserName(rights, user) }))
       .sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
 
-    return !term ? userBoxes.map(({ user }) => user) : searchRate(userBoxes, term, ['title']).map(({ item }) => item.user);
+    return !term
+      ? userBoxes.map(({ user }) => user)
+      : searchRate(userBoxes, term, ['title']).map(({ item }) => item.user);
   }, [rights, term]);
 
   return (

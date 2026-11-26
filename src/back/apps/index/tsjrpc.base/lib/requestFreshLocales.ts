@@ -1,8 +1,5 @@
 import { ServerTsjrpcSatisfy } from 'back/complect/model/tsjrpc.satisfy';
-import {
-  langLocaleDynamicFileStoragesLazy,
-  langLocaleEditorFileStoragesLazy,
-} from 'back/locales/file-storages';
+import { langLocaleDynamicFileStoragesLazy, langLocaleEditorFileStoragesLazy } from 'back/locales/file-storages';
 import { Langi } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { checkIsNotNil } from 'shared/utils/checkIs';

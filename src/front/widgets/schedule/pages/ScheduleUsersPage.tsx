@@ -120,9 +120,7 @@ function ScheduleUsersSearchList({ termAtom }: { termAtom: Atom<string> }) {
             isInitExpand
             withoutTitle
             filter={
-              search
-                ? user => takeScheduleWidgetUserName(rights, user).toLowerCase().includes(search)
-                : undefined
+              search ? user => takeScheduleWidgetUserName(rights, user).toLowerCase().includes(search) : undefined
             }
           />
         );

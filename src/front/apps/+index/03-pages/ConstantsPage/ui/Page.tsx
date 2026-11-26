@@ -4,7 +4,11 @@ import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useAtomValue } from 'atomaric';
-import { constantsConfigurator, constantsDefaultConfig, constantsSectionTitleKeys } from 'shared/const/cm/constants.def';
+import {
+  constantsConfigurator,
+  constantsDefaultConfig,
+  constantsSectionTitleKeys,
+} from 'shared/const/cm/constants.def';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 import { checkIsNumber, checkIsStartsWith } from 'shared/utils/checkIs';
 import { mapObjectEntries } from 'shared/utils/object.utils';

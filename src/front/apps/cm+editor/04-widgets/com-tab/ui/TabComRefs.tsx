@@ -52,7 +52,9 @@ export const CmEditorComTabComRefs = ({ ccom }: { ccom: EditableCom }) => {
       <CmComJoinGroupList
         comw={ccom.wid}
         emptyNode={
-          <div className="my-5 text-x7 w-full text-center">{translateEditorBase(EditorLocaleKey.CmEditorNoReferences)}</div>
+          <div className="my-5 text-x7 w-full text-center">
+            {translateEditorBase(EditorLocaleKey.CmEditorNoReferences)}
+          </div>
         }
         children={(comRefList, allRefs) =>
           checkAccess('cm', 'COM_REF', 'C') && (

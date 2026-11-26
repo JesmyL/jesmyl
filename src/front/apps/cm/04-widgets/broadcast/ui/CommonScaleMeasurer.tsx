@@ -32,10 +32,7 @@ export const CmBroadcastCommonScaleMeasurer = ({ htmls, className, style, subUpd
     let minScale = Infinity;
 
     for (const child of container.children) {
-      const scale = Math.min(
-        container.clientHeight / child.clientHeight,
-        container.clientWidth / child.clientWidth,
-      );
+      const scale = Math.min(container.clientHeight / child.clientHeight, container.clientWidth / child.clientWidth);
 
       if (scale > 0 && scale < minScale && checkIsNotNaN(scale)) minScale = scale;
     }

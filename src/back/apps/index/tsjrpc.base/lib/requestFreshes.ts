@@ -172,10 +172,7 @@ export const indexTSJRPCBaseRequestFreshes = {
 
     const otherFooterIconStore = otherFooterIconFileStore.getValue();
 
-    if (
-      otherFooterIconStore.iconNames.length &&
-      localDay(Date.now()) !== localDay(otherFooterIconStore.m)
-    )
+    if (otherFooterIconStore.iconNames.length && localDay(Date.now()) !== localDay(otherFooterIconStore.m))
       rotateOtherFooterIcon();
 
     if (

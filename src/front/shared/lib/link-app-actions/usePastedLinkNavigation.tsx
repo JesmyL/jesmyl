@@ -23,10 +23,7 @@ const parsePastedUrl = (text: string): URL | nil => {
   }
 };
 
-export const usePastedLinkNavigation = (
-  onPaste?: ClipboardEventHandler<PastedInputElement>,
-  onClear?: () => void,
-) => {
+export const usePastedLinkNavigation = (onPaste?: ClipboardEventHandler<PastedInputElement>, onClear?: () => void) => {
   const router = useRouter({ warn: false });
   const [appActionNav, setAppActionNav] = useState<{ href: string; key: number } | null>(null);
 
@@ -57,6 +54,11 @@ export const usePastedLinkNavigation = (
 
   return {
     onPaste: handlePaste,
-    appActionNavNode: appActionNav && <AppActionHrefNaver key={appActionNav.key} href={appActionNav.href} />,
+    appActionNavNode: appActionNav && (
+      <AppActionHrefNaver
+        key={appActionNav.key}
+        href={appActionNav.href}
+      />
+    ),
   };
 };

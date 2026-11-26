@@ -9,8 +9,7 @@ import { StringTemplaterGenKey, StringTemplaterInterpolation, StringTemplaterVal
 const escapeTplChars = lazyInit(() => {
   const regexp = makeRegExp(`/[${objectKeys(strTplEncodeDict).join('')}]/g`);
 
-  return (str: string) =>
-    str.replace(regexp, char => strTplEncodeDict[char as keyof typeof strTplEncodeDict]);
+  return (str: string) => str.replace(regexp, char => strTplEncodeDict[char as keyof typeof strTplEncodeDict]);
 });
 
 const enum ConceptKey {
@@ -272,10 +271,10 @@ const IF = (
 
 type CaseCb<Key extends string, Cases> = <const Cond extends AnyCondition>(
   cond: Cond,
-) => (template: TemplateStringsArray, ...args: TplArg[]) => OmitConceptKeys<
-  SwitchStructConcept<Key, Cases | Cond>,
-  'c' | 'cs'
->;
+) => (
+  template: TemplateStringsArray,
+  ...args: TplArg[]
+) => OmitConceptKeys<SwitchStructConcept<Key, Cases | Cond>, 'c' | 'cs'>;
 
 type DefaultCb<Key extends string, Cases> = (
   template: TemplateStringsArray,
@@ -380,11 +379,7 @@ type StrTplArg<Vals extends object> = [Vals] extends [NoVals]
   ? TplArg
   : TplArg & { readonly [switchMeta]?: (vals: Vals) => void };
 
-type StrInterpolation<
-  Vals extends object,
-  TemplateScalar extends readonly VarKey[],
-  GenKey extends string = string,
-> = [
+type StrInterpolation<Vals extends object, TemplateScalar extends readonly VarKey[], GenKey extends string = string> = [
   Vals,
 ] extends [NoVals]
   ? Interpolation<string, TemplateScalar>

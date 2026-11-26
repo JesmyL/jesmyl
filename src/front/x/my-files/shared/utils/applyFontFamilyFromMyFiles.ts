@@ -18,10 +18,7 @@ export const applyFontFamilyFromMyFiles = async (win: Window | nil, fileId: MyFi
 
   if (Array.from(win.document.fonts).some(face => face.family === family && face.status === 'loaded')) return true;
 
-  const src =
-    typeof fileId === 'number'
-      ? bundledFontFamilies.get(fileId)?.src
-      : await takeFontFileBuffer(fileId);
+  const src = typeof fileId === 'number' ? bundledFontFamilies.get(fileId)?.src : await takeFontFileBuffer(fileId);
 
   if (src == null) return false;
 

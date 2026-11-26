@@ -22,9 +22,7 @@ export class RemoteBroadcastErrorBoundary extends React.Component<Props, State> 
         <pre className="max-h-[50vh] overflow-auto whitespace-pre-wrap break-all text-left text-xs">
           {String(this.state.error)}
         </pre>
-        <Button onClick={() => this.setState({ error: null })}>
-          {translateBase(BaseLocaleKey.Update)}
-        </Button>
+        <Button onClick={() => this.setState({ error: null })}>{translateBase(BaseLocaleKey.Update)}</Button>
       </div>
     );
   }

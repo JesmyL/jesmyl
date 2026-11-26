@@ -31,7 +31,14 @@ type Props = {
   periodShiftMs?: number;
 };
 
-export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand, dayScopeProps, periodShiftMs }: Props) {
+export function ScheduleWidgetDayEventList({
+  day,
+  isPastDay,
+  dayi,
+  isForceExpand,
+  dayScopeProps,
+  periodShiftMs,
+}: Props) {
   const [isShowPeriodsNotTs, setIsShowTsNotPeriods] = useState(false);
   const [isReplacementInProcess, setIsReplacementInProcess] = useState(false);
   const rights = useScheduleWidgetRightsContext();

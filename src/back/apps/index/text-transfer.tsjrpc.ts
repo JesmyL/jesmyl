@@ -74,8 +74,22 @@ const deviceType = (agent: string) => {
 };
 
 const agentDetails = lazyInit(() => {
-  const browsers = { Edg: 'Edge', OPR: 'Opera', YaBrowser: 'Yandex', Chrome: 'Chrome', Firefox: 'Firefox', Safari: 'Safari' };
-  const oses = { Android: 'Android', iPhone: 'iOS', iPad: 'iPadOS', Windows: 'Windows', Macintosh: 'macOS', Linux: 'Linux' };
+  const browsers = {
+    Edg: 'Edge',
+    OPR: 'Opera',
+    YaBrowser: 'Yandex',
+    Chrome: 'Chrome',
+    Firefox: 'Firefox',
+    Safari: 'Safari',
+  };
+  const oses = {
+    Android: 'Android',
+    iPhone: 'iOS',
+    iPad: 'iPadOS',
+    Windows: 'Windows',
+    Macintosh: 'macOS',
+    Linux: 'Linux',
+  };
 
   return {
     browsers,

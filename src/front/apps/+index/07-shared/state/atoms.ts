@@ -33,9 +33,12 @@ export const liveDataStreamersAtom = atom<{ fio: string; login: SokiAuthLogin }[
 
 export const textTransferWindowsAtom = atom<TextTransferWindow[]>([]);
 export const textTransferFilesAtom = atom<TextTransferFile[]>([]);
-export const textTransferDownloadAtom = atom<{ deviceId: DeviceId; name: string; loaded: number; count: number } | null>(
-  null,
-);
+export const textTransferDownloadAtom = atom<{
+  deviceId: DeviceId;
+  name: string;
+  loaded: number;
+  count: number;
+} | null>(null);
 export const textTransferCountAtom = atom(0);
 export const textTransferDevicesAtom = atom<Awaited<ReturnType<TextTransferTsjrpcModel['getDevices']>>>({
   owner: '',

@@ -75,10 +75,7 @@ export const IndexNounPronsRedactorWordRedactor = (props: {
             }
             onSend={() => {
               if (!levelRef.current) {
-                toast(
-                  translateBase(BaseLocaleKey.IndexSelectComplexity),
-                  makeToastKOMoodConfig(),
-                );
+                toast(translateBase(BaseLocaleKey.IndexSelectComplexity), makeToastKOMoodConfig());
                 return;
               }
 

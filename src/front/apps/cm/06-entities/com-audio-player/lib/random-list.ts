@@ -37,8 +37,7 @@ let pendingManualPick: CmRandomListItem | null = null;
 /** Fresh random pick the walk appended but playback has not confirmed; an errored one leaves the prev-list again. */
 let unconfirmedRandomPickComw: CmComWid | null = null;
 
-const takeRandomListTable = () =>
-  cmIDB.db.table<CmRandomListRow, number, CmRandomListRowInsert>('randomList');
+const takeRandomListTable = () => cmIDB.db.table<CmRandomListRow, number, CmRandomListRowInsert>('randomList');
 
 /** Parses one persisted row at the IDB boundary; an invalid row is dropped. */
 const parseRandomListRow = (row: unknown): CmRandomListRow | null => {
@@ -398,9 +397,7 @@ const consumePreparedRandomItem = (pointer: number | nil, lookup: RandomListComs
 };
 
 /** Backward walk that only lowers the pointer and never leaves the history; index 0 ends the walk. */
-export const takeCmComAudioPlayerPrevRandomItem = async (
-  coms: IExportableCom[],
-): Promise<CmRandomListItem | nil> => {
+export const takeCmComAudioPlayerPrevRandomItem = async (coms: IExportableCom[]): Promise<CmRandomListItem | nil> => {
   if (cmComAudioPlayerRandomListAtom.get() == null) await cmComAudioPlayerRandomListTurn(true).catch(retNull);
 
   const items = cmComAudioPlayerRandomListAtom.get();
@@ -484,9 +481,7 @@ export const cmComAudioPlayerPrepareNextRandomCom = () => {
  * Next in shuffle mode: forward along the history while a usable entry follows the pointer, and only
  * at its end a new unique random com is appended. The prepared pick is re-validated at consume time.
  */
-export const takeCmComAudioPlayerNextRandomItem = async (
-  coms: IExportableCom[],
-): Promise<CmRandomListItem | nil> => {
+export const takeCmComAudioPlayerNextRandomItem = async (coms: IExportableCom[]): Promise<CmRandomListItem | nil> => {
   if (cmComAudioPlayerRandomListAtom.get() == null) await cmComAudioPlayerRandomListTurn(true).catch(retNull);
 
   const items = cmComAudioPlayerRandomListAtom.get();

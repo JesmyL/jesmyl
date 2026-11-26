@@ -56,10 +56,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
   const appInform = rights.schedule.appInform ?? 0;
   const willReceiveInform =
     appInform !== 0 &&
-    scheduleWidgetUserRights.checkIsHasRights(
-      user.R ?? rights.schedule.ctrl.defu,
-      ScheduleWidgetUserRoleRight.Read,
-    );
+    scheduleWidgetUserRights.checkIsHasRights(user.R ?? rights.schedule.ctrl.defu, ScheduleWidgetUserRoleRight.Read);
   const userName =
     userAuth?.nick === undefined
       ? takeUserAuthName(userAuth) || <span className="text-x7 italic">{translateBase(BaseLocaleKey.Link)}</span>
@@ -77,7 +74,12 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
       <span className="flex flex-1 flex-col min-w-0 leading-tight">
         <span className="flex gap-2 items-center">
           <span className="ellipsis">{userName}</span>
-          {balance >= 0 || <LazyIcon icon="UserRemove02" className="text-x7" />}
+          {balance >= 0 || (
+            <LazyIcon
+              icon="UserRemove02"
+              className="text-x7"
+            />
+          )}
         </span>
         <span className="text-x7 text-[0.7em] ellipsis">{roleTitle}</span>
       </span>
@@ -159,19 +161,13 @@ const ScheduleWidgetUserInform = ({ userLogin, willReceiveInform }: InformProps)
     <div className="mt-5">
       <TheIconButton
         icon={isInformReceivable ? 'Notification01' : 'NotificationOff01'}
-        postfix={translateBase(
-          BaseLocaleKey.ScheduleUserReceiveInform,
-          { v: !isInformReceivable },
-        )}
+        postfix={translateBase(BaseLocaleKey.ScheduleUserReceiveInform, { v: !isInformReceivable })}
         disabled
       />
       {!pushInfo || (
         <TheIconButton
           icon={pushInfo.isSilent === Bool.True ? 'VolumeOff' : 'VolumeHigh'}
-          postfix={translateBase(
-            BaseLocaleKey.ScheduleInformSoundOn,
-            { v: pushInfo.isSilent !== Bool.True },
-          )}
+          postfix={translateBase(BaseLocaleKey.ScheduleInformSoundOn, { v: pushInfo.isSilent !== Bool.True })}
           disabled
         />
       )}

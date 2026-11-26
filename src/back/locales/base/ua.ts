@@ -231,9 +231,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.QuestionerCommentRequiredFor]: 'Коментар "$t;" є обовʼязковим',
   [BaseLocaleKey.QuestionerSortValuesIn]: 'Потрібно відсортувати значення в пункті "$t;"',
   [BaseLocaleKey.QuestionerRestoreIn]: 'Потрібно відновити всі пропущені слова в пункті "$t;"',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.QuestionerVariantsNumber,
-  )`$n; варіант${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.QuestionerVariantsNumber)`$n; варіант${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
 
   [BaseLocaleKey.Bible]: 'Біблія',
   [BaseLocaleKey.BibleChapter]: 'Глава',
@@ -323,13 +321,9 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleTechBreak]: 'Тех. перерва',
   [BaseLocaleKey.ScheduleEndOfDay]: 'кінець дня',
   [BaseLocaleKey.ScheduleLessThanHour]: 'до початку менше години',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleAfterMinutes,
-  )`через $n; хвилин${FUNCTION('dec')('$n', 'у', 'и', '')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAfterMinutes)`через $n; хвилин${FUNCTION('dec')('$n', 'у', 'и', '')}`,
   [BaseLocaleKey.ScheduleAtTime]: 'о $tm;',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleBeforeHours,
-  )`до початку $n; годин${FUNCTION('dec')('$n', 'у', 'и', '')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleBeforeHours)`до початку $n; годин${FUNCTION('dec')('$n', 'у', 'и', '')}`,
   ...baseLocaleTemplate(
     BaseLocaleKey.ScheduleBeforeDays,
   )`до початку $n; ${FUNCTION('dec')('$n', 'день', 'дні', 'днів')}`,
@@ -366,7 +360,9 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleFirstIsTechDay]: 'Перший - технічний день',
   [BaseLocaleKey.ScheduleMakeFirstDayUsual]: 'Зробити перший день звичайним?',
   [BaseLocaleKey.ScheduleFirstDayPrep]: 'Зробити перший день підготовчим?',
-  ...baseLocaleTemplate(BaseLocaleKey.ScheduleAllowRemoteControls)`${IF('$v').THEN`Заборонити`.ELSE`Дозволити`} підключення пультів`,
+  ...baseLocaleTemplate(
+    BaseLocaleKey.ScheduleAllowRemoteControls,
+  )`${IF('$v').THEN`Заборонити`.ELSE`Дозволити`} підключення пультів`,
   [BaseLocaleKey.ScheduleDefaultRights]: 'Права за замовчуванням',
   [BaseLocaleKey.ScheduleSmallFontStatements]: 'Чинні твердження дрібним шрифтом',
   [BaseLocaleKey.ScheduleNewUser]: ' - Новий',
@@ -464,9 +460,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.ScheduleContentUnavailable]: 'Вміст недоступний',
   [BaseLocaleKey.ScheduleSourceRemoved]: 'Джерело видалено',
   [BaseLocaleKey.ScheduleAddEventTemplate]: 'Додати шаблон події',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.ScheduleUsedCount,
-  )` вик. $n; раз${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.ScheduleUsedCount)` вик. $n; раз${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
   [BaseLocaleKey.ScheduleNotUsed]: ' не використовується',
   [BaseLocaleKey.ScheduleTemplateRedact]: '- Редагування шаблону',
   [BaseLocaleKey.ScheduleAttachmentRedact]: '- Редагування вкладення',
@@ -798,9 +792,7 @@ export const localeBaseUa = convertObjectToArray<LocaleBase<Langi.Ua>>({
   [BaseLocaleKey.NumberSeconds]: '$n сек.',
   [BaseLocaleKey.Detailed]: 'Детальніше',
   [BaseLocaleKey.FontSize]: 'Розмір шрифту',
-  ...baseLocaleTemplate(
-    BaseLocaleKey.LookedNumberTimes,
-  )`Переглянули $n; раз${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
+  ...baseLocaleTemplate(BaseLocaleKey.LookedNumberTimes)`Переглянули $n; раз${FUNCTION('dec')('$n', '', 'и', 'ів')}`,
   [BaseLocaleKey.ToAdd]: 'Додати',
   [BaseLocaleKey.NumberDay]: '$n;-й день',
   [BaseLocaleKey.SavedLocally]: 'Збережено локально',

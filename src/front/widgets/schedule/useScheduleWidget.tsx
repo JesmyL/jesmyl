@@ -96,9 +96,7 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
       ScheduleWidgetRegType.HideContent,
     );
 
-    const myUserR = isTopUser
-      ? scheduleWidgetUserRights.getAllRights()
-      : (myUser?.R ?? schedule.ctrl.defu);
+    const myUserR = isTopUser ? scheduleWidgetUserRights.getAllRights() : (myUser?.R ?? schedule.ctrl.defu);
 
     const isCanRead =
       (isSwPublic && !isSwHideContent) ||

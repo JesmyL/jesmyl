@@ -44,7 +44,10 @@ import {
 } from '$cm/entities/com-audio-player';
 import { CmComFaceDescriptionVariant, CmComFaceList } from '$cm/entities/com-face';
 import { CmComToolFavorite, CmComToolIsComToolIconItemsContext, CmComToolNameContext } from '$cm/entities/com-tool';
-import { CmComListPackKindSelector, cmComListPackKindSelectorLocaleKeyDict } from '$cm/entities/ComListPackKindSelector';
+import {
+  CmComListPackKindSelector,
+  cmComListPackKindSelectorLocaleKeyDict,
+} from '$cm/entities/ComListPackKindSelector';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
 import { CmComAudioPlayerMarksMovers } from '$cm/ext';
 import { CmPlayerTextSlides } from '$cm/features/PlayerTextSlides';
@@ -183,7 +186,7 @@ const PlayerTrack = () => {
         }}
       />
 
-      {(duration > 0 && Number.isFinite(duration) && Number.isFinite(currentTime)) && (
+      {duration > 0 && Number.isFinite(duration) && Number.isFinite(currentTime) && (
         <TimeLabel time={`-${convertSecondsInStrTime(duration - currentTime)}`} />
       )}
     </>
@@ -484,10 +487,7 @@ const CmPlayerPageContent = ({
       cmComAudioPlayerMarkManualPick();
       cmComAudioPlayerSetCurrentComw(incomingEntryComw);
       setHintedComwToCheck(incomingEntryComw);
-      void cmIDB.tb.coms
-        .get(incomingEntryComw)
-        .catch(retNull)
-        .then(startCmPlayerIncomingPlayback);
+      void cmIDB.tb.coms.get(incomingEntryComw).catch(retNull).then(startCmPlayerIncomingPlayback);
 
       return;
     }

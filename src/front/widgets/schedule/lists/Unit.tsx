@@ -29,9 +29,7 @@ export function ScheduleWidgetListUnit(props: Props) {
   const { unit, cat, cati } = props;
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
-  const title = (
-    <>{unit.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleUntitled)}</span>}</>
-  );
+  const title = <>{unit.title || <span className="italic">{translateBase(BaseLocaleKey.ScheduleUntitled)}</span>}</>;
   const unitScopeData = useMemo(() => ({ ...scheduleScopeProps, unitMi: unit.mi }), [scheduleScopeProps, unit.mi]);
 
   return (

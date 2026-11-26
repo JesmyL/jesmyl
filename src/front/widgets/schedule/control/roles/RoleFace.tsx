@@ -11,8 +11,7 @@ export function ScheduleWidgetRoleFace({ role, schedule }: { role?: IScheduleWid
   const { byId, byLogin } = useUserInfoDict();
   const roleUser = role && extractScheduleWidgetRoleUser(schedule, role.mi);
   const myUserId = auth.login ? byLogin.get(auth.login)?.id : null;
-  if (role === undefined)
-    return <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleUnknownRole)}</div>;
+  if (role === undefined) return <div className="text-xKO">{translateBase(BaseLocaleKey.ScheduleUnknownRole)}</div>;
 
   const roleUserAuth = roleUser ? byId.get(roleUser.id)?.uauth : null;
   const roleUserName =

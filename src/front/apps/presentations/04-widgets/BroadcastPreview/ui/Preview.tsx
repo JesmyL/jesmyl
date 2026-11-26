@@ -4,7 +4,10 @@ import { Button } from '#shared/components';
 import { HorizontalDirection } from '#shared/model/Direction';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { switchPresentationSlideByDirection } from '$presentations/shared/lib/presentation-broadcast';
-import { presentationsCurrentSlidAtom, presentationsCurrentSlidesAtom } from '$presentations/shared/state/broadcast.atoms';
+import {
+  presentationsCurrentSlidAtom,
+  presentationsCurrentSlidesAtom,
+} from '$presentations/shared/state/broadcast.atoms';
 import { useAtomValue } from 'atomaric';
 import { BaseLocaleKey } from 'shared/model/+locale/_BaseLocaleKey';
 

@@ -143,9 +143,7 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
                 user={user}
               />
             ))}
-            <TheButton onClick={isOpenAtom.do.toggle}>
-              {translateBase(BaseLocaleKey.ScheduleDistribute)}
-            </TheButton>
+            <TheButton onClick={isOpenAtom.do.toggle}>{translateBase(BaseLocaleKey.ScheduleDistribute)}</TheButton>
           </>
         )}
 

@@ -8,8 +8,9 @@ const sign = (secret: string, data: string) => crypto.createHmac('sha256', secre
 
 export const signRemoteBroadcastJwt = (secret: string, deviceId: string, now = Date.now()) => {
   const iat = Math.trunc(now / 1000);
-  const claims = Buffer.from(JSON.stringify({ sub: deviceId, iat, exp: iat + remoteBroadcastJwtTtlSeconds }))
-    .toString('base64url');
+  const claims = Buffer.from(JSON.stringify({ sub: deviceId, iat, exp: iat + remoteBroadcastJwtTtlSeconds })).toString(
+    'base64url',
+  );
   const body = `${jwtHeader}.${claims}`;
 
   return `${body}.${sign(secret, body)}`;

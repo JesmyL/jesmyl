@@ -494,10 +494,7 @@ const DashboardMessages = () => {
 
   const markAllRead = async (kind: DashMessageKind) => {
     await indexDashTsjrpcClient.markDashMessagesRead_v1({ kind });
-    await Promise.all([
-      messagesQuery.refetch(),
-      queryClient.invalidateQueries({ queryKey: [QueryKey.DashCounters] }),
-    ]);
+    await Promise.all([messagesQuery.refetch(), queryClient.invalidateQueries({ queryKey: [QueryKey.DashCounters] })]);
   };
 
   const toggleMessage = (messageId: number) => {

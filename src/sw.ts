@@ -55,9 +55,7 @@ registerRoute(
     fontFileReg.test(props.url.pathname),
   new CacheFirst({
     cacheName: 'resource-fonts-v2',
-    plugins: [
-      new ExpirationPlugin({ maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 7, purgeOnQuotaError: true }),
-    ],
+    plugins: [new ExpirationPlugin({ maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 7, purgeOnQuotaError: true })],
   }),
 );
 
@@ -74,9 +72,9 @@ const cacheCmEditorChunks = async () => {
 
   const cache = await caches.open(cmEditorCacheName);
   const editorUrls = cmEditorPrecacheUrls.map(url => new URL(url, self.registration.scope).href);
-  const uncachedUrls = (
-    await Promise.all(editorUrls.map(async url => ((await cache.match(url)) ? null : url)))
-  ).filter(checkIsNotNil);
+  const uncachedUrls = (await Promise.all(editorUrls.map(async url => ((await cache.match(url)) ? null : url)))).filter(
+    checkIsNotNil,
+  );
   const results = await Promise.allSettled(uncachedUrls.map(url => cache.add(url)));
 
   results.forEach((result, index) => {

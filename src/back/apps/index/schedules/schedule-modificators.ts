@@ -73,7 +73,8 @@ export const checkIsScheduleUserAllowed = async (sch: IScheduleWidget, auth: Loc
 };
 
 const makeThrowIfNoScheduleRights =
-  (ruleKey: ScheduleWidgetUserRoleRight, message: string) => async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
+  (ruleKey: ScheduleWidgetUserRoleRight, message: string) =>
+  async (sch: IScheduleWidget, auth: LocalSokiAuth | nil) => {
     const R = await takeAuthScheduleUserRights(sch, auth);
 
     if (

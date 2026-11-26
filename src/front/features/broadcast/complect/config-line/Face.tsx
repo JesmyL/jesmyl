@@ -21,7 +21,10 @@ export const ScreenBroadcastFace = ({
 }: ScreenBroadcastFaceProps) => {
   return (
     <div
-      className={twMerge('inline-flex gap-2 between pointer ml-2 px-[10px] py-[3px] rounded-[5px] text-x1 min-w-[70px]', className)}
+      className={twMerge(
+        'inline-flex gap-2 between pointer ml-2 px-[10px] py-[3px] rounded-[5px] text-x1 min-w-[70px]',
+        className,
+      )}
       onClick={putOnClick(configi)}
     >
       <span>{config.title}</span>

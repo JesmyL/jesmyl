@@ -49,9 +49,7 @@ export const CmEditorMeetingEventEditsHistoryModalInner = ({
   if (historyPacks == null || error)
     return (
       <ModalBody>
-        <div className="flex center full-size text-xKO">
-          {error ? `${error}` : translateBase(BaseLocaleKey.Error)}
-        </div>
+        <div className="flex center full-size text-xKO">{error ? `${error}` : translateBase(BaseLocaleKey.Error)}</div>
       </ModalBody>
     );
 

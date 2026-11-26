@@ -30,12 +30,12 @@ describe('locale templates', () => {
       baseLocaleTemplate(BaseLocaleKey.CmMarkComTool, MenuComToolName.MarkCom, ['$v'])`${IF('$v').THEN`Yes`.ELSE`No`}`,
     ).toEqual({ [MenuComToolName.MarkCom]: '$IF{{$v}{Yes}{No}}' });
 
-    expect(() =>
-      baseLocaleTemplate(
-        BaseLocaleKey.CmMarkComTool,
-        MenuComToolName.MarkCom,
-        ['$v', '$w'],
-      )`${IF('$v').THEN`Yes`.ELSE`No`}`,
+    expect(
+      () =>
+        baseLocaleTemplate(BaseLocaleKey.CmMarkComTool, MenuComToolName.MarkCom, [
+          '$v',
+          '$w',
+        ])`${IF('$v').THEN`Yes`.ELSE`No`}`,
     ).toThrow('The args $w is not used in template');
   });
 });

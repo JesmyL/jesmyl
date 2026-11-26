@@ -218,7 +218,9 @@ const CmEditorCatRow = ({ cat, isCanUpdate }: { cat: CmEditorCat; isCanUpdate: b
     <div className="my-3 pb-3 border-b border-x3 flex flex-wrap gap-2 items-center">
       <span className="font-bold">{cat.name}</span>
       <span className="text-x7">{takeCmEditorCategoriesPageKindTitle(cat.kind)}</span>
-      <span className="text-x7">{translateEditorBase(EditorLocaleKey.CmEditorCategoryComsCount, { c: cat.comws.length })}</span>
+      <span className="text-x7">
+        {translateEditorBase(EditorLocaleKey.CmEditorCategoryComsCount, { c: cat.comws.length })}
+      </span>
 
       {cat.wid === CmCatWid.all || !isCanUpdate || (
         <TheIconButton

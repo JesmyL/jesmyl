@@ -37,17 +37,21 @@ if (mediaSession) {
     cmComAudioPlayerSwitchIsPlay(true);
   });
   mediaSession.setActionHandler('pause', () => cmComAudioPlayerSwitchIsPlay(false));
-  mediaSession.setActionHandler('previoustrack', () =>
-    void cmComAudioPlayerGoToAdjacentCom(
-      CmComAudioPlayerAdjacentDirection.Prev,
-      cmComAudioPlayerIsFromPlayerPageAtom.get(),
-    ).catch(retNull),
+  mediaSession.setActionHandler(
+    'previoustrack',
+    () =>
+      void cmComAudioPlayerGoToAdjacentCom(
+        CmComAudioPlayerAdjacentDirection.Prev,
+        cmComAudioPlayerIsFromPlayerPageAtom.get(),
+      ).catch(retNull),
   );
-  mediaSession.setActionHandler('nexttrack', () =>
-    void cmComAudioPlayerGoToAdjacentCom(
-      CmComAudioPlayerAdjacentDirection.Next,
-      cmComAudioPlayerIsFromPlayerPageAtom.get(),
-    ).catch(retNull),
+  mediaSession.setActionHandler(
+    'nexttrack',
+    () =>
+      void cmComAudioPlayerGoToAdjacentCom(
+        CmComAudioPlayerAdjacentDirection.Next,
+        cmComAudioPlayerIsFromPlayerPageAtom.get(),
+      ).catch(retNull),
   );
 
   try {

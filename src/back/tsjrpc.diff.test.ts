@@ -79,9 +79,7 @@ describe('makeDiffHtml', () => {
     const was = '{\n  "name": "Ivan",\n  "email": "ivan@mail.ru"\n}';
     const newV = '{\n  "name": "Ivan",\n  "email": "ivan@mail.com"\n}';
 
-    expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}{\n  "name": "Ivan",\n  "email": "ivan@mail.rucom"\n}${preClose}`,
-    );
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}{\n  "name": "Ivan",\n  "email": "ivan@mail.rucom"\n}${preClose}`);
   });
 
   it('escapes every segment', () => {
@@ -117,9 +115,7 @@ describe('makeDiffHtml', () => {
     const was = 'line one\nline two\nline three\nline four';
     const newV = 'line ONE\nline two\nline three\nline FOUR';
 
-    expect(makeDiffHtml(was, newV)).toBe(
-      `${preOpen}line oneONE\nline two\nline three\nline fourFOUR${preClose}`,
-    );
+    expect(makeDiffHtml(was, newV)).toBe(`${preOpen}line oneONE\nline two\nline three\nline fourFOUR${preClose}`);
   });
 
   it('renders a pure line insertion as one block', () => {
