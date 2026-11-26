@@ -84,17 +84,21 @@ const historyWeekMs = historyDayMs * 7;
 
 type VisitsHistoryBucket = { label: string; count: number };
 
-const takeHistoryBucket = (date: string, period: VisitsHistoryPeriod) => {
-  if (period === VisitsHistoryPeriod.Week) {
-    const weekStart = Math.floor(Date.parse(`${date}T00:00:00Z`) / historyWeekMs) * historyWeekMs;
+const takeIsoDayText = (date: number) => new Date(date).toISOString().slice(0, 10);
 
-    return { key: `${weekStart}`, label: new Date(weekStart).toISOString().slice(5, 10) };
+const takeHistoryBucket = (date: number, period: VisitsHistoryPeriod) => {
+  if (period === VisitsHistoryPeriod.Week) {
+    const weekStart = Math.floor(date / historyWeekMs) * historyWeekMs;
+
+    return { key: `${weekStart}`, label: takeIsoDayText(weekStart).slice(5) };
   }
 
-  if (period === VisitsHistoryPeriod.Month) return { key: date.slice(0, 7), label: date.slice(0, 7) };
-  if (period === VisitsHistoryPeriod.Year) return { key: date.slice(0, 4), label: date.slice(0, 4) };
+  const dayText = takeIsoDayText(date);
 
-  return { key: date, label: date.slice(5) };
+  if (period === VisitsHistoryPeriod.Month) return { key: dayText.slice(0, 7), label: dayText.slice(0, 7) };
+  if (period === VisitsHistoryPeriod.Year) return { key: dayText.slice(0, 4), label: dayText.slice(0, 4) };
+
+  return { key: `${date}`, label: dayText.slice(5) };
 };
 
 const makeHistoryBuckets = (dayStats: VisitsDashboardDayStat[], period: VisitsHistoryPeriod): VisitsHistoryBucket[] => {
@@ -116,20 +120,19 @@ const makeAverageBuckets = (dayStats: VisitsDashboardDayStat[], period: VisitsHi
 
   const totalsByDate = new Map(dayStats.map(({ date, total }) => [date, total]));
   const buckets = new Map<string, { label: string; total: number; days: number }>();
-  const endTime = Date.parse(`${dayStats[dayStats.length - 1].date}T00:00:00Z`);
+  const endTime = dayStats[dayStats.length - 1].date;
 
-  for (let time = Date.parse(`${dayStats[0].date}T00:00:00Z`); time <= endTime; time += historyDayMs) {
-    const date = new Date(time).toISOString().slice(0, 10);
-    const { key, label } = takeHistoryBucket(date, period);
+  for (let time = dayStats[0].date; time <= endTime; time += historyDayMs) {
+    const { key, label } = takeHistoryBucket(time, period);
     const bucket = buckets.get(key);
 
     if (bucket) {
-      bucket.total += totalsByDate.get(date) ?? 0;
+      bucket.total += totalsByDate.get(time) ?? 0;
       bucket.days++;
     } else
       buckets.set(key, {
         label,
-        total: totalsByDate.get(date) ?? 0,
+        total: totalsByDate.get(time) ?? 0,
         days: 1,
       });
   }
@@ -886,9 +889,9 @@ const DashboardContent = ({ dashboard }: { dashboard: VisitsDashboard }) => {
       ? []
       : [
           {
-            label: stat.date.slice(5),
+            label: takeIsoDayText(stat.date).slice(5),
             count: stat.minVersion,
-            info: `${stat.date} — v${stat.minVersion}`,
+            info: `${takeIsoDayText(stat.date)} — v${stat.minVersion}`,
           },
         ],
   );

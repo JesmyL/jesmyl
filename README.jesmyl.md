@@ -53,6 +53,7 @@ Project-specific instructions for the jesmyl repo — read together with the uni
 - Everything that ends up in the frontend bundle must be as small as possible — this is the core philosophy.
 - Class fields that are not part of the public API must be `private`/`protected` — never expose a field that only the class itself reads or writes.
 - State/identifier values should be numbers, not strings — use enums instead of string literals for state identifiers (e.g. `montserrat = 'montserrat'` is bad practice).
+- Dates must be stored and passed to the frontend as numbers (timestamps), never as pre-formatted date strings — patterns like `const date = new Date(Date.now() + 3 * howMillisecondsInHour).toISOString().slice(0, 10);` (cutting an ISO string down to a date-only string) are bad practice.
 - Encode string unions like `'prev' | 'next'` used as identifiers/state into numeric `const enum` instead of string literal unions.
 - Use only `const enum`, never plain `enum`.
 - Performance: hoist regexps out of functions (build once via `lazyInit`), build char-class regexps from object keys (`objectKeys(dict).join('')`), and prefer a single `.replace` pass with a replacer dict over chained `.replace` calls.

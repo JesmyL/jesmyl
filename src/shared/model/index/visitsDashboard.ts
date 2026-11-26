@@ -44,7 +44,7 @@ export type VisitsDashboardVisitor = {
 };
 
 export type VisitsDashboardDayStat = {
-  date: string;
+  date: number;
   total: number;
   maxOnline: number;
   versions: PRecord<number, number>;

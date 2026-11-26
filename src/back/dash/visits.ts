@@ -795,7 +795,7 @@ export const takeVisitsDashboard = async (online: {
     onlineHours: makeOnlineHours(onlineHoursRow?.hoursOnlineMin, onlineHoursRow?.hoursOnlineMax),
     versions: stats.versions,
     todayMinVersion: stats.minVersion,
-    dayStats: dayRows,
+    dayStats: dayRows.map(row => ({ ...row, date: Date.parse(row.date) })),
   };
 };
 
