@@ -6,7 +6,11 @@ import {
   translateBackTexts,
 } from 'back/locales/back';
 import { BackLocaleKey } from 'shared/model/+locale/_BackLocaleKey';
-import { appVersionFileStore, dashReportRecipientsFileStorage } from 'back/apps/index/file-stores';
+import {
+  appVersionFileStore,
+  appVersionReleasesFileStore,
+  dashReportRecipientsFileStorage,
+} from 'back/apps/index/file-stores';
 import { sendSchedulePush } from 'back/apps/index/schedules/app-inform/web-push';
 import { takeAllUsersTiny, takeUserTiny } from 'back/apps/index/tinies/userTiny';
 import { dashErrorDB, dashReadDB, visitDayDB, visitDB } from 'back/drizzle.schema';
@@ -138,7 +142,7 @@ const takeTodayVisitRows = async (now: number) => {
 };
 
 const takeMinVersionRows = () =>
-  db.select({ date: visitDayDB.date, minVersion: visitDayDB.minVersion }).from(visitDayDB).orderBy(visitDayDB.date);
+  db.select({ date: visitDayDB.date, minVersion: visitDayDB.minVersion }).from(visitDayDB).orderBy(desc(visitDayDB.date));
 
 type DayStats = {
   date: string;
@@ -234,6 +238,51 @@ const makeStatsTable = (bars: ChartBar[], isVertical = false, isZeroBlank = fals
 
 const makeStatsRows = (bars: ChartBar[], isZeroBlank = false) => makeStatsTable(bars, true, isZeroBlank);
 
+const makeThreeColumnStatsTable = (headCells: string[], rows: { label: string; cells: string[] }[]) =>
+  `<table cellspacing="0" cellpadding="4" style="border-collapse:collapse">${
+    `<tr>${headCells.map(label => `<th style="${statsHeadStyle}">${label}</th>`).join('')}</tr>` +
+    rows
+      .map(
+        ({ label, cells }) =>
+          `<tr><th style="${statsHeadStyle}">${label}</th>${cells.map(cell => `<td style="${statsCellStyle}">${cell}</td>`).join('')}</tr>`,
+      )
+      .join('')
+  }</table>`;
+
+/** Онлайн по часам: за каждый час — минимальный и максимальный одновременно учтённый онлайн; -1 — замера не было, ячейка пустая. */
+const makeOnlineHoursTable = async (stats: ReturnType<typeof makeDayStats>, langi: Langi, currentHour: number) => {
+  const row = (
+    await db
+      .select({ hoursOnlineMin: visitDayDB.hoursOnlineMin, hoursOnlineMax: visitDayDB.hoursOnlineMax })
+      .from(visitDayDB)
+      .where(eq(visitDayDB.date, stats.date))
+      .limit(1)
+  ).at(0);
+  const { min, max } = makeOnlineHours(row?.hoursOnlineMin, row?.hoursOnlineMax);
+  const isToday = stats.date === takeMskDayKey(Date.now());
+
+  return makeThreeColumnStatsTable(
+    [
+      translateBackTexts(langi, BackLocaleKey.VisitReportOnlineTime),
+      translateBackTexts(langi, BackLocaleKey.VisitReportOnlineMin),
+      translateBackTexts(langi, BackLocaleKey.VisitReportOnlineMax),
+    ],
+    min.flatMap((minValue, hour) =>
+      isToday && hour > currentHour
+        ? []
+        : [
+            {
+              label: `${hour}:00`,
+              cells: [
+                minValue === noOnlineSample ? '' : `${minValue}`,
+                max[hour] === noOnlineSample ? '' : `${max[hour]}`,
+              ],
+            },
+          ],
+    ),
+  );
+};
+
 const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>, langi = Langi.Ru) => {
   const visitorRows = (
     await Promise.all(
@@ -249,8 +298,16 @@ const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>, langi = 
   const visitorsTable = `<table cellspacing="0" cellpadding="4" style="border-collapse:collapse">${
     (visitorRows || `<tr><td style="${statsCellStyle}" colspan="2">—</td></tr>`) + anonRow
   }</table>`;
+  const releases = appVersionReleasesFileStore.getValue();
   const minVersionStats = (await takeMinVersionRows()).flatMap(({ date, minVersion }) =>
-    minVersion === null ? [] : [{ label: date.slice(5).replace('-', '.'), count: minVersion }],
+    minVersion === null
+      ? []
+      : [
+          {
+            label: date.slice(5).replace('-', '.'),
+            cells: [`${minVersion}`, `${releases[date] ?? '—'}`],
+          },
+        ],
   );
   const minVersionText =
     stats.minVersion === null
@@ -263,7 +320,7 @@ const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>, langi = 
   const versionsTable = makeStatsRows(
     objectKeys(stats.versions)
       .map(Number)
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map(label => ({ label, count: stats.versions[label] ?? 0 })),
   );
   const currentHour = new Date(Date.now() + mskShiftMs).getUTCHours();
@@ -278,10 +335,19 @@ const makeDayStatsHtml = async (stats: ReturnType<typeof makeDayStats>, langi = 
     `<p>${translateBackTexts(langi, BackLocaleKey.VisitReportMinVersion, { v: `<b>${minVersionText}</b>` })}</p>` +
     `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportByVisitors)}</h3>${visitorsTable}` +
     `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportByHours)}</h3>${makeStatsRows(hourBars, true)}` +
-    `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportVersions)}</h3>${versionsTable}` +
+    `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportOnlineByHours)}</h3>` +
+    (await makeOnlineHoursTable(stats, langi, currentHour)) +
+    `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportVersions, { v: appVersionFileStore.getValue().num })}</h3>${versionsTable}` +
     (minVersionStats.length < 2
       ? ''
-      : `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportMinVersionsByDays)}</h3>${makeStatsRows(minVersionStats.slice(-10))}`)
+      : `<h3>${translateBackTexts(langi, BackLocaleKey.VisitReportMinVersionsByDays)}</h3>${makeThreeColumnStatsTable(
+          [
+            translateBackTexts(langi, BackLocaleKey.VisitReportDate),
+            translateBackTexts(langi, BackLocaleKey.VisitReportMinVersionColumn),
+            translateBackTexts(langi, BackLocaleKey.VisitReportActualVersion),
+          ],
+          minVersionStats.slice(0, 10),
+        )}`)
   );
 };
 
@@ -307,7 +373,7 @@ const makeDayStatsText = (
   const versionsText =
     objectKeys(stats.versions)
       .map(Number)
-      .sort((a, b) => a - b)
+      .sort((a, b) => b - a)
       .map(version => `${version}: ${stats.versions[version]}`)
       .join(', ') || '—';
 
@@ -317,7 +383,7 @@ const makeDayStatsText = (
     translateBackTexts(langi, BackLocaleKey.VisitReportMinVersion, { v: minVersionText }),
     `${translateBackTexts(langi, BackLocaleKey.VisitReportByVisitors)}: ${visitors.map(({ name, count }) => `${name} — ${count}`).join(', ') || '—'}`,
     `${translateBackTexts(langi, BackLocaleKey.VisitReportAnonymous)}: ${translateBackTexts(langi, BackLocaleKey.VisitReportUniqVisits, { u: stats.anonUniq, v: anonVisitsText })}`,
-    `${translateBackTexts(langi, BackLocaleKey.VisitReportVersions)}: ${versionsText}`,
+    `${translateBackTexts(langi, BackLocaleKey.VisitReportVersions, { v: currentVersion })}: ${versionsText}`,
   ].join('\n');
 };
 
@@ -508,7 +574,7 @@ export const sendChangesEmail = async (messageText: string, langi = Langi.Ru) =>
 };
 
 export const deleteOldDashMessages = () =>
-  dbDelete(dashErrorDB, lt(dashErrorDB.createdAt, Date.now() - howMillisecondsInDay * 60));
+  dbDelete(dashErrorDB, lt(dashErrorDB.createdAt, Date.now() - howMillisecondsInDay * 7));
 
 export const updateVisitDayOnline = async (online: number) => {
   const now = Date.now();
